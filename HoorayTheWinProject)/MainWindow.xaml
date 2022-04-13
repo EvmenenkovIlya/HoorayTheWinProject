@@ -6,5 +6,23 @@
         xmlns:local="clr-namespace:HoorayTheWinProject_"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid/>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Users and Tests">
+                <Grid Background="#FFE5E5E5">
+                    <TreeView x:Name="treeView1" Margin="10,21,542,34">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                                <TextBlock Text="{Binding Name}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                    <Button Content="Update UserList" HorizontalAlignment="Left" Margin="78,377,0,0" VerticalAlignment="Top" Width="106"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </Window>
