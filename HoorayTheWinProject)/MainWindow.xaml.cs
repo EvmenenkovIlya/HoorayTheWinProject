@@ -53,5 +53,15 @@ namespace HoorayTheWinProject_
             treeView1.ItemsSource = groups;
 
         }
+
+        private void ButtonCreateAQuestion_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonCreateAReport_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
