@@ -6,11 +6,5 @@
         xmlns:local="clr-namespace:HoorayTheWinProject_"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <ComboBox x:Name="ComboBoxTypeOfQuestion" HorizontalAlignment="Left" Margin="626,132,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBoxTypeOfQuestion_SelectionChanged"/>
-        <ComboBox HorizontalAlignment="Left" Margin="323,231,0,0" VerticalAlignment="Top" Width="120" Text="zzzzz"/>
-        <Button Content="Create a Question" HorizontalAlignment="Left" Margin="644,281,0,0" VerticalAlignment="Top" Height="58" Width="102" Background="#FFE81E1E"/>
-        <Button Content="Create a Question" HorizontalAlignment="Left" Margin="196,58,0,0" VerticalAlignment="Top" Height="58" Width="102" Background="#FFE81E1E"/>
-
-    </Grid>
+    <Grid/>
 </Window>
