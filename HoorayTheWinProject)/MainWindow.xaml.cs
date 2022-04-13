@@ -24,5 +24,14 @@ namespace HoorayTheWinProject_
         {
             InitializeComponent();
         }
+        
+        private void ComboBoxTypeOfQuestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 1)
+            { 
+            
+             
+            }
+        }
     }
 }
