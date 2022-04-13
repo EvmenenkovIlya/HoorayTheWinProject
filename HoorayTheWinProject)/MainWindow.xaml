@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button Content="Create a Question" HorizontalAlignment="Left" Margin="671,267,0,0" VerticalAlignment="Top" Height="58" Width="102" Background="#FFE81E1E"/>
 
     </Grid>
 </Window>
