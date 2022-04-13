@@ -30,7 +30,7 @@ namespace HoorayTheWinProject_
             if (ComboBoxTypeOfQuestion.SelectedIndex == 1)
             { 
             
-            
+             
             }
         }
     }
