@@ -8,10 +8,10 @@
         Title="MainWindow" Height="578" Width="894">
     <Grid>
         <TabControl>
-            <TabItem Header="Users and Tests" Margin="-2,-2,-35,0">
-                <Grid Background="#FFE5E5E5" Height="538" Margin="0,0,-2,0">
-                    <Button Content="Update UserList" HorizontalAlignment="Left" Margin="452,354,0,0" VerticalAlignment="Top" Width="106"/>
-                    <Button Content="Start / Finish Test" HorizontalAlignment="Left" Margin="473,256,0,0" VerticalAlignment="Top" Height="44" Width="106"/>
+            <TabItem Header="Users and Tests" Margin="-2,-2,-35,0" Height="22" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5" Height="540" Margin="0,0,-2,0">
+                    <Button Content="Update UserList" HorizontalAlignment="Left" Margin="235,210,0,0" VerticalAlignment="Top" Width="106"/>
+                    <Button Content="Start / Finish Test" HorizontalAlignment="Left" Margin="570,344,0,0" VerticalAlignment="Top" Height="44" Width="106"/>
                     <ListBox x:Name="ListBoxGroupsName" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="20,26,549,435">
                         <ListBoxItem Content="Test0"/>
                         <ListBoxItem Content="Test1"/>
@@ -22,34 +22,62 @@
                     <TextBox x:Name="TextBoxNewGroupName" HorizontalAlignment="Left" Margin="20,119,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
                     <Button x:Name="ButtonChangeGroupName" Content="Change Group Name" HorizontalAlignment="Left" Margin="163,119,0,0" VerticalAlignment="Top" Width="132"/>
                     <TextBox x:Name="TextBoxNewUserName" HorizontalAlignment="Left" Margin="31,476,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-                    <Button x:Name="ButtonChangeUserName" Content="Change User Name" HorizontalAlignment="Left" Margin="184,476,0,0" VerticalAlignment="Top" Width="137"/>
+                    <Button x:Name="ButtonChangeUserName" Content="Change User Name" HorizontalAlignment="Left" Margin="180,476,0,0" VerticalAlignment="Top" Width="138"/>
                     <Label Content="List of Users:" HorizontalAlignment="Left" Margin="32,207,0,0" VerticalAlignment="Top" Width="92"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="32,499,0,0" VerticalAlignment="Top" Width="120"/>
-                    <Button x:Name="ButtonAddToGroup" Content="Add To Group" HorizontalAlignment="Left" Margin="184,503,0,0" VerticalAlignment="Top" Width="137"/>
+                    <ComboBox x:Name="ComboBoxListOfGroups" HorizontalAlignment="Left" Margin="32,499,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="ButtonAddToGroup" Content="Add To Group" HorizontalAlignment="Left" Margin="180,501,0,0" VerticalAlignment="Top" Width="137"/>
+                    <TextBox x:Name="TextBoxGroupName" HorizontalAlignment="Left" Height="20" Margin="20,159,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="ButtonAddGroup" Content="Add group" HorizontalAlignment="Left" Height="20" Margin="163,159,0,0" VerticalAlignment="Top" Width="132"/>
+                    <Button x:Name="ButtonDeleteUser" Content="❌" HorizontalAlignment="Left" Height="20" Margin="332,484,0,0" VerticalAlignment="Top" Width="22" RenderTransformOrigin="-0.273,1.002"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Height="21" Margin="691,220,0,0" VerticalAlignment="Top" Width="82"/>
+                    <ListBox x:Name="ListBoxCheckBoxOfGroupForTest" HorizontalAlignment="Left" Height="170" Margin="473,26,0,0" VerticalAlignment="Top" Width="300" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                    <ComboBox x:Name="ComboBoxChooseTestForStart" HorizontalAlignment="Left" Height="21" Margin="473,220,0,0" VerticalAlignment="Top" Width="150"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Question" Height="20" Margin="29,0,-29,0" VerticalAlignment="Center">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" Margin="0,0,-3,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="89*"/>
-                        <ColumnDefinition Width="705*"/>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="84*"/>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="782*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="ComboBoxTypeOfQuestion" HorizontalAlignment="Left" Margin="23,10,0,0" VerticalAlignment="Top" Width="169" Grid.ColumnSpan="2"/>
-                    <Button x:Name="ButtonCreateAQuestion" Content="Create a question" HorizontalAlignment="Left" Margin="88,52,0,0" VerticalAlignment="Top" Width="118" Grid.ColumnSpan="2"/>
-                    <TextBox x:Name="TextBoxTypeOfQuestion" HorizontalAlignment="Left" Margin="23,91,0,0" TextWrapping="Wrap" Text="Text of a question" VerticalAlignment="Top" Width="248" Height="100" Grid.ColumnSpan="2"/>
-                    <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="23,228,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="23,257,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="23,318,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="23,287,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.511,0.493" Grid.ColumnSpan="2"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="19,202,0,0" TextWrapping="Wrap" Text="Variants " VerticalAlignment="Top" Width="70" Grid.Column="1"/>
-                    <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="176,230,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="176,289,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="176,259,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="176,320,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <TextBox HorizontalAlignment="Left" Margin="35,228,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
-                    <TextBox HorizontalAlignment="Left" Margin="35,257,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
-                    <TextBox HorizontalAlignment="Left" Margin="35,286,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
-                    <TextBox HorizontalAlignment="Left" Margin="35,314,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+                    <ComboBox x:Name="ComboBoxTypeOfQuestion" HorizontalAlignment="Left" Margin="8,55,0,0" VerticalAlignment="Top" Width="169" Grid.ColumnSpan="3" Grid.Column="1">
+                        <ComboBoxItem Content="Choose number"/>
+                        <ComboBoxItem Content="Choose one"/>
+                        <ComboBoxItem Content="Write a reponse"/>
+                        <ComboBoxItem Content="In series "/>
+                        <ComboBoxItem Content="Yes or no"/>
+                    </ComboBox>
+                    <Button x:Name="ButtonCreateAQuestion" Content="Create a question" HorizontalAlignment="Left" Margin="55,372,0,0" VerticalAlignment="Top" Width="118" Grid.Column="1" Height="34" Grid.ColumnSpan="3"/>
+                    <TextBox x:Name="TextBoxTypeOfQuestion" HorizontalAlignment="Left" Margin="8,91,0,0" TextWrapping="Wrap" Text="Text of a question" VerticalAlignment="Top" Width="323" Height="100" Grid.ColumnSpan="3" Grid.Column="1"/>
+                    <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="8,228,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="1"/>
+                    <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="8,257,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="1"/>
+                    <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="8,318,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="1"/>
+                    <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="8,287,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.511,0.493" Grid.ColumnSpan="3" Grid.Column="1"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="12,202,0,0" TextWrapping="Wrap" Text="Variants " VerticalAlignment="Top" Width="70" Grid.Column="3"/>
+                    <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="169,230,0,0" VerticalAlignment="Top" Grid.Column="3"/>
+                    <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="169,289,0,0" VerticalAlignment="Top" Grid.Column="3"/>
+                    <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="169,0,0,0" VerticalAlignment="Center" Grid.Column="3"/>
+                    <CheckBox Content="CheckBox" HorizontalAlignment="Left" Margin="169,320,0,0" VerticalAlignment="Top" Grid.Column="3"/>
+                    <TextBox HorizontalAlignment="Left" Margin="28,228,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="3"/>
+                    <TextBox HorizontalAlignment="Left" Margin="28,257,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="3"/>
+                    <TextBox HorizontalAlignment="Left" Margin="28,286,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="3"/>
+                    <TextBox HorizontalAlignment="Left" Margin="28,314,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="3"/>
+                    <Label Grid.Column="1" Content="Choose type of question" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="149" Height="30" Grid.ColumnSpan="3"/>
+                    <ListBox Grid.Column="3" HorizontalAlignment="Left" Height="100" Margin="328,38,0,0" VerticalAlignment="Top" Width="321" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListBox_SelectionChanged"/>
+                    <Label Grid.Column="3" Content="List of tests&#xD;&#xA;" HorizontalAlignment="Center" Height="43" Margin="0,10,0,0" VerticalAlignment="Top" Width="126"/>
+                    <ListBox Grid.Column="3" HorizontalAlignment="Left" Height="141" Margin="328,248,0,0" VerticalAlignment="Top" Width="321" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                    <Label Grid.Column="3" Content="List of questions" HorizontalAlignment="Left" Height="38" Margin="328,219,0,0" VerticalAlignment="Top" Width="101"/>
+                    <Button x:Name="ButtonAddQuestionToTest" Grid.Column="3" Content="Add question to test" HorizontalAlignment="Left" Height="28" Margin="328,394,0,0" VerticalAlignment="Top" Width="132"/>
+                    <ComboBox x:Name="ComboBoxListOfTests" Grid.Column="3" HorizontalAlignment="Left" Height="28" Margin="328,439,0,0" VerticalAlignment="Top" Width="132" SelectionChanged="ComboBox_SelectionChanged"/>
+                    <Button x:Name="ButtonAddTest" Grid.Column="3" Content="Add test" HorizontalAlignment="Left" Height="24" Margin="512,157,0,0" VerticalAlignment="Top" Width="137" Click="ButtonAddTest_Click"/>
+                    <TextBox x:Name="TextBoxAddTest" Grid.Column="3" HorizontalAlignment="Left" Height="24" Margin="330,157,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="136"/>
+                    <Button x:Name="ButtonChangeNameOfTest" Grid.Column="3" Content="Change name of test" HorizontalAlignment="Left" Height="25" Margin="512,193,0,0" VerticalAlignment="Top" Width="137" RenderTransformOrigin="0.486,-0.438"/>
+                    <TextBox x:Name="TextBoxChangeNameOfTest" Grid.Column="3" HorizontalAlignment="Left" Height="26" Margin="330,192,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="136"/>
+                    <Button x:Name="ButtonContentOfQuestion" Grid.Column="3" Content="Change content of question" HorizontalAlignment="Left" Height="28" Margin="489,394,0,0" VerticalAlignment="Top" Width="160"/>
+                    <Button Grid.Column="3" Content="Save the changes" HorizontalAlignment="Left" Height="34" Margin="111,372,0,0" VerticalAlignment="Top" Width="129"/>
+                    <Button x:Name="ButtonDeleteQuestionFromTest" Grid.Column="3" Content="❌" HorizontalAlignment="Left" Height="26" Margin="667,395,0,0" VerticalAlignment="Top" Width="27"/>
                 </Grid>
             </TabItem>
         </TabControl>
