@@ -8,16 +8,12 @@ namespace HoorayTheWinProjectLogic.Questions
 {
     public class EnteringAResponse : AbstractQuestion
     {
-        public EnteringAResponse (string question, string answerOfUser)
-        { 
-            TextOfQuestion = question;
-            TypeQuestion = "1";
-            AnswerUser[0]=answerOfUser;
-        }
-        public override void ChangeText(string question)
+        public EnteringAResponse(string question, string answerOfUser)
         {
             TextOfQuestion = question;
-        }
+            TypeQuestion = "1";
+            AnswerUser[0] = answerOfUser;
 
+        }
     }
 }

@@ -17,10 +17,7 @@ namespace HoorayTheWinProjectLogic.Questions
             AnswerUser[2] = answerThree;
             AnswerUser[3] = answerFour;
         }
-        public override void ChangeText(string question)
-        {
-            TextOfQuestion = question;
-        }
+
     }
 }
 

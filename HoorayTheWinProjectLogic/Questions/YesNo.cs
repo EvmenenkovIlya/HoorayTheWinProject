@@ -15,9 +15,5 @@ namespace HoorayTheWinProjectLogic.Questions
             AnswerUser[0] = "Yes";
             AnswerUser[1] = "No";
         }
-        public override void ChangeText(string question)
-        {
-            TextOfQuestion = question;
-        }
     }
 }

@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HoorayTheWinProjectLogic;
+using System.Collections.ObjectModel;
 
 namespace HoorayTheWinProject_
 {
@@ -20,11 +22,12 @@ namespace HoorayTheWinProject_
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
+
         }
-        
-        
+
     }
 }
