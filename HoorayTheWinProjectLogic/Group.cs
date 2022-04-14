@@ -8,7 +8,7 @@ namespace HoorayTheWinProjectLogic
 {
     public class Group
     {
-        public string NameGroup { get; private set; }
+        public string NameGroup { get; set; }
         public List<User> Users { get; private set; }
         public Group(string nameGroup)
         {
@@ -35,9 +35,5 @@ namespace HoorayTheWinProjectLogic
             Users.RemoveAt(index);
         }
 
-        public void ChangeName(string newName)
-        {
-            NameGroup = newName;
-        }
     }
 }
