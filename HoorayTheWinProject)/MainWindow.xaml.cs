@@ -22,46 +22,12 @@ namespace HoorayTheWinProject_
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<Node> groups;
+        
         public MainWindow()
         {
             InitializeComponent();
 
-            groups = new ObservableCollection<Node>
-        {
-            new Node
-            {
-                Name ="Group Фиксики",
-                Nodes = new ObservableCollection<Node>
-                {
-                    new Node {Name="Чинила 1" },
-                    new Node {Name="Чинила 2" },
-                }
-            },
-            new Node
-            {
-                Name ="Group Лунтик's friends",
-                Nodes = new ObservableCollection<Node>
-                {
-                    new Node {Name="Вупсень" },
-                    new Node {Name="Пупсень" },
-                    new Node {Name="Кузнечик" }
-                }
-            },
-
-        };
-            treeView1.ItemsSource = groups;
-
         }
 
-        private void ButtonCreateAQuestion_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ButtonCreateAReport_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
