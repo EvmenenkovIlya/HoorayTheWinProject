@@ -43,5 +43,20 @@ namespace HoorayTheWinProject_
         {
 
         }
+
+        private void TextBoxTextOfQuestion_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
