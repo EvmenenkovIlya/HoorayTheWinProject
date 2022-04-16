@@ -23,9 +23,27 @@ namespace HoorayTheWinProjectLogic
         Group group1 = new Group("Hooray, the win!");
         Group group2 = new Group("Romashki");
 
-        group1.
-        //group1.AddUser(user1);
+        public Group GetFirstGroup()
+        {
+            group1.AddUser(user1);
+            group1.AddUser(user2);
+            group1.AddUser(user3);
+            group1.AddUser(user4);
+            group1.AddUser(user5);
+            return group1;
+        }
 
-        
+        public Group GetSeconsGroup()
+        {
+            group1.AddUser(user6);
+            group1.AddUser(user7);
+            group1.AddUser(user8);
+            group1.AddUser(user9);
+            group1.AddUser(user10);
+            return group2;
+        }
+
+
+
     }
 }
