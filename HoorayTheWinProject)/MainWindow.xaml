@@ -23,7 +23,7 @@
                     <ComboBox Grid.Column='1' Name='ComboBoxChooseTestForStart'  Margin="20, 0, 20, 20" VerticalAlignment="Bottom" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Questions" Margin="-2,-2,-2,2">
+            <TabItem Header="Questions">
                 <Grid Background="AntiqueWhite">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50*"/>
@@ -52,7 +52,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="FOR TEST" Height="22" Margin="-2,-2,2,0" VerticalAlignment="Top">
+            <TabItem Header="FOR TEST" Height="22" VerticalAlignment="Top">
                 <Grid Background="AntiqueWhite">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50*"/>
@@ -62,7 +62,7 @@
                         <RowDefinition Height="50*"/>
                         <RowDefinition Height="50*"/>
                     </Grid.RowDefinitions>
-
+                    <TextBlock Grid.Column ="1" Name="TextBlockForMessegeFromUser" />
                 </Grid>
             </TabItem>
             <Grid Height="262" Width="489"/>
