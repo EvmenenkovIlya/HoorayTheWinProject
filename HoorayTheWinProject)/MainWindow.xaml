@@ -19,13 +19,13 @@
                         <RowDefinition Height="50*"/>
                     </Grid.RowDefinitions>
                     <Label Content="List of Groups:" Margin="20, 0, 0, 0"/>
-                    <ListBox Name='ListBoxGroups' Margin="20, 30, 20, 80"/>
+                    <ListBox Name='ListBoxGroups' Margin="20, 30, 20, 80" d:ItemsSource="{d:SampleData ItemCount=5}"/>
                     <TextBox Name="TextBoxNewGroupName" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="180" Height="25" Margin="20, 0, 0, 45"/>
                     <Button Name="ButtonCreateNewGroup" Content="Create a new Group" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" Height="25" Margin="0, 0, 20, 45"/>
                     <TextBox Name="TextBoxChageGroupName" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="180" Height="25" Margin="20, 0, 0, 10"/>
                     <Button Name="ButtonChangeGroupName" Content="Change Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" Height="25" Margin="0, 0, 20, 10"/>
                     <Label Grid.Column='1' Content="Choose Group fot Test:" Margin="20, 0, 0, 0"/>
-                    <ListBox Grid.Column='1' Name='ListBoxCheckBoxOfGroupForTest' Margin="20, 30, 20, 60"/>
+                    <ListBox Grid.Column='1' Name='ListBoxCheckBoxOfGroupForTest' Margin="20, 30, 20, 60" d:ItemsSource="{d:SampleData ItemCount=5}"/>
                     <Label Grid.Column='1' Content="Choose Test:" Margin="20, 0, 20, 40" VerticalAlignment="Bottom"/>
                     <ComboBox Grid.Column='1' Name='ComboBoxChooseTestForStart'  Margin="20, 0, 20, 20" VerticalAlignment="Bottom" />
                     <Button Grid.Column="1" Grid.Row="1" Content="Start New Test" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20, 0, 20, 20"/>
@@ -35,7 +35,7 @@
                     <Button Grid.Row='1' Name="ButtonDeletFromGroup" Content="❌" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25" Height="25" Margin="0, 0, 20, 10"/>
                     <TextBox Grid.Row='1' Name="TextBoxChageUserName" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="180" Height="25" Margin="20, 0, 0, 45"/>
                     <ComboBox Grid.Row='1' Name='ComboBoxChooseGroup'  Width="180" Height="25" Margin="20, 0, 20, 10" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
-                    <ListBox Grid.Row='1' Name='ListBoxListOfUsers' Margin="20, 30, 20, 80"/>
+                    <ListBox Grid.Row='1' Name='ListBoxListOfUsers' Margin="20, 30, 20, 80" d:ItemsSource="{d:SampleData ItemCount=5}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Questions">
