@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using HoorayTheWinProjectLogic;
 using System.Collections.ObjectModel;
 
+
 namespace HoorayTheWinProject_
 {
     /// <summary>
@@ -26,6 +27,13 @@ namespace HoorayTheWinProject_
         public MainWindow()
         {
             InitializeComponent();
+            Group group1 = UserMock.GetFirstGroup();
+            Group group2 = UserMock.GetSecondGroup();
+            foreach (User user in group1.Users) 
+            {
+                ListBoxItem nameUser = new ListBoxItem() { Content = user.NameUser};
+                ListBoxListOfUsers.Items.Add(nameUser);
+            }
 
         }
 
@@ -55,6 +63,11 @@ namespace HoorayTheWinProject_
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ListBoxGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
