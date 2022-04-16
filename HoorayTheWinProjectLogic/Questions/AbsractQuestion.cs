@@ -4,9 +4,9 @@
     {
         public string TextOfQuestion { get; set; }
 
-        public string TypeQuestion { get; protected set; }
+        public string TypeQuestion { get; set; }
 
-        public List <string> AnswerUser { get; protected set; }
+        public List <string> AnswerUser { get; set; }
 
     }
 }
