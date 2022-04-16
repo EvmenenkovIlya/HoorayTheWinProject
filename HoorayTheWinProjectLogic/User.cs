@@ -15,9 +15,5 @@ namespace HoorayTheWinProjectLogic
         {
             NameUser = nameUser;
         }
-        public void ChangeName(string newName)
-        {
-            NameUser = newName;
-        }
     }
 }
