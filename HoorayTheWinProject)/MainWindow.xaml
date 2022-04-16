@@ -23,7 +23,36 @@
                     <ComboBox Grid.Column='1' Name='ComboBoxChooseTestForStart'  Margin="20, 0, 20, 20" VerticalAlignment="Bottom" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Questions">
+            <TabItem Header="Questions" Margin="-2,-2,-2,2">
+                <Grid Background="AntiqueWhite">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="237*"/>
+                        <RowDefinition Height="317*"/>
+                    </Grid.RowDefinitions>
+                    <Label x:Name="LabelChooseType" Content="Choose type of question" Height="30" Margin="20,15,208,0" VerticalAlignment="Top" FontFamily="Calibri" FontSize="16"/>
+                    <ComboBox x:Name="ComboBoxTypeOfQuestion" Height="20" Margin="199,20,20,0" VerticalAlignment="Top" RenderTransformOrigin="0.549,0.151"/>
+                    <TextBox x:Name="TextBoxTextOfQuestion" Margin="20,54,20,20" TextWrapping="Wrap" Text="TextBox" TextChanged="TextBoxTextOfQuestion_TextChanged" Grid.Row="0" FontSize="16"/>
+                    <Label Content="Variants" Margin="154,25,153,265" Grid.Row="1" FontFamily="Calibri" FontSize="16" HorizontalContentAlignment="Center"/>
+                    <RadioButton Content="RadioButton" Margin="20,63,273,236" Grid.Row="1" FontSize="14"/>
+                    <RadioButton Content="RadioButton" Margin="20,93,273,206" Grid.Row="1" FontSize="14"/>
+                    <RadioButton Content="RadioButton" Margin="20,123,273,176" Grid.Row="1" FontSize="14"/>
+                    <RadioButton Content="RadioButton" Margin="20,153,273,146" Grid.Row="1" FontSize="14"/>
+                    <TextBox Height="18"  Margin="144,63,147,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" FontSize="14" VerticalContentAlignment="Top"/>
+                    <TextBox Height="18"  Margin="144,93,147,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" FontSize="14" VerticalContentAlignment="Top"/>
+                    <TextBox Height="18"  Margin="144,123,147,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" FontSize="14" VerticalContentAlignment="Top"/>
+                    <TextBox Height="18"  Margin="144,153,147,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" FontSize="14" VerticalContentAlignment="Top"/>
+                    <CheckBox Content="CheckBox" Margin="270,63,23,236" Grid.Row="1" Checked="CheckBox_Checked" Width="104"  FontSize="14" Height="18"/>
+                    <CheckBox Content="CheckBox" Margin="270,93,23,206" Grid.Row="1" Checked="CheckBox_Checked" Width="104"  FontSize="14" Height="18"/>
+                    <CheckBox Content="CheckBox" Margin="270,123,23,176" Grid.Row="1" Checked="CheckBox_Checked" Width="104"  FontSize="14" Height="18"/>
+                    <CheckBox Content="CheckBox" Margin="270,153,23,146" Grid.Row="1" Checked="CheckBox_Checked" Width="104"  FontSize="14" Height="18"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="FOR TEST" Height="22" Margin="-2,-2,2,0" VerticalAlignment="Top">
                 <Grid Background="AntiqueWhite">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50*"/>
@@ -36,19 +65,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="FOR TEST">
-                <Grid Background="AntiqueWhite">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="50*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50*"/>
-                        <RowDefinition Height="50*"/>
-                    </Grid.RowDefinitions>
-
-                </Grid>
-            </TabItem>
+            <Grid Height="262" Width="489"/>
         </TabControl>
     </Grid>
 </Window>
