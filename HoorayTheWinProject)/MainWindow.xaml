@@ -20,8 +20,8 @@
                     </Grid.RowDefinitions>
                     <Label Content="List of Groups:" Margin="20, 0, 0, 0"/>
                     <ListBox Name='ListBoxGroups' Margin="20, 30, 20, 80" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListBoxGroups_SelectionChanged"/>
-                    <TextBox Name="TextBoxNewGroupName" VerticalAlignment="Bottom" Height="25" Margin="20, 0, 195, 45"/>
-                    <Button Name="ButtonCreateNewGroup" Content="Create a new Group" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" Height="25" Margin="0, 0, 20, 45"/>
+                    <TextBox Name="TextBoxNewGroupName" VerticalAlignment="Bottom" Height="25" Margin="20, 0, 195, 45" TextChanged="TextBoxNewGroupName_TextChanged"/>
+                    <Button Name="ButtonCreateNewGroup" Content="Create a new Group" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" Height="25" Margin="0, 0, 20, 45" Click="ButtonCreateNewGroup_Click"/>
                     <TextBox Name="TextBoxChageGroupName" VerticalAlignment="Bottom" Height="25" Margin="20, 0, 195, 10"/>
                     <Button Name="ButtonChangeGroupName" Content="Change Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150" Height="25" Margin="0, 0, 20, 10"/>
                     <Label Grid.Column='1' Content="Choose Group fot Test:" Margin="20, 0, 0, 0"/>

@@ -35,5 +35,9 @@ namespace HoorayTheWinProjectLogic
             Users.RemoveAt(index);
         }
 
+        public override string ToString()
+        {
+            return NameGroup;
+        }
     }
 }

@@ -23,17 +23,24 @@ namespace HoorayTheWinProject_
     /// </summary>
     public partial class MainWindow : Window
     {
+        Group group1 = UserMock.GetFirstGroup();
+        Group group2 = UserMock.GetSecondGroup();
+        Group group3 = new Group("Other");
+        List<Group> groups = new List<Group>();
         
         public MainWindow()
         {
             InitializeComponent();
-            Group group1 = UserMock.GetFirstGroup();
-            Group group2 = UserMock.GetSecondGroup();
-            foreach (User user in group1.Users) 
+            groups.Add(group3);
+            groups.Add(group1);
+            groups.Add(group2);
+            foreach (Group group in groups)
             {
-                ListBoxItem nameUser = new ListBoxItem() { Content = user.NameUser};
-                ListBoxListOfUsers.Items.Add(nameUser);
-            }
+                ListBoxItem groupName = new ListBoxItem() { Content = group.NameGroup};
+                ListBoxGroups.Items.Add(groupName);
+            }                      
+            ButtonCreateNewGroup.IsEnabled = false;
+            
 
         }
 
@@ -69,7 +76,38 @@ namespace HoorayTheWinProject_
 
         private void ListBoxGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ListBoxListOfUsers.Items.Clear();
+            string s = ListBoxGroups.SelectedItem.ToString()[37..];
+            Group groupOfUser = groups.Find(x => x.NameGroup.Contains(s));                       
+            foreach (User user in groupOfUser.Users)
+            {
+                ListBoxItem nameUser = new ListBoxItem() { Content = user.NameUser };
+                ListBoxListOfUsers.Items.Add(nameUser);
+            }
+            
+        }
 
+        private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string tmp = TextBoxNewGroupName.Text;
+            if (tmp == "" || group1.NameGroup.Contains(tmp))
+            {
+                return;
+            }
+            else 
+            {
+                ButtonCreateNewGroup.IsEnabled = true;                 
+            }
+        }
+
+        private void ButtonCreateNewGroup_Click(object sender, RoutedEventArgs e)
+        {
+            Group groupNew = new Group(TextBoxNewGroupName.Text);
+            TextBoxNewGroupName.Clear();
+            groups.Add(groupNew);
+            ListBoxItem nameGroup = new ListBoxItem() { Content = groupNew.NameGroup };            
+            ListBoxGroups.Items.Add(nameGroup);           
+            ButtonCreateNewGroup.IsEnabled = false;
         }
     }
 }
