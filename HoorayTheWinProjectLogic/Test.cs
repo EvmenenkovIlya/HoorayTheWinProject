@@ -10,8 +10,8 @@ namespace HoorayTheWinProjectLogic
     public class Test
     {
         public string NameTest { get; set; }
-        public List<Group> Groups { get; private set; }
-        public List<AbstractQuestion> AbstractQuestions { get; private set; }
+        public List<Group> Groups { get; set; }
+        public List<AbstractQuestion> AbstractQuestions { get; set; }
 
         public Test(string nameTest)
         {
@@ -66,6 +66,10 @@ namespace HoorayTheWinProjectLogic
         public void FinishTest()
         {
 
+        }
+        public override string ToString()
+        {
+            return NameTest;
         }
     }
 }

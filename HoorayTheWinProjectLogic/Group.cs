@@ -16,7 +16,7 @@ namespace HoorayTheWinProjectLogic
             Users = new List<User>();
         }
 
-        public void AddUser(User user) 
+        public void AddUser(User user)
         {
             if (user == null)
             {
@@ -33,6 +33,17 @@ namespace HoorayTheWinProjectLogic
             }
 
             Users.RemoveAt(index);
+        }
+
+        /*public void RebaseUser(User user, Group newGroup)
+        {
+            newGroup.AddUser(user);
+            Users.Remove(user);
+        }*/
+
+        public override string ToString()
+        {
+            return NameGroup;
         }
 
     }

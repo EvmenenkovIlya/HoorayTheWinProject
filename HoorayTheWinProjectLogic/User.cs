@@ -15,5 +15,9 @@ namespace HoorayTheWinProjectLogic
         {
             NameUser = nameUser;
         }
+        public override string ToString()
+        {
+            return NameUser;
+        }
     }
 }
