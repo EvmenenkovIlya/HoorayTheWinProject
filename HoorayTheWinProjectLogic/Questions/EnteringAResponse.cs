@@ -10,9 +10,10 @@ namespace HoorayTheWinProjectLogic.Questions
     {
         public EnteringAResponse(string question, string answerOfUser)
         {
+            List<string> AnswerUser = new List<string>();
             TextOfQuestion = question;
             TypeQuestion = "1";
-            AnswerUser[0] = answerOfUser;
+            AnswerUser.Add(answerOfUser);
 
         }
     }

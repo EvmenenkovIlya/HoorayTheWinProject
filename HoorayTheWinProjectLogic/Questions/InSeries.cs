@@ -10,12 +10,13 @@ namespace HoorayTheWinProjectLogic.Questions
     {
         public InSeries(string question, string answerOne, string answerTwo, string answerThree, string answerFour)
         {
+            List<string> AnswerUser = new List<string>();
             TextOfQuestion = question;
             TypeQuestion = "5";
-            AnswerUser[0] = answerOne;
-            AnswerUser[1] = answerTwo;
-            AnswerUser[2] = answerThree;
-            AnswerUser[3] = answerFour;
+            AnswerUser.Add(answerOne);
+            AnswerUser.Add(answerTwo);
+            AnswerUser.Add(answerThree);
+            AnswerUser.Add(answerFour);
         }
 
     }
