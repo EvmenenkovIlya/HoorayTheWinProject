@@ -52,7 +52,7 @@ namespace HoorayTheWinProjectLogic
         public static Test ReturnTest() 
         {
             Test testMock = new Test("TestForTest");
-            for (int i = 1; i >= 5; i++ )
+            for (int i = 1; i <= 5; i++ )
             {
                 testMock.AddQuestion(ReturnQuestion(i));
             }

@@ -35,12 +35,6 @@ namespace HoorayTheWinProjectLogic
             Users.RemoveAt(index);
         }
 
-        /*public void RebaseUser(User user, Group newGroup)
-        {
-            newGroup.AddUser(user);
-            Users.Remove(user);
-        }*/
-
         public override string ToString()
         {
             return NameGroup;
