@@ -10,14 +10,15 @@ namespace HoorayTheWinProjectLogic.Questions
     {
         public ChooseNumber(string question, string answerOne, string answerTwo, string answerThree, string answerFour)
         {
-            List<string> AnswerUser = new List<string>();
+            List<string> Answer = new List<string>();
             TextOfQuestion = question;
             TypeQuestion = "4";
-            AnswerUser.Add(answerOne);
-            AnswerUser.Add(answerTwo);
-            AnswerUser.Add(answerThree);
-            AnswerUser.Add(answerFour);
-            
+            Answer.Add(answerOne);
+            Answer.Add(answerTwo);
+            Answer.Add(answerThree);
+            Answer.Add(answerFour);
+            AnswerUser = Answer;
+
         }
     }
 }

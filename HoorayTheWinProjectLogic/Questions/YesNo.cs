@@ -10,11 +10,12 @@ namespace HoorayTheWinProjectLogic.Questions
     {
         public YesNo(string question)
         {
-            List<string> AnswerUser = new List<string>();
+            List<string> Answer = new List<string>();
             TextOfQuestion = question;
             TypeQuestion = "2";
-            AnswerUser.Add("Yes");
-            AnswerUser.Add("No");           
+            Answer.Add("Yes");
+            Answer.Add("No");
+            AnswerUser = Answer;
         }
     }
 }

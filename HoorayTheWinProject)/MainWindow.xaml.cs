@@ -137,13 +137,18 @@ namespace HoorayTheWinProject_
         {
             ListBoxListOfQuestions.Items.Clear();
             Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;
-            
+            if (selectedTest == null || selectedTest.AbstractQuestions.Count == 0)
+            {
+                return;
+            }
+            else
+            {
                 foreach (AbstractQuestion question in selectedTest.AbstractQuestions)
                 {
                     ListBoxItem que = new ListBoxItem() { Content = question.TextOfQuestion };
-                    ListBoxListOfQuestions.Items.Add(que);                   
+                    ListBoxListOfQuestions.Items.Add(que);
                 }
-            
+            }
         }
 
         private void TextBoxTextOfQuestion_TextChanged_1(object sender, TextChangedEventArgs e)
@@ -152,6 +157,11 @@ namespace HoorayTheWinProject_
         }
 
         private void ListBoxListOfQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
