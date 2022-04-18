@@ -13,7 +13,7 @@ namespace HoorayTheWinProjectLogic.Questions
             List<string> Answer = new List<string>();
             TextOfQuestion = question;
             Answer.Add(answerOfUser);
-            AnswerUser = Answer;
+            base.Answer = Answer;
 
         }
     }

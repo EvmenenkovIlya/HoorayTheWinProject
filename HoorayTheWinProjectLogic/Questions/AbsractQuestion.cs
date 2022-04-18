@@ -6,7 +6,11 @@
 
         public string TypeQuestion { get; set; }
 
-        public List <string> AnswerUser { get; set; }
+        public List <string> Answer { get; set; }
 
+        public override string ToString()
+        {
+            return TextOfQuestion;
+        }
     }
 }

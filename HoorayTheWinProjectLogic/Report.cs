@@ -18,7 +18,7 @@ namespace HoorayTheWinProjectLogic
         {
             Name = user.NameUser;
             Question = question.TextOfQuestion;
-            UserAnswer = answer.AnswerUser;
+            UserAnswer = answer.Answer;
         }
 
         public void GetReport()

@@ -29,7 +29,6 @@ namespace HoorayTheWinProject_
         Group _other = new Group("Other");
         Test _bankOfQuestions = new Test("Bank Of Questions");
         Test test1 = QuestionsMock.ReturnTest();
-        AbstractQuestion question = QuestionsMock.ReturnQuestion(1);
         List<Group> groups = new List<Group>();
         List<Test> tests = new List<Test>();
 
@@ -41,9 +40,7 @@ namespace HoorayTheWinProject_
             tests.Add(_bankOfQuestions);
             tests.Add(test1);
             groups.Add(group1);
-            groups.Add(group2);
-
-            ListBoxListOfQuestions.Items.Add(question.TextOfQuestion);
+            groups.Add(group2);            
 
             ListBoxGroups.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
@@ -81,21 +78,15 @@ namespace HoorayTheWinProject_
         }
 
         private void ListBoxGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ListBoxListOfUsers.Items.Clear();
+        {          
             Group groupOfUser = (Group) ListBoxGroups.SelectedItem;
             if (groupOfUser == null || groupOfUser.Users.Count == 0)
             {
-                return;
+                ListBoxListOfUsers.ItemsSource = null;                
             }
             else
             {
-                //ListBoxListOfUsers.ItemsSource = groupOfUser.Users; Не работает как нужно                
-                foreach (User user in groupOfUser.Users)
-                {
-                    ListBoxItem nameUser = new ListBoxItem() { Content = user.NameUser };
-                    ListBoxListOfUsers.Items.Add(nameUser);
-                }      
+                ListBoxListOfUsers.ItemsSource = groupOfUser.Users;              
             }
         }
 
@@ -122,32 +113,28 @@ namespace HoorayTheWinProject_
         }
 
         private void ButtonDeleteGroup_Click(object sender, RoutedEventArgs e)
-        {           
-            ListBoxListOfUsers.Items.Clear();
+        {                       
             Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             foreach (User user in groupOfUser.Users)
             {
                 _other.AddUser(user);
             }               
             groups.Remove(groupOfUser);
-            ListBoxGroups.Items.Refresh();           
+            ListBoxGroups.Items.Refresh();
+            ListBoxListOfUsers.ItemsSource = null;
         }
 
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListBoxListOfQuestions.Items.Clear();
-            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;
+            
+            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;           
             if (selectedTest == null || selectedTest.AbstractQuestions.Count == 0)
             {
-                return;
+                ListBoxListOfQuestions.ItemsSource = null;
             }
             else
             {
-                foreach (AbstractQuestion question in selectedTest.AbstractQuestions)
-                {
-                    ListBoxItem que = new ListBoxItem() { Content = question.TextOfQuestion };
-                    ListBoxListOfQuestions.Items.Add(que);
-                }
+                ListBoxListOfQuestions.ItemsSource = selectedTest.AbstractQuestions;
             }
         }
 
