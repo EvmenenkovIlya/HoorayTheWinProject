@@ -44,6 +44,7 @@ namespace HoorayTheWinProject_
 
             ListBoxGroups.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
+            ListBoxCheckBoxOfGroupForTest.ItemsSource = tests;
             ButtonCreateNewGroup.IsEnabled = false;
         }
 

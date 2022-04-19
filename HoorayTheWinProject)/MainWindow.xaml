@@ -28,9 +28,12 @@
                     <Button Name="ButtonDeleteGroup" Content="❌" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25" Height="25" Margin="0, 0, 20, 10" FontWeight="Bold" FontFamily="Arial Black" FontSize="14" Click="ButtonDeleteGroup_Click" />
                     <Label  Name="LabelGroupForTest" Grid.Column='2' Content="Choose Group for Test:" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
                     <ListBox Grid.Column='2' Name='ListBoxCheckBoxOfGroupForTest' d:ItemsSource="{d:SampleData ItemCount=5}" Margin="20,30,20,80" FontSize="18" SelectionChanged="ListBoxCheckBoxOfGroupForTest_SelectionChanged">
-                        <CheckBox IsEnabled="True"/>
-                        <CheckBox/>
-                        <CheckBox/>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding NameTest}"
+                                           IsChecked="{Binding IsSelected}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                     <Label Grid.Column='2' Name="LabelChooseTest" Content="Choose Test:" VerticalAlignment="Top"  Margin="20,300,20,0" FontFamily="Arial Black" FontSize="20"/>
                     <ComboBox Grid.Column='2' Name='ComboBoxChooseTestForStart' VerticalAlignment="Top" Margin="20,336,20,0" FontSize="16"/>

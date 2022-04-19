@@ -12,7 +12,7 @@ namespace HoorayTheWinProjectLogic
         public string NameTest { get; set; }
         public List<Group> Groups { get; set; }
         public List<AbstractQuestion> AbstractQuestions { get; set; }
-
+       // public bool IsSelected { get; set; }
         public Test(string nameTest)
         {
             NameTest = nameTest;
