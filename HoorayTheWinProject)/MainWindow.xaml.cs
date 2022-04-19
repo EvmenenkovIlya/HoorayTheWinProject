@@ -150,6 +150,7 @@ namespace HoorayTheWinProject_
 
         private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Group groupOfUser = (Group)ListBoxCheckBoxOfGroupForTest.SelectedItem;
 
         }
 
