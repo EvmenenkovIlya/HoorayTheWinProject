@@ -51,7 +51,7 @@
                         <RowDefinition Height="50*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row ="0" Name="LabelChooseType" Content="Choose type of question" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
-                    <ComboBox Grid.Row ="0" Name="ComboBoxTypeOfQuestion" VerticalAlignment="Top" Margin="20,35,20,0" FontSize="16">
+                    <ComboBox Grid.Row ="0" Name="ComboBoxTypeOfQuestion" VerticalAlignment="Top" Margin="20,35,20,0" FontSize="16" SelectionChanged="ComboBoxTypeOfQuestion_SelectionChanged">
                         <ComboBoxItem Content="CHOOSE NUMBER" FontSize="16"/>
 
                         <ComboBoxItem Content="CHOOSE ONE" FontSize="16"/>
@@ -64,7 +64,7 @@
                     </ComboBox>
                     <TextBox Name="TextBoxTextOfQuestion" Margin= "20,70,20,20" FontSize="18" TextChanged="TextBoxTextOfQuestion_TextChanged_1"/>
                     <Label Grid.Row="1" Name="LabelVariants" Content="Variants" HorizontalContentAlignment="Center" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
-                    <RadioButton Grid.Row="1" Name="RadioButtonOne" Content="RadioButton" Margin="20,50,0,300" FontFamily="Arial" FontSize="14"/>
+                    <RadioButton Grid.Row="1" Name="RadioButtonOne" Content="RadioButton" Margin="20,50,0,300" FontFamily="Arial" FontSize="14" />
                     <RadioButton Grid.Row="1" Name="RadioButtonTwo" Content="RadioButton" Margin="20,90,0,260" FontFamily="Arial" FontSize="14"/>
                     <RadioButton Grid.Row="1" Name="RadioButtonThree" Content="RadioButton" Margin="20,130,0,220" FontFamily="Arial" FontSize="14"/>
                     <RadioButton Grid.Row="1" Name="RadioButtonFour" Content="RadioButton" Margin="20,170,0,180" FontFamily="Arial" FontSize="14"/>

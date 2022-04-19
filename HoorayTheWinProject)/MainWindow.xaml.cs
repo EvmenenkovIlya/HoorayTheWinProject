@@ -32,7 +32,7 @@ namespace HoorayTheWinProject_
         List<Group> groups = new List<Group>();
         List<Test> tests = new List<Test>();
 
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,11 +40,11 @@ namespace HoorayTheWinProject_
             tests.Add(_bankOfQuestions);
             tests.Add(test1);
             groups.Add(group1);
-            groups.Add(group2);            
+            groups.Add(group2);
 
             ListBoxGroups.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
-            ButtonCreateNewGroup.IsEnabled = false;            
+            ButtonCreateNewGroup.IsEnabled = false;
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -78,15 +78,15 @@ namespace HoorayTheWinProject_
         }
 
         private void ListBoxGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {          
-            Group groupOfUser = (Group) ListBoxGroups.SelectedItem;
+        {
+            Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             if (groupOfUser == null || groupOfUser.Users.Count == 0)
             {
-                ListBoxListOfUsers.ItemsSource = null;                
+                ListBoxListOfUsers.ItemsSource = null;
             }
             else
             {
-                ListBoxListOfUsers.ItemsSource = groupOfUser.Users;              
+                ListBoxListOfUsers.ItemsSource = groupOfUser.Users;
             }
         }
 
@@ -97,9 +97,9 @@ namespace HoorayTheWinProject_
             {
                 return;
             }
-            else 
+            else
             {
-                ButtonCreateNewGroup.IsEnabled = true;                 
+                ButtonCreateNewGroup.IsEnabled = true;
             }
         }
 
@@ -107,18 +107,18 @@ namespace HoorayTheWinProject_
         {
             Group groupNew = new Group(TextBoxNewGroupName.Text);
             TextBoxNewGroupName.Clear();
-            groups.Add(groupNew);                                 
+            groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
             ButtonCreateNewGroup.IsEnabled = false;
         }
 
         private void ButtonDeleteGroup_Click(object sender, RoutedEventArgs e)
-        {                       
+        {
             Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             foreach (User user in groupOfUser.Users)
             {
                 _other.AddUser(user);
-            }               
+            }
             groups.Remove(groupOfUser);
             ListBoxGroups.Items.Refresh();
             ListBoxListOfUsers.ItemsSource = null;
@@ -126,8 +126,8 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;           
+
+            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;
             if (selectedTest == null || selectedTest.AbstractQuestions.Count == 0)
             {
                 ListBoxListOfQuestions.ItemsSource = null;
@@ -150,6 +150,51 @@ namespace HoorayTheWinProject_
 
         private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
+        }
+
+        private void ComboBoxTypeOfQuestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
+            {
+                RadioButtonOne.Visibility = Visibility.Hidden;
+                RadioButtonTwo.Visibility = Visibility.Hidden;
+                RadioButtonThree.Visibility = Visibility.Hidden;
+                RadioButtonFour.Visibility = Visibility.Hidden;
+
+                TextBoxOne.Visibility = Visibility.Hidden;
+                TextBoxTwo.Visibility = Visibility.Hidden;
+                TextBoxThree.Visibility = Visibility.Hidden;
+                TextBoxFour.Visibility = Visibility.Hidden;
+
+            }
+
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 1) //ChooseOne
+            {
+                TextBoxOne.Visibility = Visibility.Hidden;
+                TextBoxTwo.Visibility = Visibility.Hidden;
+                TextBoxThree.Visibility = Visibility.Hidden;
+                TextBoxFour.Visibility = Visibility.Hidden;
+
+                CheckBoxOne.Visibility = Visibility.Hidden;
+                CheckBoxTwo.Visibility = Visibility.Hidden;
+                CheckBoxThree.Visibility = Visibility.Hidden;
+                CheckBoxFour.Visibility = Visibility.Hidden;
+            }
+
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
+            {
+                CheckBoxOne.Visibility = Visibility.Hidden;
+                CheckBoxTwo.Visibility = Visibility.Hidden;
+                CheckBoxThree.Visibility = Visibility.Hidden;
+                CheckBoxFour.Visibility = Visibility.Hidden;
+
+                RadioButtonOne.Visibility = Visibility.Hidden;
+                RadioButtonTwo.Visibility = Visibility.Hidden;
+                RadioButtonThree.Visibility = Visibility.Hidden;
+                RadioButtonFour.Visibility = Visibility.Hidden;
+
+            }
 
         }
     }
