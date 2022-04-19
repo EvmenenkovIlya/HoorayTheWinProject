@@ -39,24 +39,24 @@ namespace HoorayTheWinProject_
         List<Group> groups = new List<Group>();
         List<Test> tests = new List<Test>();
 
-        
+
         public MainWindow()
         {
-            
+
             groups.Add(_other);
             tests.Add(_bankOfQuestions);
             tests.Add(test1);
             groups.Add(group1);
-            groups.Add(group2);            
+            groups.Add(group2);
 
-            ListBoxGroups.ItemsSource = groups;
-            ListBoxListOfTests.ItemsSource = tests;
-            ButtonCreateNewGroup.IsEnabled = false;
+
 
             _telegramManager = new TelegramManager(_token, OnMessage);
             _labels = new List<string>();
             InitializeComponent();
-
+            ListBoxGroups.ItemsSource = groups;
+            ListBoxListOfTests.ItemsSource = tests;
+            ButtonCreateNewGroup.IsEnabled = false;
             LB.ItemsSource = _labels;
 
 
@@ -187,6 +187,11 @@ namespace HoorayTheWinProject_
         }
 
         private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
 
         }
