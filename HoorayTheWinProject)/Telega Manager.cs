@@ -49,10 +49,10 @@ namespace HoorayTheWinProject_
 
         public void Start()
         {
-            _client.StartReceiving(HandleResive, HandleError);
+            _client.StartReceiving(HandleRecieve, HandleError);
         }
 
-        private async Task HandleResive(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             if (update.Message != null && update.Message.Text != null)
             {

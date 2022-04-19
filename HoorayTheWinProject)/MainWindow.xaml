@@ -13,7 +13,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40*"/>
                         <ColumnDefinition Width="40*"/>
-                        
+
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50*"/>
@@ -27,7 +27,14 @@
                     <Button Name="ButtonChangeGroupName" Content="Change Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="140" Height="25" Margin="0, 0, 50, 10" FontWeight="Bold" FontSize="14" FontFamily="Arial Black"/>
                     <Button Name="ButtonDeleteGroup" Content="❌" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25" Height="25" Margin="0, 0, 20, 10" FontWeight="Bold" FontFamily="Arial Black" FontSize="14" Click="ButtonDeleteGroup_Click" />
                     <Label  Name="LabelGroupForTest" Grid.Column='2' Content="Choose Group for Test:" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
-                    <ListBox Grid.Column='2' Name='ListBoxCheckBoxOfGroupForTest' d:ItemsSource="{d:SampleData ItemCount=5}" Margin="20,30,20,80" FontSize="18" SelectionChanged="ListBoxCheckBoxOfGroupForTest_SelectionChanged"/>
+                    <ListBox Grid.Column='2' Name='ListBoxCheckBoxOfGroupForTest' d:ItemsSource="{d:SampleData ItemCount=5}" Margin="20,30,20,80" FontSize="18" SelectionChanged="ListBoxCheckBoxOfGroupForTest_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding NameTest}"
+                                           IsChecked="{Binding IsSelected}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                     <Label Grid.Column='2' Name="LabelChooseTest" Content="Choose Test:" VerticalAlignment="Top"  Margin="20,300,20,0" FontFamily="Arial Black" FontSize="20"/>
                     <ComboBox Grid.Column='2' Name='ComboBoxChooseTestForStart' VerticalAlignment="Top" Margin="20,336,20,0" FontSize="16"/>
                     <Button Grid.Column="2" Name="ButtonStartNewTest" Grid.Row="1" Content="Start / Finish Test" VerticalAlignment="Top" HorizontalAlignment="Center" Height="80" Width="220" Margin="0,139,0,0" FontFamily="Arial Black" FontSize="20"/>
@@ -51,7 +58,7 @@
                         <RowDefinition Height="50*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row ="0" Name="LabelChooseType" Content="Choose type of question" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
-                    <ComboBox Grid.Row ="0" Name="ComboBoxTypeOfQuestion" VerticalAlignment="Top" Margin="20,35,20,0" FontSize="16">
+                    <ComboBox Grid.Row ="0" Name="ComboBoxTypeOfQuestion" VerticalAlignment="Top" Margin="20,35,20,0" FontSize="16" SelectionChanged="ComboBoxTypeOfQuestion_SelectionChanged">
                         <ComboBoxItem Content="CHOOSE NUMBER" FontSize="16"/>
 
                         <ComboBoxItem Content="CHOOSE ONE" FontSize="16"/>
@@ -64,7 +71,7 @@
                     </ComboBox>
                     <TextBox Name="TextBoxTextOfQuestion" Margin= "20,70,20,20" FontSize="18" TextChanged="TextBoxTextOfQuestion_TextChanged_1"/>
                     <Label Grid.Row="1" Name="LabelVariants" Content="Variants" HorizontalContentAlignment="Center" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
-                    <RadioButton Grid.Row="1" Name="RadioButtonOne" Content="RadioButton" Margin="20,50,0,300" FontFamily="Arial" FontSize="14"/>
+                    <RadioButton Grid.Row="1" Name="RadioButtonOne" Content="RadioButton" Margin="20,50,0,300" FontFamily="Arial" FontSize="14" />
                     <RadioButton Grid.Row="1" Name="RadioButtonTwo" Content="RadioButton" Margin="20,90,0,260" FontFamily="Arial" FontSize="14"/>
                     <RadioButton Grid.Row="1" Name="RadioButtonThree" Content="RadioButton" Margin="20,130,0,220" FontFamily="Arial" FontSize="14"/>
                     <RadioButton Grid.Row="1" Name="RadioButtonFour" Content="RadioButton" Margin="20,170,0,180" FontFamily="Arial" FontSize="14"/>
@@ -93,17 +100,25 @@
                     <Button Grid.Column='1' Name="ButtonDeleteTest" Content="❌" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25" Height="25" Margin="0, 0, 20, 30" FontWeight="Bold" FontFamily="Arial Black" FontSize="14" />
                 </Grid>
             </TabItem>
-            <TabItem Header="FOR TEST">
+            <TabItem Header="FOR TEST" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
                 <Grid Background="AntiqueWhite">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="206*"/>
+                        <ColumnDefinition Width="291*"/>
+                        <ColumnDefinition Width="497*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50*"/>
-                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="67*"/>
+                        <RowDefinition Height="59*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column ="1" Name="TextBlockForMessegeFromUser" />
+                    <TextBlock Grid.Column ="2" Name="TextBlockForMessegeFromUser" />
+                    <Label Content="Отправка" HorizontalAlignment="Left" Margin="30,26,0,0" VerticalAlignment="Top" Height="33" Width="104" FontSize="18" FontWeight="Bold"/>
+                    <Label Grid.Column="2" Content="Прием" HorizontalAlignment="Left" Margin="45,25,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Height="34" Width="70"/>
+                    <TextBox x:Name="TBQuestion" HorizontalAlignment="Left" Margin="30,85,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="409" Height="247" FontSize="16" Grid.ColumnSpan="2"/>
+                    <ListBox x:Name="LB" Grid.Column="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="45,85,57,70" FontSize="16"/>
+                    <Button x:Name="ButtonSend" Content="Отправить" HorizontalAlignment="Left" Margin="106,343,0,0" VerticalAlignment="Top" FontSize="16" Height="40" Width="125" Grid.Column="1" Click="ButtonSend_Click"/>
+                    <Button x:Name="ButtonStart" Content="Старт" HorizontalAlignment="Left" Margin="30,89,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="42" Width="182" Grid.ColumnSpan="2" Click="ButtonStart_Click"/>
+                    <Button x:Name="ButtonStop" Content="Стоп" HorizontalAlignment="Left" Margin="60,89,0,0" Grid.Row="1" VerticalAlignment="Top" Height="42" Width="173" FontSize="16" Grid.Column="1" Click="ButtonStop_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
