@@ -15,15 +15,22 @@ using System.Windows.Shapes;
 using HoorayTheWinProjectLogic;
 using System.Collections.ObjectModel;
 using HoorayTheWinProjectLogic.Questions;
-
+using System.Windows.Threading;
 
 namespace HoorayTheWinProject_
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    
+
     public partial class MainWindow : Window
     {
+        private TelegramManager _telegramManager;
+        private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
+        private List<string> _labels;
+        private DispatcherTimer _timer;
+
         Group group1 = UserMock.GetFirstGroup();
         Group group2 = UserMock.GetSecondGroup();
         Group _other = new Group("Other");
@@ -35,7 +42,7 @@ namespace HoorayTheWinProject_
         
         public MainWindow()
         {
-            InitializeComponent();
+            
             groups.Add(_other);
             tests.Add(_bankOfQuestions);
             tests.Add(test1);
@@ -44,7 +51,19 @@ namespace HoorayTheWinProject_
 
             ListBoxGroups.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
-            ButtonCreateNewGroup.IsEnabled = false;            
+            ButtonCreateNewGroup.IsEnabled = false;
+
+            _telegramManager = new TelegramManager(_token, OnMessage);
+            _labels = new List<string>();
+            InitializeComponent();
+
+            LB.ItemsSource = _labels;
+
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += OnTick;
+            _timer.Start();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -136,6 +155,25 @@ namespace HoorayTheWinProject_
             {
                 ListBoxListOfQuestions.ItemsSource = selectedTest.AbstractQuestions;
             }
+        }
+
+        private void OnTick(object sender, EventArgs e)
+        {
+            LB.Items.Refresh();
+        }
+
+        private void ButtonSend_Click(object sender, RoutedEventArgs e)
+        {
+            _telegramManager.Send(TBQuestion.Text);
+        }
+
+        public void OnMessage(string s)
+        {
+            _labels.Add(s);
+        }
+        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        {
+            _telegramManager.Start();
         }
 
         private void TextBoxTextOfQuestion_TextChanged_1(object sender, TextChangedEventArgs e)
