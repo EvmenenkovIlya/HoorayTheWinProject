@@ -15,15 +15,22 @@ using System.Windows.Shapes;
 using HoorayTheWinProjectLogic;
 using System.Collections.ObjectModel;
 using HoorayTheWinProjectLogic.Questions;
-
+using System.Windows.Threading;
 
 namespace HoorayTheWinProject_
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    
+
     public partial class MainWindow : Window
     {
+        private TelegramManager _telegramManager;
+        private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
+        private List<string> _labels;
+        private DispatcherTimer _timer;
+
         Group group1 = UserMock.GetFirstGroup();
         Group group2 = UserMock.GetSecondGroup();
         Group _other = new Group("Other");
@@ -32,19 +39,32 @@ namespace HoorayTheWinProject_
         List<Group> groups = new List<Group>();
         List<Test> tests = new List<Test>();
 
-        
+
         public MainWindow()
         {
-            InitializeComponent();
+
             groups.Add(_other);
             tests.Add(_bankOfQuestions);
             tests.Add(test1);
             groups.Add(group1);
-            groups.Add(group2);            
+            groups.Add(group2);
 
+
+
+            _telegramManager = new TelegramManager(_token, OnMessage);
+            _labels = new List<string>();
+            InitializeComponent();
             ListBoxGroups.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
-            ButtonCreateNewGroup.IsEnabled = false;            
+            ListBoxCheckBoxOfGroupForTest.ItemsSource = tests;
+            ButtonCreateNewGroup.IsEnabled = false;
+            LB.ItemsSource = _labels;
+
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += OnTick;
+            _timer.Start();
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -78,15 +98,15 @@ namespace HoorayTheWinProject_
         }
 
         private void ListBoxGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {          
-            Group groupOfUser = (Group) ListBoxGroups.SelectedItem;
+        {
+            Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             if (groupOfUser == null || groupOfUser.Users.Count == 0)
             {
-                ListBoxListOfUsers.ItemsSource = null;                
+                ListBoxListOfUsers.ItemsSource = null;
             }
             else
             {
-                ListBoxListOfUsers.ItemsSource = groupOfUser.Users;              
+                ListBoxListOfUsers.ItemsSource = groupOfUser.Users;
             }
         }
 
@@ -97,9 +117,9 @@ namespace HoorayTheWinProject_
             {
                 return;
             }
-            else 
+            else
             {
-                ButtonCreateNewGroup.IsEnabled = true;                 
+                ButtonCreateNewGroup.IsEnabled = true;
             }
         }
 
@@ -107,18 +127,18 @@ namespace HoorayTheWinProject_
         {
             Group groupNew = new Group(TextBoxNewGroupName.Text);
             TextBoxNewGroupName.Clear();
-            groups.Add(groupNew);                                 
+            groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
             ButtonCreateNewGroup.IsEnabled = false;
         }
 
         private void ButtonDeleteGroup_Click(object sender, RoutedEventArgs e)
-        {                       
+        {
             Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             foreach (User user in groupOfUser.Users)
             {
                 _other.AddUser(user);
-            }               
+            }
             groups.Remove(groupOfUser);
             ListBoxGroups.Items.Refresh();
             ListBoxListOfUsers.ItemsSource = null;
@@ -126,8 +146,8 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;           
+
+            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;
             if (selectedTest == null || selectedTest.AbstractQuestions.Count == 0)
             {
                 ListBoxListOfQuestions.ItemsSource = null;
@@ -136,6 +156,25 @@ namespace HoorayTheWinProject_
             {
                 ListBoxListOfQuestions.ItemsSource = selectedTest.AbstractQuestions;
             }
+        }
+
+        private void OnTick(object sender, EventArgs e)
+        {
+            LB.Items.Refresh();
+        }
+
+        private void ButtonSend_Click(object sender, RoutedEventArgs e)
+        {
+            _telegramManager.Send(TBQuestion.Text);
+        }
+
+        public void OnMessage(string s)
+        {
+            _labels.Add(s);
+        }
+        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        {
+            _telegramManager.Start();
         }
 
         private void TextBoxTextOfQuestion_TextChanged_1(object sender, TextChangedEventArgs e)
@@ -149,6 +188,57 @@ namespace HoorayTheWinProject_
         }
 
         private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Group groupOfUser = (Group)ListBoxCheckBoxOfGroupForTest.SelectedItem;
+
+        }
+
+        private void ComboBoxTypeOfQuestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
+            {
+                RadioButtonOne.Visibility = Visibility.Hidden;
+                RadioButtonTwo.Visibility = Visibility.Hidden;
+                RadioButtonThree.Visibility = Visibility.Hidden;
+                RadioButtonFour.Visibility = Visibility.Hidden;
+
+                TextBoxOne.Visibility = Visibility.Hidden;
+                TextBoxTwo.Visibility = Visibility.Hidden;
+                TextBoxThree.Visibility = Visibility.Hidden;
+                TextBoxFour.Visibility = Visibility.Hidden;
+
+            }
+
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 1) //ChooseOne
+            {
+                TextBoxOne.Visibility = Visibility.Hidden;
+                TextBoxTwo.Visibility = Visibility.Hidden;
+                TextBoxThree.Visibility = Visibility.Hidden;
+                TextBoxFour.Visibility = Visibility.Hidden;
+
+                CheckBoxOne.Visibility = Visibility.Hidden;
+                CheckBoxTwo.Visibility = Visibility.Hidden;
+                CheckBoxThree.Visibility = Visibility.Hidden;
+                CheckBoxFour.Visibility = Visibility.Hidden;
+            }
+
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
+            {
+                CheckBoxOne.Visibility = Visibility.Hidden;
+                CheckBoxTwo.Visibility = Visibility.Hidden;
+                CheckBoxThree.Visibility = Visibility.Hidden;
+                CheckBoxFour.Visibility = Visibility.Hidden;
+
+                RadioButtonOne.Visibility = Visibility.Hidden;
+                RadioButtonTwo.Visibility = Visibility.Hidden;
+                RadioButtonThree.Visibility = Visibility.Hidden;
+                RadioButtonFour.Visibility = Visibility.Hidden;
+
+            }
+
+        }
+
+        private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
 
         }
