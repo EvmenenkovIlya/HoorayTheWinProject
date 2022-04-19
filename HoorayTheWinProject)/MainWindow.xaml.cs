@@ -32,7 +32,6 @@ namespace HoorayTheWinProject_
         List<Group> groups = new List<Group>();
         List<Test> tests = new List<Test>();
 
-        
         public MainWindow()
         {
             InitializeComponent();
@@ -40,7 +39,7 @@ namespace HoorayTheWinProject_
             tests.Add(_bankOfQuestions);
             tests.Add(test1);
             groups.Add(group1);
-            groups.Add(group2);            
+            groups.Add(group2);
 
             ListBoxGroups.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
@@ -81,15 +80,15 @@ namespace HoorayTheWinProject_
         }
 
         private void ListBoxGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {          
+        {
             Group groupOfUser = (Group) ListBoxGroups.SelectedItem;
             if (groupOfUser == null || groupOfUser.Users.Count == 0)
             {
-                ListBoxListOfUsers.ItemsSource = null;                
+                ListBoxListOfUsers.ItemsSource = null;
             }
             else
             {
-                ListBoxListOfUsers.ItemsSource = groupOfUser.Users;              
+                ListBoxListOfUsers.ItemsSource = groupOfUser.Users;
             }
             if (ListBoxGroups.SelectedItem == _other)
             {
@@ -109,16 +108,16 @@ namespace HoorayTheWinProject_
             {
                 ButtonCreateNewGroup.IsEnabled = false;
             }
-            else 
+            else
             {
-                ButtonCreateNewGroup.IsEnabled = true;                 
+                ButtonCreateNewGroup.IsEnabled = true;    
             }
         }
 
         private void ButtonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
             Group groupNew = new Group(TextBoxNewGroupName.Text);
-            groups.Add(groupNew);                                 
+            groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
             TextBoxNewGroupName.Clear();
             ButtonCreateNewGroup.IsEnabled = false;
@@ -139,7 +138,7 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;           
+            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;
             if (selectedTest == null || selectedTest.AbstractQuestions.Count == 0)
             {
                 ListBoxListOfQuestions.ItemsSource = null;
