@@ -110,18 +110,30 @@ namespace HoorayTheWinProject_
             }
         }
 
-        private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
+        private void ButtonChangeGroupName_Click(object sender, RoutedEventArgs e)
         {
-            string tmp = TextBoxNewGroupName.Text;
-            if (tmp == "" || group1.NameGroup.Contains(tmp))
+            Group group = (Group)ListBoxGroups.SelectedItem;
+            group.NameGroup = TextBoxChangeGroupName.Text;
+            ListBoxGroups.Items.Refresh();
+            TextBoxChangeGroupName.Clear();
+            TextBoxChangeGroupName.IsEnabled = false;
+            ButtonChangeGroupName.IsEnabled = false;
+        }
+
+        private void TextBoxChangeGroupName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Group group = (Group)ListBoxGroups.SelectedItem;
+            string tmp = TextBoxChangeGroupName.Text;
+            if (tmp == "" || tmp==group.NameGroup)
             {
-                return;
+                ButtonChangeGroupName.IsEnabled = false;
             }
             else
             {
                 ButtonCreateNewGroup.IsEnabled = true;
             }
         }
+
 
         private void ButtonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -240,7 +252,8 @@ namespace HoorayTheWinProject_
 
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
-
+           
         }
+
     }
 }
