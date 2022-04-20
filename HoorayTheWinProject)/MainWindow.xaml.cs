@@ -201,13 +201,28 @@ namespace HoorayTheWinProject_
             Group groupOfUser = (Group)ListBoxCheckBoxOfGroupForTest.SelectedItem;
 
         }
-        //private void HideAnotherVariants 
-        //{
+        private void HideAllVariants()
+        {
+            RadioButtonOne.Visibility = Visibility.Hidden;
+            RadioButtonTwo.Visibility = Visibility.Hidden;
+            RadioButtonThree.Visibility = Visibility.Hidden;
+            RadioButtonFour.Visibility = Visibility.Hidden;
 
-        //}
+            CheckBoxOne.Visibility = Visibility.Hidden;
+            CheckBoxTwo.Visibility = Visibility.Hidden;
+            CheckBoxThree.Visibility = Visibility.Hidden;
+            CheckBoxFour.Visibility = Visibility.Hidden;
+
+            TextBoxOne.Visibility = Visibility.Hidden;
+            TextBoxTwo.Visibility = Visibility.Hidden;
+            TextBoxThree.Visibility = Visibility.Hidden;
+            TextBoxFour.Visibility = Visibility.Hidden;
+        }
         private void ComboBoxTypeOfQuestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if  (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
+            HideAllVariants();
+
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
             {
                 CheckBoxOne.Visibility = Visibility.Visible;
                 CheckBoxTwo.Visibility = Visibility.Visible;
@@ -218,12 +233,7 @@ namespace HoorayTheWinProject_
                 TextBoxTwo.Visibility = Visibility.Visible;
                 TextBoxThree.Visibility = Visibility.Visible;
                 TextBoxFour.Visibility = Visibility.Visible;
-
-                RadioButtonOne.Visibility = Visibility.Hidden;
-                RadioButtonTwo.Visibility = Visibility.Hidden;
-                RadioButtonThree.Visibility = Visibility.Hidden;
-                RadioButtonFour.Visibility = Visibility.Hidden;
-
+                return;
             }
 
             if (ComboBoxTypeOfQuestion.SelectedIndex == 1) //ChooseOne
@@ -237,29 +247,13 @@ namespace HoorayTheWinProject_
                 TextBoxTwo.Visibility = Visibility.Visible;
                 TextBoxThree.Visibility = Visibility.Visible;
                 TextBoxFour.Visibility = Visibility.Visible;
-
-                CheckBoxOne.Visibility = Visibility.Hidden;
-                CheckBoxTwo.Visibility = Visibility.Hidden;
-                CheckBoxThree.Visibility = Visibility.Hidden;
-                CheckBoxFour.Visibility = Visibility.Hidden;
-
+                return;
             }
+
             if (ComboBoxTypeOfQuestion.SelectedIndex == 2) //WriteReponse
             {
                 TextBoxOne.Visibility = Visibility.Visible;
-                TextBoxTwo.Visibility = Visibility.Hidden;
-                TextBoxThree.Visibility = Visibility.Hidden;
-                TextBoxFour.Visibility = Visibility.Hidden;
-
-                CheckBoxOne.Visibility = Visibility.Hidden;
-                CheckBoxTwo.Visibility = Visibility.Hidden;
-                CheckBoxThree.Visibility = Visibility.Hidden;
-                CheckBoxFour.Visibility = Visibility.Hidden;
-
-                RadioButtonOne.Visibility = Visibility.Hidden;
-                RadioButtonTwo.Visibility = Visibility.Hidden;
-                RadioButtonThree.Visibility = Visibility.Hidden;
-                RadioButtonFour.Visibility = Visibility.Hidden;
+                return;
             }
 
             if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
@@ -268,36 +262,18 @@ namespace HoorayTheWinProject_
                 TextBoxTwo.Visibility = Visibility.Visible;
                 TextBoxThree.Visibility = Visibility.Visible;
                 TextBoxFour.Visibility = Visibility.Visible;
-
-                CheckBoxOne.Visibility = Visibility.Hidden;
-                CheckBoxTwo.Visibility = Visibility.Hidden;
-                CheckBoxThree.Visibility = Visibility.Hidden;
-                CheckBoxFour.Visibility = Visibility.Hidden;
-
-                RadioButtonOne.Visibility = Visibility.Hidden;
-                RadioButtonTwo.Visibility = Visibility.Hidden;
-                RadioButtonThree.Visibility = Visibility.Hidden;
-                RadioButtonFour.Visibility = Visibility.Hidden;
+                return;
 
             }
             if (ComboBoxTypeOfQuestion.SelectedIndex == 4)//YesNo
             {
                 RadioButtonOne.Visibility = Visibility.Visible;
                 RadioButtonTwo.Visibility = Visibility.Visible;
-                RadioButtonThree.Visibility = Visibility.Hidden;
-                RadioButtonFour.Visibility = Visibility.Hidden;
-
-                CheckBoxOne.Visibility = Visibility.Hidden;
-                CheckBoxTwo.Visibility = Visibility.Hidden;
-                CheckBoxThree.Visibility = Visibility.Hidden;
-                CheckBoxFour.Visibility = Visibility.Hidden;
 
                 TextBoxOne.Visibility = Visibility.Visible;
                 TextBoxTwo.Visibility = Visibility.Visible;
-                TextBoxThree.Visibility = Visibility.Hidden;
-                TextBoxFour.Visibility = Visibility.Hidden;
+                return;
             }
-
         }
 
         private void ButtonStop_Click(object sender, RoutedEventArgs e)

@@ -9,6 +9,7 @@ namespace HoorayTheWinProjectLogic
     public class Group
     {
         public string NameGroup { get; set; }
+        
         public List<User> Users { get; set; }
         public Group(string nameGroup)
         {
