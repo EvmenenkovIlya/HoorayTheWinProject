@@ -137,9 +137,7 @@ namespace HoorayTheWinProject_
             Group groupNew = new Group(TextBoxNewGroupName.Text);
             groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
-            TextBoxNewGroupName.Clear();
-            groups.Add(groupNew);
-            ListBoxGroups.Items.Refresh();
+            TextBoxNewGroupName.Clear();           
             ButtonCreateNewGroup.IsEnabled = false;
         }
 
