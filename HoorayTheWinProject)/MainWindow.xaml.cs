@@ -244,6 +244,23 @@ namespace HoorayTheWinProject_
                 CheckBoxFour.Visibility = Visibility.Hidden;
 
             }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 2) //WriteReponse
+            {
+                TextBoxOne.Visibility = Visibility.Visible;
+                TextBoxTwo.Visibility = Visibility.Hidden;
+                TextBoxThree.Visibility = Visibility.Hidden;
+                TextBoxFour.Visibility = Visibility.Hidden;
+
+                CheckBoxOne.Visibility = Visibility.Hidden;
+                CheckBoxTwo.Visibility = Visibility.Hidden;
+                CheckBoxThree.Visibility = Visibility.Hidden;
+                CheckBoxFour.Visibility = Visibility.Hidden;
+
+                RadioButtonOne.Visibility = Visibility.Hidden;
+                RadioButtonTwo.Visibility = Visibility.Hidden;
+                RadioButtonThree.Visibility = Visibility.Hidden;
+                RadioButtonFour.Visibility = Visibility.Hidden;
+            }
 
             if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
             {
@@ -262,6 +279,23 @@ namespace HoorayTheWinProject_
                 RadioButtonThree.Visibility = Visibility.Hidden;
                 RadioButtonFour.Visibility = Visibility.Hidden;
 
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 4)//YesNo
+            {
+                RadioButtonOne.Visibility = Visibility.Visible;
+                RadioButtonTwo.Visibility = Visibility.Visible;
+                RadioButtonThree.Visibility = Visibility.Hidden;
+                RadioButtonFour.Visibility = Visibility.Hidden;
+
+                CheckBoxOne.Visibility = Visibility.Hidden;
+                CheckBoxTwo.Visibility = Visibility.Hidden;
+                CheckBoxThree.Visibility = Visibility.Hidden;
+                CheckBoxFour.Visibility = Visibility.Hidden;
+
+                TextBoxOne.Visibility = Visibility.Visible;
+                TextBoxTwo.Visibility = Visibility.Visible;
+                TextBoxThree.Visibility = Visibility.Hidden;
+                TextBoxFour.Visibility = Visibility.Hidden;
             }
 
         }
