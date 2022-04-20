@@ -58,6 +58,8 @@ namespace HoorayTheWinProject_
             ListBoxListOfTests.ItemsSource = tests;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = tests;
             ButtonCreateNewGroup.IsEnabled = false;
+            ButtonChangeGroupName.IsEnabled = false;
+            TextBoxChangeGroupName.IsEnabled = false;
             LB.ItemsSource = _labels;
 
 
@@ -108,6 +110,43 @@ namespace HoorayTheWinProject_
             {
                 ListBoxListOfUsers.ItemsSource = groupOfUser.Users;
             }
+            
+            if (ListBoxGroups.SelectedItem == _other)
+            {
+                TextBoxChangeGroupName.IsEnabled = false;
+            }
+            else
+            {
+                TextBoxChangeGroupName.IsEnabled = true;
+            }
+
+            TextBoxChangeGroupName.Clear();
+
+        }
+
+        private void TextBoxChangeGroupName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Group group = (Group)ListBoxGroups.SelectedItem;
+            string tmp = TextBoxChangeGroupName.Text;
+
+            int counter = 0;
+            for (int i = 0; i < groups.Count; i++)
+            {
+                if (tmp == groups[i].NameGroup)
+                {
+                    counter++;
+                    break;
+                }
+            }
+
+            if(tmp == "" || counter > 0)
+            {
+                ButtonChangeGroupName.IsEnabled = false;
+            }
+            else
+            {
+                ButtonChangeGroupName.IsEnabled = true;
+            }
         }
 
         private void ButtonChangeGroupName_Click(object sender, RoutedEventArgs e)
@@ -116,22 +155,8 @@ namespace HoorayTheWinProject_
             group.NameGroup = TextBoxChangeGroupName.Text;
             ListBoxGroups.Items.Refresh();
             TextBoxChangeGroupName.Clear();
-            TextBoxChangeGroupName.IsEnabled = false;
             ButtonChangeGroupName.IsEnabled = false;
-        }
-
-        private void TextBoxChangeGroupName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Group group = (Group)ListBoxGroups.SelectedItem;
-            string tmp = TextBoxChangeGroupName.Text;
-            if (tmp == "" || tmp==group.NameGroup)
-            {
-                ButtonChangeGroupName.IsEnabled = false;
-            }
-            else
-            {
-                ButtonCreateNewGroup.IsEnabled = true;
-            }
+            TextBoxChangeGroupName.IsEnabled = false;
         }
 
 
@@ -142,6 +167,7 @@ namespace HoorayTheWinProject_
             groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
             ButtonCreateNewGroup.IsEnabled = false;
+
         }
 
         private void ButtonDeleteGroup_Click(object sender, RoutedEventArgs e)
