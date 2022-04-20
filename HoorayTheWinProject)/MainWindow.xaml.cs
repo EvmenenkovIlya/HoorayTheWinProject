@@ -39,7 +39,6 @@ namespace HoorayTheWinProject_
         List<Group> groups = new List<Group>();
         List<Test> tests = new List<Test>();
 
-
         public MainWindow()
         {
 
@@ -57,10 +56,11 @@ namespace HoorayTheWinProject_
             ListBoxGroups.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = tests;
-            ButtonCreateNewGroup.IsEnabled = false;
+            TextBoxChageUserName.IsEnabled = false;
+            ButtonChangeUserName.IsEnabled = false;
+            ButtonDeleteGroup.IsEnabled = false;
+            ButtonCreateNewGroup.IsEnabled = false;            
             LB.ItemsSource = _labels;
-
-
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
@@ -108,24 +108,35 @@ namespace HoorayTheWinProject_
             {
                 ListBoxListOfUsers.ItemsSource = groupOfUser.Users;
             }
+            if (ListBoxGroups.SelectedItem == _other)
+            {
+                ButtonDeleteGroup.IsEnabled = false;
+            }
+            else
+            {
+                ButtonDeleteGroup.IsEnabled = true;
+            }
         }
 
         private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
+            Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             string tmp = TextBoxNewGroupName.Text;
-            if (tmp == "" || group1.NameGroup.Contains(tmp))
+            if (tmp == "" || tmp == groupOfUser.NameGroup)
             {
-                return;
+                ButtonCreateNewGroup.IsEnabled = false;
             }
             else
             {
-                ButtonCreateNewGroup.IsEnabled = true;
+                ButtonCreateNewGroup.IsEnabled = true;    
             }
         }
 
         private void ButtonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
             Group groupNew = new Group(TextBoxNewGroupName.Text);
+            groups.Add(groupNew);
+            ListBoxGroups.Items.Refresh();
             TextBoxNewGroupName.Clear();
             groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
@@ -138,15 +149,15 @@ namespace HoorayTheWinProject_
             foreach (User user in groupOfUser.Users)
             {
                 _other.AddUser(user);
-            }
-            groups.Remove(groupOfUser);
-            ListBoxGroups.Items.Refresh();
-            ListBoxListOfUsers.ItemsSource = null;
+             }
+             groups.Remove(groupOfUser);
+             ListBoxGroups.Items.Refresh();
+             ListBoxListOfUsers.ItemsSource = null;
+             ButtonDeleteGroup.IsEnabled = false;
         }
 
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;
             if (selectedTest == null || selectedTest.AbstractQuestions.Count == 0)
             {
@@ -239,6 +250,44 @@ namespace HoorayTheWinProject_
         }
 
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ButtonChangeUserName_Click(object sender, RoutedEventArgs e)
+        {
+            User user = (User)ListBoxListOfUsers.SelectedItem;
+            user.NameUser = TextBoxChageUserName.Text;
+            ListBoxListOfUsers.Items.Refresh();
+            TextBoxChageUserName.Clear();
+            TextBoxChageUserName.IsEnabled = false;
+            ButtonChangeUserName.IsEnabled = false;
+        }
+
+        private void TextBoxChageUserName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+            User user = (User)ListBoxListOfUsers.SelectedItem;
+            string tmp = TextBoxChageUserName.Text;
+            if (tmp == "" || tmp == user.NameUser)
+            {
+                ButtonChangeUserName.IsEnabled = false;
+            }
+            else
+            {
+                ButtonChangeUserName.IsEnabled = true;
+            }
+        }
+
+        private void ListBoxListOfUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListBoxListOfUsers.SelectedItem != null)
+            {
+                TextBoxChageUserName.IsEnabled = true;
+            }
+        }
+
+        private void ButtonDeleteFromGroup_Click(object sender, RoutedEventArgs e)
         {
 
         }
