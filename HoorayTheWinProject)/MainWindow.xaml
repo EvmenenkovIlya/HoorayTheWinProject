@@ -30,7 +30,7 @@
                     <ListBox Grid.Column='2' Name='ListBoxCheckBoxOfGroupForTest' d:ItemsSource="{d:SampleData ItemCount=5}" Margin="20,30,20,80" FontSize="18" SelectionChanged="ListBoxCheckBoxOfGroupForTest_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <CheckBox Content="{Binding NameTest}"
+                                <CheckBox Content="{Binding NameGroup}"
                                            IsChecked="{Binding IsSelected}"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

@@ -55,7 +55,7 @@ namespace HoorayTheWinProject_
             InitializeComponent();
             ListBoxGroups.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
-            ListBoxCheckBoxOfGroupForTest.ItemsSource = tests;
+            ListBoxCheckBoxOfGroupForTest.ItemsSource = groups;
             TextBoxChageUserName.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;
             ButtonDeleteGroup.IsEnabled = false;
