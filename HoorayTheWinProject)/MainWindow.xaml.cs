@@ -41,26 +41,30 @@ namespace HoorayTheWinProject_
 
         public MainWindow()
         {
-
             groups.Add(_other);
             tests.Add(_bankOfQuestions);
             tests.Add(test1);
             groups.Add(group1);
             groups.Add(group2);
-
-
-
             _telegramManager = new TelegramManager(_token, OnMessage);
             _labels = new List<string>();
             InitializeComponent();
+
+            ComboBoxChooseTestForStart.ItemsSource = tests;
+            ComboBoxListOfTests.ItemsSource = tests;
             ListBoxGroups.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
-            ListBoxCheckBoxOfGroupForTest.ItemsSource = tests;
+            ListBoxCheckBoxOfGroupForTest.ItemsSource = groups;
+            
             TextBoxChageUserName.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;
             ButtonDeleteGroup.IsEnabled = false;
-            ButtonCreateNewGroup.IsEnabled = false;            
-            LB.ItemsSource = _labels;
+            ButtonCreateNewGroup.IsEnabled = false;
+            ButtonDeleteTest.IsEnabled = false;
+            ButtonDeleteQuestionFromTest.IsEnabled = false;
+            ComboBoxListOfTests.IsEnabled = false;
+            LB.ItemsSource = _labels; 
+
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
@@ -156,13 +160,21 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;
+            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;            
+            if (ListBoxListOfTests.SelectedIndex == 0)
+            {
+                ButtonDeleteTest.IsEnabled = false;               
+            }
+            else
+            {
+                ButtonDeleteTest.IsEnabled = true;
+            }
             if (selectedTest == null || selectedTest.AbstractQuestions.Count == 0)
             {
                 ListBoxListOfQuestions.ItemsSource = null;
             }
             else
-            {
+            { 
                 ListBoxListOfQuestions.ItemsSource = selectedTest.AbstractQuestions;
             }
         }
@@ -193,7 +205,8 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ButtonDeleteQuestionFromTest.IsEnabled = true;
+            ComboBoxListOfTests.IsEnabled = true;
         }
 
         private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -288,6 +301,35 @@ namespace HoorayTheWinProject_
         private void ButtonDeleteFromGroup_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void ComboBoxChooseGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ButtonDeleteTest_Click(object sender, RoutedEventArgs e)
+        {
+            Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;           
+            tests.Remove(chosenTest);
+            ListBoxListOfTests.Items.Refresh();
+            ComboBoxChooseTestForStart.Items.Refresh();           
+            ListBoxListOfQuestions.ItemsSource = null;
+            ButtonDeleteTest.IsEnabled = false;
+        }
+
+        private void ButtonDeleteQuestionFromTest_Click(object sender, RoutedEventArgs e)
+        {           
+            Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
+            chosenTest.DeleteQuestion(ListBoxListOfQuestions.SelectedIndex);
+            ListBoxListOfQuestions.Items.Refresh();
+            ButtonDeleteQuestionFromTest.IsEnabled = false;
+        }
+
+        private void ButtonAddQuestionToTest_Click(object sender, RoutedEventArgs e)
+        {            
+            Test chosenTest = (Test)ComboBoxListOfTests.SelectedItem;
+            chosenTest.AddQuestion((AbstractQuestion)ListBoxListOfQuestions.SelectedItem);
         }
     }
 }
