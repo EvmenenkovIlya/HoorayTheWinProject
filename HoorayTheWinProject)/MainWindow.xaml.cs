@@ -156,7 +156,8 @@ namespace HoorayTheWinProject_
             ListBoxGroups.Items.Refresh();
             TextBoxChangeGroupName.Clear();
             ButtonChangeGroupName.IsEnabled = false;
-            TextBoxChangeGroupName.IsEnabled = false;
+            ListBoxGroups.SelectedItem = -1;
+            
         }
 
 
