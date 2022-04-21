@@ -406,7 +406,15 @@ namespace HoorayTheWinProject_
 
         private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ButtonCreateNewGroup.IsEnabled = true;
+            int index = groups.FindIndex(x=>x.NameGroup==TextBoxNewGroupName.Text);
+            if(TextBoxNewGroupName.Text=="" || index>0 || index == 0)
+            {
+                ButtonCreateNewGroup.IsEnabled = false;
+            }
+            else
+            {
+                ButtonCreateNewGroup.IsEnabled = true;
+            }
         }
 
         private void ButtonDeleteTest_Click(object sender, RoutedEventArgs e)
@@ -435,20 +443,9 @@ namespace HoorayTheWinProject_
 
         private void TextBoxChangeNameOfTest_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Test test = (Test)ListBoxListOfTests.SelectedItem;
-            string tmp = TextBoxChangeNameOfTest.Text;
+            int index = tests.FindIndex(x => x.NameTest == TextBoxChangeNameOfTest.Text);
 
-            int counter = 0;
-            for (int i = 0; i < tests.Count; i++)
-            {
-                if (tmp == tests[i].NameTest)
-                {
-                    counter++;
-                    break;
-                }
-            }
-
-            if (tmp == "" || counter > 0)
+            if (TextBoxChangeNameOfTest.Text == "" || index > 0 || index==0)
             {
                 ButtonChangeNameOfTest.IsEnabled = false;
             }
