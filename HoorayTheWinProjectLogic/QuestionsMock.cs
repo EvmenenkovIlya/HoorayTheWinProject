@@ -21,7 +21,7 @@ namespace HoorayTheWinProjectLogic
             ChooseOne firstQuestion = new ChooseOne("Who is the author of War and Peace?", "Lermontov", "Dostoevskiy", "Tolstoy", "Leskov");
             ChooseNumber secondQuestion = new ChooseNumber("What kind of animal have a four legs?", "Fish", "Kangaroo", "Tiger", "Panda");
             InSeries thirdQuestion = new InSeries("Sort in right order the authors by their year of birth", "Mayakovskiy", "Pushkin", "Tyutchev", "Pelevin");
-            YesNo forthQuestion = new YesNo("Is an year contains 365 days?");
+            YesNo forthQuestion = new YesNo("Is an year contains 365 days?", "yes", "no");
             EnteringAResponse fifthQuestion = new EnteringAResponse("What is the color of banan?", "Yellow");
             switch (type)
             {

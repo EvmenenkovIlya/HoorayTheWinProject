@@ -13,7 +13,7 @@ namespace HoorayTheWinProjectLogic.Questions
         {
             List<string> Answer = new List<string>();
             TextOfQuestion = question;
-            TypeQuestion = "3";
+            TypeQuestion = "1";
             Answer.Add(answerOne);
             Answer.Add(answerTwo);
             Answer.Add(answerThree);
