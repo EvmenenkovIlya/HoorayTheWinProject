@@ -13,7 +13,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40*"/>
                         <ColumnDefinition Width="40*"/>
-                        
+
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50*"/>
@@ -35,10 +35,10 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <Label Grid.Column='2' Name="LabelChooseTest" Content="Choose Test:" VerticalAlignment="Top"  Margin="20,300,20,0" FontFamily="Arial Black" FontSize="20"/>
-                    <ComboBox Grid.Column='2' Name='ComboBoxChooseTestForStart' VerticalAlignment="Top" Margin="20,336,20,0" FontSize="16"/>
-                    <Button Grid.Column="2" Name="ButtonStartNewTest" Grid.Row="1" Content="Start / Finish Test" VerticalAlignment="Top" HorizontalAlignment="Center" Height="80" Width="220" Margin="0,139,0,0" FontFamily="Arial Black" FontSize="20"/>
-                    <Label Name="LabelListOfUser" Content="List of Users:" Margin="20,378,20,0" FontFamily="Arial Black" FontSize="20" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                    <Label Grid.Column='1' Name="LabelChooseTest" Content="Choose Test:" VerticalAlignment="Top"  Margin="20,300,20,0" FontFamily="Arial Black" FontSize="20"/>
+                    <ComboBox Grid.Column='1' Name='ComboBoxChooseTestForStart' VerticalAlignment="Top" Margin="20,336,20,0" FontSize="16"/>
+                    <Button Grid.Column="1" Name="ButtonStartNewTest" Grid.Row="1" Content="Start / Finish Test" VerticalAlignment="Top" HorizontalAlignment="Center" Height="80" Width="220" Margin="0,139,0,0" FontFamily="Arial Black" FontSize="20" Click="ButtonStartNewTest_Click"/>
+                    <Label Grid.Row='1' Name="LabelListOfUser" Content="List of Users:" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
                     <Button Grid.Row='1' Name="ButtonChangeUserName" Content="Change User Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160" Height="25" Margin="0, 0, 20, 45" FontWeight="Normal" FontFamily="Arial Black" FontSize="14" Click="ButtonChangeUserName_Click" />
                     <Button Grid.Row='1' Name="ButtonAddToGroup" Content="Add To Group" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="130" Height="25" Margin="0,0,50,10" FontWeight="Bold" FontSize="14" FontFamily="Arial Black" Click="ButtonAddToGroup_Click"/>
                     <Button Grid.Row='1' Name="ButtonDeleteFromGroup" Content="❌" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25" Height="25" Margin="0, 0, 20, 10" FontWeight="Bold" FontFamily="Arial Black" FontSize="14" Click="ButtonDeleteFromGroup_Click" />
@@ -50,8 +50,8 @@
             <TabItem Header="QUESTIONS" Margin="-2,0,-2,0">
                 <Grid Background="AntiqueWhite">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50*"/>
@@ -87,16 +87,16 @@
                     <Button Name="ButtonSaveTheChanges" Content="Save the changes" Margin="250,240,0,50" Grid.Row="1" Width="180" Height="60" FontFamily="Arial Black" FontSize="16" Click="ButtonSaveTheChanges_Click"/>
                     <Label Grid.Column="1" Grid.Row="0" Name="LabelListOfTests" Content="List of tests" Margin="20,0,20,0" FontSize="20" FontFamily="Arial Black"/>
                     <ListBox Grid.Column="1" Grid.Row ="0" Name="ListBoxListOfTests" Margin="20,35,20,120" d:ItemsSource="{d:SampleData ItemCount=5}" FontSize="18" SelectionChanged="ListBoxListOfTests_SelectionChanged"/>
-                    <Button Grid.Column="1" Grid.Row="0" Name="ButtonAddTest" Content="Add test" Margin="0,0,20,75" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Width="200" Height="25" FontFamily="Arial Black" FontSize="14"/>
-                    <Button Grid.Column="1" Grid.Row="0" Name="ButtonChangeNameOfTest" Content="Change name of test" Margin="0,0,50,30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="170" Height="25" FontFamily="Arial Black" FontSize="14"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" Name="TextBoxAddTest" Height="25" Width = "240" Margin="20,0,0,75" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="16"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" Name="TextBoxChangeNameOfTest" Height="25" Width = "240" Margin="20,0,0,30" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="16"/>
+                    <Button Grid.Column="1" Grid.Row="0" Name="ButtonAddTest" Content="Add test" Margin="0,0,20,75" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Width="200" Height="25" FontFamily="Arial Black" FontSize="14" Click="ButtonAddTest_Click"/>
+                    <Button Grid.Column="1" Grid.Row="0" Name="ButtonChangeNameOfTest" Content="Change name of test" Margin="0,0,50,30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="170" Height="25" FontFamily="Arial Black" FontSize="14" Click="ButtonChangeNameOfTest_Click"/>
+                    <TextBox Grid.Column="1" Grid.Row="0" Name="TextBoxAddTest" Height="25" Width = "240" Margin="20,0,0,75" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="16" TextChanged="TextBoxAddTest_TextChanged"/>
+                    <TextBox Grid.Column="1" Grid.Row="0" Name="TextBoxChangeNameOfTest" Height="25" Width = "240" Margin="20,0,0,30" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="16" TextChanged="TextBoxChangeNameOfTest_TextChanged"/>
                     <Label Grid.Column="1" Grid.Row="1" Name="LabelListOfQuestions" Content="List of questions" Margin="20,0,20,0" FontSize="20" FontFamily="Arial Black"/>
                     <ListBox Grid.Column="1" Grid.Row ="1" Name="ListBoxListOfQuestions" Margin="20,35,20,120" d:ItemsSource="{d:SampleData ItemCount=5}" FontSize="18" SelectionChanged="ListBoxListOfQuestions_SelectionChanged"/>
                     <Button Grid.Column="1" Grid.Row="1" Name="ButtonContentOfQuestion" Content="Change content of question" Margin="0,0,20,60" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="240" Height="30" FontFamily="Arial Black" FontSize="14" Click="ButtonContentOfQuestion_Click"/>
                     <Button Grid.Column="1" Grid.Row="1" Name="ButtonAddQuestionToTest" Content="Add question to test" Margin="20,0,0,60" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="200" Height="30" FontFamily="Arial Black" FontSize="14" Click="ButtonAddQuestionToTest_Click"/>
                     <Button Grid.Column="1" Grid.Row="1" Name="ButtonDeleteQuestionFromTest" Content="❌" Margin="0,0,20,20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="30" Height="30" FontFamily="Arial Black" FontSize="14" FontWeight="Bold" Click="ButtonDeleteQuestionFromTest_Click"/>
-                    <ComboBox Grid.Column="1" Grid.Row ="1" Name="ComboBoxListOfTests" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="390" Margin="20,0,0,20" FontSize="16"/>
+                    <ComboBox Grid.Column="1" Grid.Row ="1" Name="ComboBoxListOfTests" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="390" Margin="20,0,0,20" FontSize="16" SelectionChanged="ComboBoxListOfTests_SelectionChanged"/>
                     <Button Grid.Column='1' Name="ButtonDeleteTest" Content="❌" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25" Height="25" Margin="0, 0, 20, 30" FontWeight="Bold" FontFamily="Arial Black" FontSize="14" Click="ButtonDeleteTest_Click" />
                 </Grid>
             </TabItem>

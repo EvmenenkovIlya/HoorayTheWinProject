@@ -11,6 +11,8 @@ namespace HoorayTheWinProjectLogic
         public string NameGroup { get; set; }
         
         public List<User> Users { get; set; }
+
+        public bool IsSelected { get; set; }
         public Group(string nameGroup)
         {
             NameGroup = nameGroup;
