@@ -36,26 +36,26 @@ namespace HoorayTheWinProject_
         Group _other = new Group("Other");
         Test _bankOfQuestions = new Test("Bank Of Questions");
         Test test1 = QuestionsMock.ReturnTest();
-        List<Group> groups = new List<Group>();
+        
         List<Test> tests = new List<Test>();
 
         public MainWindow()
         {
-            groups.Add(_other);
+            DataMock.groups.Add(_other);
             tests.Add(_bankOfQuestions);
             tests.Add(test1);
-            groups.Add(group1);
-            groups.Add(group2);
+            DataMock.groups.Add(group1);
+            DataMock.groups.Add(group2);
             _telegramManager = new TelegramManager(_token, OnMessage);
             _labels = new List<string>();
             InitializeComponent();
 
             ComboBoxChooseTestForStart.ItemsSource = tests;
             ComboBoxListOfTests.ItemsSource = tests;
-            ListBoxGroups.ItemsSource = groups;
-            ComboBoxChooseGroup.ItemsSource = groups;
+            ListBoxGroups.ItemsSource = DataMock.groups;
+            ComboBoxChooseGroup.ItemsSource = DataMock.groups;
             ListBoxListOfTests.ItemsSource = tests;
-            ListBoxCheckBoxOfGroupForTest.ItemsSource = groups;
+            ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
             TextBoxChageUserName.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;
             ButtonCreateNewGroup.IsEnabled = false;
@@ -113,20 +113,9 @@ namespace HoorayTheWinProject_
 
         private void TextBoxChangeGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Group group = (Group)ListBoxGroups.SelectedItem;
             string tmp = TextBoxChangeGroupName.Text;
-
-            int counter = 0;
-            for (int i = 0; i < groups.Count; i++)
-            {
-                if (tmp == groups[i].NameGroup)
-                {
-                    counter++;
-                    break;
-                }
-            }
-
-            if(tmp == "" || counter > 0)
+            int index = DataMock.groups.FindIndex(x => x.NameGroup == tmp);
+            if (tmp == "" || index >= 0)
             {
                 ButtonChangeGroupName.IsEnabled = false;
             }
@@ -151,7 +140,7 @@ namespace HoorayTheWinProject_
         private void ButtonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
             Group groupNew = new Group(TextBoxNewGroupName.Text);
-            groups.Add(groupNew);
+            DataMock.groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
             ListBoxCheckBoxOfGroupForTest.Items.Refresh();
             TextBoxNewGroupName.Clear();           
@@ -166,7 +155,7 @@ namespace HoorayTheWinProject_
             {
                 _other.AddUser(user);
              }
-             groups.Remove(groupOfUser);
+             DataMock.groups.Remove(groupOfUser);
              ListBoxGroups.Items.Refresh();
              ListBoxListOfUsers.ItemsSource = null;
              ButtonDeleteGroup.IsEnabled = false;
@@ -427,8 +416,13 @@ namespace HoorayTheWinProject_
 
         private void ButtonStartNewTest_Click(object sender, RoutedEventArgs e)
         {
-            var listForTest = groups.Where(x => x.IsSelected == true);
+            var listForTest = DataMock.groups.Where(x => x.IsSelected == true);
             ListBoxGroups.ItemsSource = listForTest;
+        }
+
+        private void ComboBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

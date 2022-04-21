@@ -96,7 +96,7 @@
                     <Button Grid.Column="1" Grid.Row="1" Name="ButtonContentOfQuestion" Content="Change content of question" Margin="0,0,20,60" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="240" Height="30" FontFamily="Arial Black" FontSize="14"/>
                     <Button Grid.Column="1" Grid.Row="1" Name="ButtonAddQuestionToTest" Content="Add question to test" Margin="20,0,0,60" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="200" Height="30" FontFamily="Arial Black" FontSize="14" Click="ButtonAddQuestionToTest_Click"/>
                     <Button Grid.Column="1" Grid.Row="1" Name="ButtonDeleteQuestionFromTest" Content="❌" Margin="0,0,20,20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="30" Height="30" FontFamily="Arial Black" FontSize="14" FontWeight="Bold" Click="ButtonDeleteQuestionFromTest_Click"/>
-                    <ComboBox Grid.Column="1" Grid.Row ="1" Name="ComboBoxListOfTests" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="390" Margin="20,0,0,20" FontSize="16"/>
+                    <ComboBox Grid.Column="1" Grid.Row ="1" Name="ComboBoxListOfTests" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="390" Margin="20,0,0,20" FontSize="16" SelectionChanged="ComboBoxListOfTests_SelectionChanged"/>
                     <Button Grid.Column='1' Name="ButtonDeleteTest" Content="❌" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25" Height="25" Margin="0, 0, 20, 30" FontWeight="Bold" FontFamily="Arial Black" FontSize="14" Click="ButtonDeleteTest_Click" />
                 </Grid>
             </TabItem>
