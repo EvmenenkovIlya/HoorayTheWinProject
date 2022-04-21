@@ -21,10 +21,10 @@
                     </Grid.RowDefinitions>
                     <Label Name="LabelListOfGroup" Content="List of Groups:" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20" Grid.ColumnSpan="2"/>
                     <ListBox Name='ListBoxGroups' d:ItemsSource="{d:SampleData ItemCount=5}" Margin="20, 30, 20, 80" FontSize="18" SelectionChanged="ListBoxGroups_SelectionChanged" />
-                    <TextBox Name="TextBoxNewGroupName" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="25" Width="260" Margin="20, 0, 0, 45" FontSize="16" TextChanged="TextBoxNewGroupName_TextChanged"/>
+                    <TextBox Name="TextBoxNewGroupName" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="25" Width="260" Margin="20, 0, 0, 45" FontSize="16"/>
                     <Button Name="ButtonCreateNewGroup" Content="Create a new Group" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="170" Height="25" Margin="0, 0, 20, 45" FontWeight="Bold" FontSize="14" FontFamily="Arial Black" Click="ButtonCreateNewGroup_Click"/>
-                    <TextBox Name="TextBoxChageGroupName" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="25" Width="260" Margin="20, 0, 0, 10" FontSize="16"/>
-                    <Button Name="ButtonChangeGroupName" Content="Change Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="140" Height="25" Margin="0, 0, 50, 10" FontWeight="Bold" FontSize="14" FontFamily="Arial Black"/>
+                    <TextBox x:Name="TextBoxChangeGroupName" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="25" Width="260" Margin="20, 0, 0, 10" FontSize="16" TextChanged="TextBoxChangeGroupName_TextChanged"/>
+                    <Button Name="ButtonChangeGroupName" Content="Change Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="140" Height="25" Margin="0, 0, 50, 10" FontWeight="Bold" FontSize="14" FontFamily="Arial Black" Click="ButtonChangeGroupName_Click"/>
                     <Button Name="ButtonDeleteGroup" Content="❌" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25" Height="25" Margin="0, 0, 20, 10" FontWeight="Bold" FontFamily="Arial Black" FontSize="14" Click="ButtonDeleteGroup_Click" />
                     <Label  Name="LabelGroupForTest" Grid.Column='2' Content="Choose Group for Test:" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
                     <ListBox Grid.Column='2' Name='ListBoxCheckBoxOfGroupForTest' d:ItemsSource="{d:SampleData ItemCount=5}" Margin="20,30,20,80" FontSize="18" SelectionChanged="ListBoxCheckBoxOfGroupForTest_SelectionChanged">
