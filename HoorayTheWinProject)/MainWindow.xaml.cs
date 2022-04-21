@@ -58,14 +58,18 @@ namespace HoorayTheWinProject_
             ListBoxCheckBoxOfGroupForTest.ItemsSource = groups;
             TextBoxChageUserName.IsEnabled = false;
             TextBoxChangeGroupName.IsEnabled = false;
+            TextBoxChangeNameOfTest.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;            
             ButtonDeleteGroup.IsEnabled = false;
+            ButtonAddTest.IsEnabled = false;
             ButtonDeleteTest.IsEnabled = false;
+            ButtonChangeNameOfTest.IsEnabled = false;
+            ButtonAddQuestionToTest.IsEnabled = false;
             ButtonDeleteQuestionFromTest.IsEnabled = false;            
             ButtonCreateNewGroup.IsEnabled = false;
             ButtonChangeGroupName.IsEnabled = false;
             ButtonAddToGroup.IsEnabled = false;
-            ButtonDeleteFromGroup.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;            
             ComboBoxChooseGroup.IsEnabled = false;
             ComboBoxListOfTests.IsEnabled = false;
             _timer = new DispatcherTimer();
@@ -174,13 +178,15 @@ namespace HoorayTheWinProject_
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;            
-            if (ListBoxListOfTests.SelectedIndex == 0)
+            if (ListBoxListOfTests.SelectedItem == _bankOfQuestions)
             {
-                ButtonDeleteTest.IsEnabled = false;               
+                ButtonDeleteTest.IsEnabled = false;
+                TextBoxChangeNameOfTest.IsEnabled = false;
             }
             else
             {
                 ButtonDeleteTest.IsEnabled = true;
+                TextBoxChangeNameOfTest.IsEnabled = true;
             }
             if (selectedTest == null || selectedTest.AbstractQuestions.Count == 0)
             {
@@ -190,6 +196,9 @@ namespace HoorayTheWinProject_
             { 
                 ListBoxListOfQuestions.ItemsSource = selectedTest.AbstractQuestions;
             }
+            ButtonDeleteQuestionFromTest.IsEnabled = false;
+            ComboBoxListOfTests.IsEnabled = false;
+            ButtonContentOfQuestion.IsEnabled = false;
         }
 
         private void OnTick(object sender, EventArgs e)
@@ -440,6 +449,59 @@ namespace HoorayTheWinProject_
         {            
             Test chosenTest = (Test)ComboBoxListOfTests.SelectedItem;
             chosenTest.AddQuestion((AbstractQuestion)ListBoxListOfQuestions.SelectedItem);
+        }
+
+        private void TextBoxAddTest_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string tmp = TextBoxAddTest.Text;
+            int counter = 0;
+            for (int i = 0; i < tests.Count; i++)
+            {
+                if (tmp == tests[i].NameTest)
+                {
+                    counter++;
+                    break;
+                }
+            }
+            if (tmp == "" || counter > 0)
+            {
+                ButtonAddTest.IsEnabled = false;               
+            }
+            else
+            {
+                ButtonAddTest.IsEnabled = true;                
+            }
+
+        }
+
+        private void ButtonAddTest_Click(object sender, RoutedEventArgs e)
+        {
+            Test chosenTest = new Test(TextBoxAddTest.Text);            
+            tests.Add(chosenTest);
+            ListBoxListOfTests.Items.Refresh();
+            ComboBoxListOfTests.Items.Refresh();
+            TextBoxAddTest.Clear();
+            ButtonAddTest.IsEnabled = false;
+        }
+
+        private void ComboBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ButtonContentOfQuestion_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBoxChangeNameOfTest_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void ButtonChangeNameOfTest_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
