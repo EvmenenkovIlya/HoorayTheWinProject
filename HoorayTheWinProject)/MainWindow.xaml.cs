@@ -38,6 +38,7 @@ namespace HoorayTheWinProject_
         Test test1 = QuestionsMock.ReturnTest();
         List<Group> groups = new List<Group>();
         List<Test> tests = new List<Test>();
+        
 
         public MainWindow()
         {
@@ -69,6 +70,9 @@ namespace HoorayTheWinProject_
             ButtonAddQuestionToTest.IsEnabled = false;
             ButtonCreateNewGroup.IsEnabled = false;
             ButtonChangeGroupName.IsEnabled = false;
+            TextBoxChangeGroupName.IsEnabled = false;
+            ButtonSaveTheChanges.IsEnabled= false;
+            ButtonContentOfQuestion.IsEnabled = false;
             ButtonAddToGroup.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;            
             ComboBoxChooseGroup.IsEnabled = false;
@@ -239,6 +243,7 @@ namespace HoorayTheWinProject_
         {
             ButtonDeleteQuestionFromTest.IsEnabled = true;
             ComboBoxListOfTests.IsEnabled = true;
+            ButtonContentOfQuestion.IsEnabled = true;
         }
 
         private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -445,11 +450,75 @@ namespace HoorayTheWinProject_
             ListBoxListOfQuestions.Items.Refresh();
             ButtonDeleteQuestionFromTest.IsEnabled = false;
         }
+        private void IsSelected(object sender, RoutedEventArgs e)
+        {
 
+        }
         private void ButtonAddQuestionToTest_Click(object sender, RoutedEventArgs e)
         {            
             Test chosenTest = (Test)ComboBoxListOfTests.SelectedItem;
             chosenTest.AddQuestion((AbstractQuestion)ListBoxListOfQuestions.SelectedItem);
+        }
+
+        private void ButtonCreateAQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
+            {
+                ChooseNumber chooseNumber = new ChooseNumber (TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text) ;
+                //chooseNumber.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
+                _bankOfQuestions.AddQuestion(chooseNumber);
+                ListBoxListOfQuestions.Items.Refresh();
+                return;
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 1) //chooseOne
+            {
+                ChooseOne chooseOne = new ChooseOne(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
+                _bankOfQuestions.AddQuestion(chooseOne);
+                ListBoxListOfQuestions.Items.Refresh();
+                return;
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 2)//enteringAReponse
+            {
+                EnteringAResponse enteringAResponse = new EnteringAResponse(TextBoxTextOfQuestion.Text, TextBoxOne.Text);
+                _bankOfQuestions.AddQuestion(enteringAResponse);
+                ListBoxListOfQuestions.Items.Refresh();
+                return;
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
+            {
+                InSeries inSeries = new InSeries(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
+                _bankOfQuestions.AddQuestion(inSeries);
+                ListBoxListOfQuestions.Items.Refresh();
+                return;
+            }
+            if(ComboBoxTypeOfQuestion.SelectedIndex == 4) //Yes/No
+            {
+                YesNo yesNo = new YesNo(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text);
+                _bankOfQuestions.AddQuestion(yesNo);
+                ListBoxListOfQuestions.Items.Refresh();
+                return;
+            }
+
+        }
+
+        private void ButtonContentOfQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonCreateAQuestion.IsEnabled = false;
+            
+            AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
+            
+            TextBoxTextOfQuestion.Text = question.TextOfQuestion;
+            
+            ButtonSaveTheChanges.IsEnabled = true;
+        }
+
+        private void ButtonSaveTheChanges_Click(object sender, RoutedEventArgs e)
+        {
+            AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
+            question.TextOfQuestion = TextBoxTextOfQuestion.Text;
+            ListBoxListOfQuestions.Items.Refresh();
+            ButtonSaveTheChanges.IsEnabled = false;
+            TextBoxTextOfQuestion.Clear();
         }
 
         private void TextBoxChangeNameOfTest_TextChanged(object sender, TextChangedEventArgs e)
