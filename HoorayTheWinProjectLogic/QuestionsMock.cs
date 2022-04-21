@@ -8,14 +8,7 @@ using HoorayTheWinProjectLogic.Questions;
 namespace HoorayTheWinProjectLogic
 {
     public class QuestionsMock
-    {
-        /*string question1 = "Who is the author of War and Peace?";
-        string answer1 = "Lermontov";
-        string answer2 = "Leskov";
-        string answer3 = "Dostoevskiy";
-        string answer4 = "Tolstoy";*/
-        
-        
+    {            
         public static AbstractQuestion ReturnQuestion(int type)
         {
             ChooseOne firstQuestion = new ChooseOne("Who is the author of War and Peace?", "Lermontov", "Dostoevskiy", "Tolstoy", "Leskov");
