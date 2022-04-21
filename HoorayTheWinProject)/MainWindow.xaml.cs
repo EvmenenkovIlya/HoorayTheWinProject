@@ -161,6 +161,7 @@ namespace HoorayTheWinProject_
             groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
             ComboBoxChooseGroup.Items.Refresh();
+            ListBoxCheckBoxOfGroupForTest.Items.Refresh();
             TextBoxNewGroupName.Clear();           
             ButtonCreateNewGroup.IsEnabled = false;
         }
@@ -458,6 +459,12 @@ namespace HoorayTheWinProject_
         {            
             Test chosenTest = (Test)ComboBoxListOfTests.SelectedItem;
             chosenTest.AddQuestion((AbstractQuestion)ListBoxListOfQuestions.SelectedItem);
+        }
+
+        private void ButtonStartNewTest_Click(object sender, RoutedEventArgs e)
+        {
+            var listForTest = groups.Where(x => x.IsSelected == true);
+            ListBoxGroups.ItemsSource = listForTest;
         }
 
         private void ButtonCreateAQuestion_Click(object sender, RoutedEventArgs e)
