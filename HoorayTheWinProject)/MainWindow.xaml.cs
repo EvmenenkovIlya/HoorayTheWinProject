@@ -67,6 +67,8 @@ namespace HoorayTheWinProject_
             ButtonCreateNewGroup.IsEnabled = false;
             ButtonChangeGroupName.IsEnabled = false;
             TextBoxChangeGroupName.IsEnabled = false;
+            ButtonSaveTheChanges.IsEnabled= false;
+            ButtonContentOfQuestion.IsEnabled = false;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
@@ -220,6 +222,7 @@ namespace HoorayTheWinProject_
         {
             ButtonDeleteQuestionFromTest.IsEnabled = true;
             ComboBoxListOfTests.IsEnabled = true;
+            ButtonContentOfQuestion.IsEnabled = true;
         }
 
         private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -466,6 +469,26 @@ namespace HoorayTheWinProject_
                 return;
             }
 
+        }
+
+        private void ButtonContentOfQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonCreateAQuestion.IsEnabled = false;
+            
+            AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
+            
+            TextBoxTextOfQuestion.Text = question.TextOfQuestion;
+            
+            ButtonSaveTheChanges.IsEnabled = true;
+        }
+
+        private void ButtonSaveTheChanges_Click(object sender, RoutedEventArgs e)
+        {
+            AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
+            question.TextOfQuestion = TextBoxTextOfQuestion.Text;
+            ListBoxListOfQuestions.Items.Refresh();
+            ButtonSaveTheChanges.IsEnabled = false;
+            TextBoxTextOfQuestion.Clear();
         }
     }
 }
