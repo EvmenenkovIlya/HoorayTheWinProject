@@ -70,29 +70,9 @@ namespace HoorayTheWinProject_
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
             _timer.Start();
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ButtonAddTest_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        }       
 
         private void TextBoxTextOfQuestion_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
 
         }
@@ -324,7 +304,6 @@ namespace HoorayTheWinProject_
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
            
-       
 
         }
 
@@ -418,11 +397,6 @@ namespace HoorayTheWinProject_
         private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
             ButtonCreateNewGroup.IsEnabled = true;
-        }
-
-        private void ComboBoxChooseGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         private void ButtonDeleteTest_Click(object sender, RoutedEventArgs e)
