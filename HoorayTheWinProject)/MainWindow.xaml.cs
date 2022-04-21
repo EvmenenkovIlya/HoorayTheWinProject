@@ -451,10 +451,7 @@ namespace HoorayTheWinProject_
             ListBoxListOfQuestions.Items.Refresh();
             ButtonDeleteQuestionFromTest.IsEnabled = false;
         }
-        private void IsSelected(object sender, RoutedEventArgs e)
-        {
-
-        }
+       
         private void ButtonAddQuestionToTest_Click(object sender, RoutedEventArgs e)
         {            
             Test chosenTest = (Test)ComboBoxListOfTests.SelectedItem;
@@ -585,5 +582,9 @@ namespace HoorayTheWinProject_
             ButtonAddTest.IsEnabled = false;
         }
 
+        private void ComboBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
