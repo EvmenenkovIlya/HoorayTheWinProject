@@ -52,20 +52,22 @@ namespace HoorayTheWinProject_
 
             ComboBoxChooseTestForStart.ItemsSource = tests;
             ComboBoxListOfTests.ItemsSource = tests;
-            ListBoxGroups.ItemsSource = groups;
             ComboBoxChooseGroup.ItemsSource = groups;
+            ListBoxGroups.ItemsSource = groups;            
             ListBoxListOfTests.ItemsSource = tests;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = groups;
             TextBoxChageUserName.IsEnabled = false;
-            ButtonChangeUserName.IsEnabled = false;
-            ButtonCreateNewGroup.IsEnabled = false;
+            TextBoxChangeGroupName.IsEnabled = false;
+            ButtonChangeUserName.IsEnabled = false;            
             ButtonDeleteGroup.IsEnabled = false;
             ButtonDeleteTest.IsEnabled = false;
-            ButtonDeleteQuestionFromTest.IsEnabled = false;
-            ComboBoxListOfTests.IsEnabled = false;
+            ButtonDeleteQuestionFromTest.IsEnabled = false;            
             ButtonCreateNewGroup.IsEnabled = false;
             ButtonChangeGroupName.IsEnabled = false;
-            TextBoxChangeGroupName.IsEnabled = false;
+            ButtonAddToGroup.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
+            ComboBoxListOfTests.IsEnabled = false;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
@@ -114,7 +116,6 @@ namespace HoorayTheWinProject_
         {
             Group group = (Group)ListBoxGroups.SelectedItem;
             string tmp = TextBoxChangeGroupName.Text;
-
             int counter = 0;
             for (int i = 0; i < groups.Count; i++)
             {
@@ -124,7 +125,6 @@ namespace HoorayTheWinProject_
                     break;
                 }
             }
-
             if(tmp == "" || counter > 0)
             {
                 ButtonChangeGroupName.IsEnabled = false;
@@ -140,10 +140,9 @@ namespace HoorayTheWinProject_
             Group group = (Group)ListBoxGroups.SelectedItem;
             group.NameGroup = TextBoxChangeGroupName.Text;
             ListBoxGroups.Items.Refresh();
+            ComboBoxChooseGroup.Items.Refresh();
             TextBoxChangeGroupName.Clear();
             ButtonChangeGroupName.IsEnabled = false;
-            ListBoxGroups.SelectedItem = -1;
-            
         }
 
 
@@ -152,9 +151,9 @@ namespace HoorayTheWinProject_
             Group groupNew = new Group(TextBoxNewGroupName.Text);
             groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
+            ComboBoxChooseGroup.Items.Refresh();
             TextBoxNewGroupName.Clear();           
             ButtonCreateNewGroup.IsEnabled = false;
-
         }
 
         private void ButtonDeleteGroup_Click(object sender, RoutedEventArgs e)
@@ -166,8 +165,10 @@ namespace HoorayTheWinProject_
              }
              groups.Remove(groupOfUser);
              ListBoxGroups.Items.Refresh();
-             ListBoxListOfUsers.ItemsSource = null;
+            ComboBoxChooseGroup.Items.Refresh();
+            ListBoxListOfUsers.ItemsSource = null;
              ButtonDeleteGroup.IsEnabled = false;
+            TextBoxChangeGroupName.IsEnabled = false;
         }
 
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -371,6 +372,7 @@ namespace HoorayTheWinProject_
 
         private void ComboBoxChooseGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ListBoxGroups.Items.Refresh();
             TextBoxChageUserName.IsEnabled = false;            
             ButtonDeleteFromGroup.IsEnabled = false;
             if(ComboBoxChooseGroup.SelectedIndex != -1)
@@ -396,7 +398,24 @@ namespace HoorayTheWinProject_
 
         private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ButtonCreateNewGroup.IsEnabled = true;
+            string tmp = TextBoxNewGroupName.Text;
+            int counter = 0;
+            for (int i = 0; i < groups.Count; i++)
+            {
+                if (tmp == groups[i].NameGroup)
+                {
+                    counter++;
+                    break;
+                }
+            }
+            if (tmp == "" || counter > 0)
+            {
+                ButtonCreateNewGroup.IsEnabled = false;
+            }
+            else
+            {
+                ButtonCreateNewGroup.IsEnabled = true;
+            }
         }
 
         private void ButtonDeleteTest_Click(object sender, RoutedEventArgs e)
