@@ -12,6 +12,7 @@ namespace HoorayTheWinProjectLogic.Questions
         {
             List<string> Answer = new List<string>();
             TextOfQuestion = question;
+            TypeQuestion = "2";
             Answer.Add(answerOfUser);
             base.Answer = Answer;
 

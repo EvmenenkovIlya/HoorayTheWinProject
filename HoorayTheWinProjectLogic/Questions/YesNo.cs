@@ -8,11 +8,11 @@ namespace HoorayTheWinProjectLogic.Questions
 {
     public class YesNo : AbstractQuestion
     {
-        public YesNo(string question)
+        public YesNo(string question, string answerOne, string answerTwo)
         {
             List<string> Answer = new List<string>();
             TextOfQuestion = question;
-            TypeQuestion = "2";
+            TypeQuestion = "4";
             Answer.Add("Yes");
             Answer.Add("No");
             base.Answer = Answer;
