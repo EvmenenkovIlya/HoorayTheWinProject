@@ -62,6 +62,7 @@ namespace HoorayTheWinProject_
             ButtonDeleteGroup.IsEnabled = false;
             ButtonDeleteTest.IsEnabled = false;
             ButtonDeleteQuestionFromTest.IsEnabled = false;
+            ButtonChangeNameOfTest.IsEnabled = false;
             ComboBoxListOfTests.IsEnabled = false;
             ButtonCreateNewGroup.IsEnabled = false;
             ButtonChangeGroupName.IsEnabled = false;
@@ -188,6 +189,15 @@ namespace HoorayTheWinProject_
             else
             { 
                 ListBoxListOfQuestions.ItemsSource = selectedTest.AbstractQuestions;
+            }
+
+            if (ListBoxListOfTests.SelectedItem == _bankOfQuestions)
+            {
+                TextBoxChangeNameOfTest.IsEnabled = false;
+            }
+            else
+            {
+                TextBoxChangeNameOfTest.IsEnabled = true;
             }
         }
 
@@ -421,6 +431,41 @@ namespace HoorayTheWinProject_
         {            
             Test chosenTest = (Test)ComboBoxListOfTests.SelectedItem;
             chosenTest.AddQuestion((AbstractQuestion)ListBoxListOfQuestions.SelectedItem);
+        }
+
+        private void TextBoxChangeNameOfTest_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Test test = (Test)ListBoxListOfTests.SelectedItem;
+            string tmp = TextBoxChangeNameOfTest.Text;
+
+            int counter = 0;
+            for (int i = 0; i < tests.Count; i++)
+            {
+                if (tmp == tests[i].NameTest)
+                {
+                    counter++;
+                    break;
+                }
+            }
+
+            if (tmp == "" || counter > 0)
+            {
+                ButtonChangeNameOfTest.IsEnabled = false;
+            }
+            else
+            {
+                ButtonChangeNameOfTest.IsEnabled = true;
+            }
+        }
+
+        private void ButtonChangeNameOfTest_Click(object sender, RoutedEventArgs e)
+        {
+            Test test = (Test)ListBoxListOfTests.SelectedItem;
+            test.NameTest = TextBoxChangeNameOfTest.Text;
+            ListBoxListOfTests.Items.Refresh();
+            TextBoxChangeNameOfTest.Clear();
+            ButtonChangeNameOfTest.IsEnabled = false;
+            ListBoxListOfTests.SelectedItem = -1;
         }
     }
 }
