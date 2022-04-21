@@ -41,53 +41,38 @@ namespace HoorayTheWinProject_
 
         public MainWindow()
         {
-
             groups.Add(_other);
             tests.Add(_bankOfQuestions);
             tests.Add(test1);
             groups.Add(group1);
             groups.Add(group2);
-
-
-
             _telegramManager = new TelegramManager(_token, OnMessage);
             _labels = new List<string>();
             InitializeComponent();
+
+            ComboBoxChooseTestForStart.ItemsSource = tests;
+            ComboBoxListOfTests.ItemsSource = tests;
             ListBoxGroups.ItemsSource = groups;
+            ComboBoxChooseGroup.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = groups;
             TextBoxChageUserName.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;
+            ButtonCreateNewGroup.IsEnabled = false;
             ButtonDeleteGroup.IsEnabled = false;
-            ButtonCreateNewGroup.IsEnabled = false;            
-            LB.ItemsSource = _labels;
+            ButtonDeleteTest.IsEnabled = false;
+            ButtonDeleteQuestionFromTest.IsEnabled = false;
+            ComboBoxListOfTests.IsEnabled = false;
+            ButtonCreateNewGroup.IsEnabled = false;
+            ButtonChangeGroupName.IsEnabled = false;
+            TextBoxChangeGroupName.IsEnabled = false;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
             _timer.Start();
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ButtonAddTest_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        }       
 
         private void TextBoxTextOfQuestion_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
 
         }
@@ -110,27 +95,57 @@ namespace HoorayTheWinProject_
             }
             if (ListBoxGroups.SelectedItem == _other)
             {
-                ButtonDeleteGroup.IsEnabled = false;
+                ButtonDeleteGroup.IsEnabled = false;                
+                TextBoxChangeGroupName.IsEnabled = false;
             }
             else
             {
-                ButtonDeleteGroup.IsEnabled = true;
+                ButtonDeleteGroup.IsEnabled = true;                
+                TextBoxChangeGroupName.IsEnabled = true;
+            }                        
+            TextBoxChangeGroupName.Clear();
+            TextBoxChageUserName.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;
+            ButtonAddToGroup.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
+        }
+
+        private void TextBoxChangeGroupName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Group group = (Group)ListBoxGroups.SelectedItem;
+            string tmp = TextBoxChangeGroupName.Text;
+
+            int counter = 0;
+            for (int i = 0; i < groups.Count; i++)
+            {
+                if (tmp == groups[i].NameGroup)
+                {
+                    counter++;
+                    break;
+                }
+            }
+
+            if(tmp == "" || counter > 0)
+            {
+                ButtonChangeGroupName.IsEnabled = false;
+            }
+            else
+            {
+                ButtonChangeGroupName.IsEnabled = true;
             }
         }
 
-        private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
+        private void ButtonChangeGroupName_Click(object sender, RoutedEventArgs e)
         {
-            Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
-            string tmp = TextBoxNewGroupName.Text;
-            if (tmp == "" || tmp == groupOfUser.NameGroup)
-            {
-                ButtonCreateNewGroup.IsEnabled = false;
-            }
-            else
-            {
-                ButtonCreateNewGroup.IsEnabled = true;    
-            }
+            Group group = (Group)ListBoxGroups.SelectedItem;
+            group.NameGroup = TextBoxChangeGroupName.Text;
+            ListBoxGroups.Items.Refresh();
+            TextBoxChangeGroupName.Clear();
+            ButtonChangeGroupName.IsEnabled = false;
+            ListBoxGroups.SelectedItem = -1;
+            
         }
+
 
         private void ButtonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -139,6 +154,7 @@ namespace HoorayTheWinProject_
             ListBoxGroups.Items.Refresh();
             TextBoxNewGroupName.Clear();           
             ButtonCreateNewGroup.IsEnabled = false;
+
         }
 
         private void ButtonDeleteGroup_Click(object sender, RoutedEventArgs e)
@@ -156,13 +172,21 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;
+            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;            
+            if (ListBoxListOfTests.SelectedIndex == 0)
+            {
+                ButtonDeleteTest.IsEnabled = false;               
+            }
+            else
+            {
+                ButtonDeleteTest.IsEnabled = true;
+            }
             if (selectedTest == null || selectedTest.AbstractQuestions.Count == 0)
             {
                 ListBoxListOfQuestions.ItemsSource = null;
             }
             else
-            {
+            { 
                 ListBoxListOfQuestions.ItemsSource = selectedTest.AbstractQuestions;
             }
         }
@@ -193,7 +217,8 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ButtonDeleteQuestionFromTest.IsEnabled = true;
+            ComboBoxListOfTests.IsEnabled = true;
         }
 
         private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -278,6 +303,7 @@ namespace HoorayTheWinProject_
 
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
+           
 
         }
 
@@ -286,14 +312,21 @@ namespace HoorayTheWinProject_
             User user = (User)ListBoxListOfUsers.SelectedItem;
             user.NameUser = TextBoxChageUserName.Text;
             ListBoxListOfUsers.Items.Refresh();
-            TextBoxChageUserName.Clear();
+            TextBoxChageUserName.Clear();            
+            ButtonChangeUserName.IsEnabled = false;           
+            ListBoxListOfUsers.SelectedIndex = -1;
             TextBoxChageUserName.IsEnabled = false;
-            ButtonChangeUserName.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
         }
 
         private void TextBoxChageUserName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+            if (TextBoxChageUserName.Cursor == null)
+            {
+                ButtonDeleteFromGroup.IsEnabled = false;
+                ComboBoxChooseGroup.IsEnabled = false;
+            }
             User user = (User)ListBoxListOfUsers.SelectedItem;
             string tmp = TextBoxChageUserName.Text;
             if (tmp == "" || tmp == user.NameUser)
@@ -308,15 +341,86 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ListBoxListOfUsers.SelectedItem != null)
+            TextBoxChageUserName.Clear();
+            ComboBoxChooseGroup.SelectedIndex = -1;
+            ButtonAddToGroup.IsEnabled = false;
+            TextBoxChageUserName.IsEnabled = true;
+            ButtonDeleteFromGroup.IsEnabled = true;
+            ComboBoxChooseGroup.IsEnabled = true;
+            if (ListBoxGroups.SelectedItem == _other)
             {
-                TextBoxChageUserName.IsEnabled = true;
+                ButtonDeleteFromGroup.IsEnabled = false;
+            }
+            else
+            {
+                ButtonDeleteFromGroup.IsEnabled = true;
             }
         }
 
         private void ButtonDeleteFromGroup_Click(object sender, RoutedEventArgs e)
         {
+            Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
+            User user = (User)ListBoxListOfUsers.SelectedItem;
+            _other.AddUser(user);
+            groupOfUser.RemoveUser(user);            
+            ListBoxListOfUsers.Items.Refresh();
+            TextBoxChageUserName.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;
+        }
 
+        private void ComboBoxChooseGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TextBoxChageUserName.IsEnabled = false;            
+            ButtonDeleteFromGroup.IsEnabled = false;
+            if(ComboBoxChooseGroup.SelectedIndex != -1)
+            {
+                ButtonAddToGroup.IsEnabled = true;
+            }
+        }
+
+        private void ButtonAddToGroup_Click(object sender, RoutedEventArgs e)
+        {
+            Group groupOfUser = (Group)ComboBoxChooseGroup.SelectedItem;
+            Group group = (Group)ListBoxGroups.SelectedItem;
+            User user = (User)ListBoxListOfUsers.SelectedItem;
+            groupOfUser.AddUser(user);
+            group.RemoveUser(user);
+            ListBoxListOfUsers.Items.Refresh();
+            ComboBoxChooseGroup.SelectedIndex = -1;
+            TextBoxChageUserName.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
+            ButtonAddToGroup.IsEnabled = false;
+        }
+
+        private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ButtonCreateNewGroup.IsEnabled = true;
+        }
+
+        private void ButtonDeleteTest_Click(object sender, RoutedEventArgs e)
+        {
+            Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;           
+            tests.Remove(chosenTest);
+            ListBoxListOfTests.Items.Refresh();
+            ComboBoxChooseTestForStart.Items.Refresh();           
+            ListBoxListOfQuestions.ItemsSource = null;
+            ButtonDeleteTest.IsEnabled = false;
+        }
+
+        private void ButtonDeleteQuestionFromTest_Click(object sender, RoutedEventArgs e)
+        {           
+            Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
+            chosenTest.DeleteQuestion(ListBoxListOfQuestions.SelectedIndex);
+            ListBoxListOfQuestions.Items.Refresh();
+            ButtonDeleteQuestionFromTest.IsEnabled = false;
+        }
+
+        private void ButtonAddQuestionToTest_Click(object sender, RoutedEventArgs e)
+        {            
+            Test chosenTest = (Test)ComboBoxListOfTests.SelectedItem;
+            chosenTest.AddQuestion((AbstractQuestion)ListBoxListOfQuestions.SelectedItem);
         }
     }
 }
