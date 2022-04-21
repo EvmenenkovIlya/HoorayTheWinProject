@@ -71,18 +71,18 @@
                     </ComboBox>
                     <TextBox Name="TextBoxTextOfQuestion" Margin= "20,70,20,20" FontSize="18" TextChanged="TextBoxTextOfQuestion_TextChanged_1"/>
                     <Label Grid.Row="1" Name="LabelVariants" Content="Variants" HorizontalContentAlignment="Center" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
-                    <RadioButton Grid.Row="1" Name="RadioButtonOne" Content="RadioButton" Margin="20,50,0,300" FontFamily="Arial" FontSize="14" Visibility="Hidden" />
-                    <RadioButton Grid.Row="1" Name="RadioButtonTwo" Content="RadioButton" Margin="20,90,0,260" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
-                    <RadioButton Grid.Row="1" Name="RadioButtonThree" Content="RadioButton" Margin="20,130,0,220" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
-                    <RadioButton Grid.Row="1" Name="RadioButtonFour" Content="RadioButton" Margin="20,170,0,180" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
+                    <RadioButton Grid.Row="1" Name="RadioButtonOne" Content="" Margin="90,50,0,300" FontFamily="Arial" FontSize="14" Visibility="Hidden" />
+                    <RadioButton Grid.Row="1" Name="RadioButtonTwo" Content="" Margin="90,90,0,260" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
+                    <RadioButton Grid.Row="1" Name="RadioButtonThree" Content="" Margin="90,130,0,220" FontFamily="Arial" FontSize="14" Visibility="Hidden" />
+                    <RadioButton Grid.Row="1" Name="RadioButtonFour" Content="" Margin="90,170,0,180" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
                     <TextBox Name="TextBoxOne" Height="25" Margin="100,45,147,0" Grid.Row="1" Width = "170" VerticalAlignment="Top" FontSize="16" Visibility="Hidden"/>
                     <TextBox Name="TextBoxTwo" Height="25" Margin="100,85,147,0" Grid.Row="1" Width ="170" VerticalAlignment="Top" FontSize="16" Visibility="Hidden"/>
                     <TextBox Name="TextBoxThree" Height="25" Margin="100,125,147,0" Grid.Row="1" Width= "170" VerticalAlignment="Top" FontSize="16" Visibility="Hidden"/>
                     <TextBox Name="TextBoxFour" Height="25" Margin="100,165,147,0" Grid.Row="1" Width= "170" VerticalAlignment="Top" FontSize="16" Visibility="Hidden"/>
-                    <CheckBox Name="CheckBoxOne" Content="CheckBox" Margin="320,50,20,300" Grid.Row="1" Height="25" FontWeight="Normal" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
-                    <CheckBox Name="CheckBoxTwo" Content="CheckBox" Margin="320,90,20,260" Grid.Row="1" Height="25" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
-                    <CheckBox Name="CheckBoxThree" Content="CheckBox" Margin="320,125,20,210" Grid.Row="1" Height="25" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
-                    <CheckBox Name="CheckBoxFour" Content="CheckBox" Margin="320,165,20,170" Grid.Row="1" Height="25" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
+                    <CheckBox Name="CheckBoxOne" Content="" Margin="320,50,20,300" Grid.Row="1" Height="25" FontWeight="Normal" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
+                    <CheckBox Name="CheckBoxTwo" Content="" Margin="320,90,20,260" Grid.Row="1" Height="25" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
+                    <CheckBox Name="CheckBoxThree" Content="" Margin="320,125,20,210" Grid.Row="1" Height="25" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
+                    <CheckBox Name="CheckBoxFour" Content="" Margin="320,165,20,170" Grid.Row="1" Height="25" FontFamily="Arial" FontSize="14" Visibility="Hidden"/>
                     <Button Name="ButtonCreateAQuestion" Content="Create a question" Margin="0,240,250,50" Grid.Row="1" Width="180" Height="60" FontSize="16" FontFamily="Arial Black" Click="ButtonCreateAQuestion_Click"/>
                     <Button Name="ButtonSaveTheChanges" Content="Save the changes" Margin="250,240,0,50" Grid.Row="1" Width="180" Height="60" FontFamily="Arial Black" FontSize="16"/>
                     <Label Grid.Column="1" Grid.Row="0" Name="LabelListOfTests" Content="List of tests" Margin="20,0,20,0" FontSize="20" FontFamily="Arial Black"/>
