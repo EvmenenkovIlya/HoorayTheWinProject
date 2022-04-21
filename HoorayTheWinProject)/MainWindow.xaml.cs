@@ -60,6 +60,7 @@ namespace HoorayTheWinProject_
             TextBoxChageUserName.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;
+            ButtonCreateNewGroup.IsEnabled = false;
             ButtonDeleteGroup.IsEnabled = false;            
             ButtonAddToGroup.IsEnabled = false;
             ComboBoxChooseGroup.IsEnabled = false;
@@ -406,5 +407,9 @@ namespace HoorayTheWinProject_
             ButtonAddToGroup.IsEnabled = false;
         }
 
+        private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ButtonCreateNewGroup.IsEnabled = true;
+        }
     }
 }
