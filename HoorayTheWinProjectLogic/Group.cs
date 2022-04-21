@@ -25,14 +25,14 @@ namespace HoorayTheWinProjectLogic
             Users.Add(user);
         }
 
-        public void RemoveUser(int index)
+        public void RemoveUser(User user)
         {
             if (Users.Count < 1)
             {
                 throw new Exception("The group is empty");
             }
 
-            Users.RemoveAt(index);
+            Users.Remove(user);
         }
 
         public override string ToString()

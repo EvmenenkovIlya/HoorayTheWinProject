@@ -54,12 +54,16 @@ namespace HoorayTheWinProject_
             _labels = new List<string>();
             InitializeComponent();
             ListBoxGroups.ItemsSource = groups;
+            ComboBoxChooseGroup.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = tests;
             TextBoxChageUserName.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;
             ButtonDeleteGroup.IsEnabled = false;
-            ButtonCreateNewGroup.IsEnabled = false;            
+            ButtonCreateNewGroup.IsEnabled = false;
+            ButtonAddToGroup.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
             LB.ItemsSource = _labels;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
@@ -110,12 +114,16 @@ namespace HoorayTheWinProject_
             }
             if (ListBoxGroups.SelectedItem == _other)
             {
-                ButtonDeleteGroup.IsEnabled = false;
+                ButtonDeleteGroup.IsEnabled = false;                
             }
             else
             {
-                ButtonDeleteGroup.IsEnabled = true;
-            }
+                ButtonDeleteGroup.IsEnabled = true;                
+            }                        
+            TextBoxChageUserName.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;
+            ButtonAddToGroup.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
         }
 
         private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
@@ -257,14 +265,21 @@ namespace HoorayTheWinProject_
             User user = (User)ListBoxListOfUsers.SelectedItem;
             user.NameUser = TextBoxChageUserName.Text;
             ListBoxListOfUsers.Items.Refresh();
-            TextBoxChageUserName.Clear();
+            TextBoxChageUserName.Clear();            
+            ButtonChangeUserName.IsEnabled = false;           
+            ListBoxListOfUsers.SelectedIndex = -1;
             TextBoxChageUserName.IsEnabled = false;
-            ButtonChangeUserName.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
         }
 
         private void TextBoxChageUserName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+            if (TextBoxChageUserName.Cursor == null)
+            {
+                ButtonDeleteFromGroup.IsEnabled = false;
+                ComboBoxChooseGroup.IsEnabled = false;
+            }
             User user = (User)ListBoxListOfUsers.SelectedItem;
             string tmp = TextBoxChageUserName.Text;
             if (tmp == "" || tmp == user.NameUser)
@@ -279,15 +294,57 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ListBoxListOfUsers.SelectedItem != null)
+            TextBoxChageUserName.Clear();
+            ComboBoxChooseGroup.SelectedIndex = -1;
+            ButtonAddToGroup.IsEnabled = false;
+            TextBoxChageUserName.IsEnabled = true;
+            ButtonDeleteFromGroup.IsEnabled = true;
+            ComboBoxChooseGroup.IsEnabled = true;
+            if (ListBoxGroups.SelectedItem == _other)
             {
-                TextBoxChageUserName.IsEnabled = true;
+                ButtonDeleteFromGroup.IsEnabled = false;
+            }
+            else
+            {
+                ButtonDeleteFromGroup.IsEnabled = true;
             }
         }
 
         private void ButtonDeleteFromGroup_Click(object sender, RoutedEventArgs e)
         {
+            Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
+            User user = (User)ListBoxListOfUsers.SelectedItem;
+            _other.AddUser(user);
+            groupOfUser.RemoveUser(user);            
+            ListBoxListOfUsers.Items.Refresh();
+            TextBoxChageUserName.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;
+        }
 
+        private void ComboBoxChooseGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TextBoxChageUserName.IsEnabled = false;            
+            ButtonDeleteFromGroup.IsEnabled = false;
+            if(ComboBoxChooseGroup.SelectedIndex != -1)
+            {
+                ButtonAddToGroup.IsEnabled = true;
+            }
+        }
+
+        private void ButtonAddToGroup_Click(object sender, RoutedEventArgs e)
+        {
+            Group groupOfUser = (Group)ComboBoxChooseGroup.SelectedItem;
+            Group group = (Group)ListBoxGroups.SelectedItem;
+            User user = (User)ListBoxListOfUsers.SelectedItem;
+            groupOfUser.AddUser(user);
+            group.RemoveUser(user);
+            ListBoxListOfUsers.Items.Refresh();
+            ComboBoxChooseGroup.SelectedIndex = -1;
+            TextBoxChageUserName.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
+            ButtonAddToGroup.IsEnabled = false;
         }
     }
 }
