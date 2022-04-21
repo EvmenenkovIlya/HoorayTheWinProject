@@ -60,8 +60,7 @@ namespace HoorayTheWinProject_
             TextBoxChageUserName.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;
-            ButtonDeleteGroup.IsEnabled = false;
-            ButtonCreateNewGroup.IsEnabled = false;
+            ButtonDeleteGroup.IsEnabled = false;            
             ButtonAddToGroup.IsEnabled = false;
             ComboBoxChooseGroup.IsEnabled = false;
             ButtonChangeGroupName.IsEnabled = false;
@@ -287,7 +286,7 @@ namespace HoorayTheWinProject_
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
            
-        }
+       
 
         }
 
@@ -377,5 +376,6 @@ namespace HoorayTheWinProject_
             ComboBoxChooseGroup.IsEnabled = false;
             ButtonAddToGroup.IsEnabled = false;
         }
+
     }
 }
