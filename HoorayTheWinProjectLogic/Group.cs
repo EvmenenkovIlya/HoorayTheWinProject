@@ -9,6 +9,7 @@ namespace HoorayTheWinProjectLogic
     public class Group
     {
         public string NameGroup { get; set; }
+        
         public List<User> Users { get; set; }
         public Group(string nameGroup)
         {
@@ -25,14 +26,14 @@ namespace HoorayTheWinProjectLogic
             Users.Add(user);
         }
 
-        public void RemoveUser(int index)
+        public void RemoveUser(User user)
         {
             if (Users.Count < 1)
             {
                 throw new Exception("The group is empty");
             }
 
-            Users.RemoveAt(index);
+            Users.Remove(user);
         }
 
         public override string ToString()
