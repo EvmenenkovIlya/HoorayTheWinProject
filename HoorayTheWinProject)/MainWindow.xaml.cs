@@ -66,6 +66,7 @@ namespace HoorayTheWinProject_
             ButtonCreateNewGroup.IsEnabled = false;
             ButtonChangeGroupName.IsEnabled = false;
             TextBoxChangeGroupName.IsEnabled = false;
+
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
@@ -152,6 +153,7 @@ namespace HoorayTheWinProject_
             Group groupNew = new Group(TextBoxNewGroupName.Text);
             groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
+            ListBoxCheckBoxOfGroupForTest.Items.Refresh();
             TextBoxNewGroupName.Clear();           
             ButtonCreateNewGroup.IsEnabled = false;
 
@@ -421,6 +423,12 @@ namespace HoorayTheWinProject_
         {            
             Test chosenTest = (Test)ComboBoxListOfTests.SelectedItem;
             chosenTest.AddQuestion((AbstractQuestion)ListBoxListOfQuestions.SelectedItem);
+        }
+
+        private void ButtonStartNewTest_Click(object sender, RoutedEventArgs e)
+        {
+            var listForTest = groups.Where(x => x.IsSelected == true);
+            ListBoxGroups.ItemsSource = listForTest;
         }
     }
 }
