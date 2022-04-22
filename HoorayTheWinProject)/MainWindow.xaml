@@ -57,6 +57,7 @@
                         <RowDefinition Height="50*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row ="0" Name="LabelChooseType" Content="Choose type of question" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
+                    <Button Grid.Row="0" Name="ButtonNewQuestion" Content="New question" Margin="0,5,20,0" HorizontalAlignment="Right" VerticalAlignment="Top"  Width="150" Height="25" FontFamily="Arial Black" FontSize="14" Click="ButtonNewQuestion_Click"/>
                     <ComboBox Grid.Row ="0" Name="ComboBoxTypeOfQuestion" VerticalAlignment="Top" Margin="20,35,20,0" FontSize="16" SelectionChanged="ComboBoxTypeOfQuestion_SelectionChanged">
                         <ComboBoxItem Content="CHOOSE NUMBER" FontSize="16"/>
 
