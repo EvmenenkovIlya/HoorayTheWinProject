@@ -29,14 +29,14 @@ namespace HoorayTheWinProjectLogic
             AbstractQuestions.Add(abstractQuestion);
         }
 
-        public void DeleteQuestion(int index)
+        public void DeleteQuestion(AbstractQuestion abstractQuestion)
         {
             if (AbstractQuestions.Count < 1)
             {
                 throw new Exception("The group is empty");
             }
 
-            AbstractQuestions.RemoveAt(index);
+            AbstractQuestions.Remove(abstractQuestion);
         }
 
         public void AddGroup(Group group)
@@ -48,14 +48,14 @@ namespace HoorayTheWinProjectLogic
             Groups.Add(group);
         }
 
-        public void DeleteGroup(int index)
+        public void DeleteGroup(Group group)
         {
             if (Groups.Count < 1)
             {
                 throw new Exception("The group is empty");
             }
 
-            Groups.RemoveAt(index);
+            Groups.Remove(group);
         }
 
         public void StartTest()

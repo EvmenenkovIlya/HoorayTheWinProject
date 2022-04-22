@@ -13,7 +13,6 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40*"/>
                         <ColumnDefinition Width="40*"/>
-
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50*"/>
@@ -27,7 +26,7 @@
                     <Button Name="ButtonChangeGroupName" Content="Change Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="140" Height="25" Margin="0, 0, 50, 10" FontWeight="Bold" FontSize="14" FontFamily="Arial Black" Click="ButtonChangeGroupName_Click"/>
                     <Button Name="ButtonDeleteGroup" Content="❌" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="25" Height="25" Margin="0, 0, 20, 10" FontWeight="Bold" FontFamily="Arial Black" FontSize="14" Click="ButtonDeleteGroup_Click" />
                     <Label  Name="LabelGroupForTest" Grid.Column='2' Content="Choose Group for Test:" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
-                    <ListBox Grid.Column='2' Name='ListBoxCheckBoxOfGroupForTest' d:ItemsSource="{d:SampleData ItemCount=5}" Margin="20,30,20,80" FontSize="18" SelectionChanged="ListBoxCheckBoxOfGroupForTest_SelectionChanged">
+                    <ListBox Grid.Column='1' Name='ListBoxCheckBoxOfGroupForTest' d:ItemsSource="{d:SampleData ItemCount=5}" Margin="20,30,20,80" FontSize="18" SelectionChanged="ListBoxCheckBoxOfGroupForTest_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <CheckBox Content="{Binding NameGroup}"
@@ -47,7 +46,7 @@
                     <ListBox Grid.Row='1' Name='ListBoxListOfUsers' Margin="20, 40, 20, 80" d:ItemsSource="{d:SampleData ItemCount=5}" FontSize="18" SelectionChanged="ListBoxListOfUsers_SelectionChanged" />
                 </Grid>
             </TabItem>
-            <TabItem Header="QUESTIONS" Margin="-2,0,-2,0">
+            <TabItem Header="QUESTIONS">
                 <Grid Background="AntiqueWhite">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
