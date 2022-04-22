@@ -23,55 +23,52 @@ namespace HoorayTheWinProject_
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     
-
     public partial class MainWindow : Window
     {
         private TelegramManager _telegramManager;
         private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
         private List<string> _labels;
         private DispatcherTimer _timer;
-
-
-        
-
+      
         public MainWindow()
         {
 
-            DataMock.CreateMockGroups();
-            DataMock.CreateMockTests();
             _telegramManager = new TelegramManager(_token, OnMessage);
             _labels = new List<string>();
             InitializeComponent();
 
-            ComboBoxChooseTestForStart.ItemsSource = DataMock.tests;
+            ListBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxListOfTests.ItemsSource = DataMock.tests;
+            ComboBoxChooseTestForStart.ItemsSource = DataMock.tests;
+
             ListBoxGroups.ItemsSource = DataMock.groups;
             ComboBoxChooseGroup.ItemsSource = DataMock.groups;
-            ListBoxListOfTests.ItemsSource = DataMock.tests;
-            ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
+            ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;           
+
             TextBoxChageUserName.IsEnabled = false;
             TextBoxChangeGroupName.IsEnabled = false;
             TextBoxChangeNameOfTest.IsEnabled = false;
-            ButtonChangeUserName.IsEnabled = false;            
-            ButtonDeleteGroup.IsEnabled = false;
+
             ButtonAddTest.IsEnabled = false;
             ButtonDeleteTest.IsEnabled = false;
-            ButtonChangeNameOfTest.IsEnabled = false;
-            ComboBoxListOfTests.IsEnabled = false;
-            ButtonDeleteQuestionFromTest.IsEnabled = false;
-            ButtonAddQuestionToTest.IsEnabled = false;
-            ButtonCreateNewGroup.IsEnabled = false;
-            ButtonChangeGroupName.IsEnabled = false;
-            TextBoxChangeGroupName.IsEnabled = false;
-            ButtonSaveTheChanges.IsEnabled= false;
-            ButtonContentOfQuestion.IsEnabled = false;
             ButtonAddToGroup.IsEnabled = false;
-            ButtonDeleteFromGroup.IsEnabled = false;            
-            ComboBoxChooseGroup.IsEnabled = false;
+            ButtonDeleteGroup.IsEnabled = false;
+            ButtonSaveTheChanges.IsEnabled= false;
+            ButtonCreateNewGroup.IsEnabled = false;
+            ButtonChangeUserName.IsEnabled = false;            
+            ButtonChangeGroupName.IsEnabled = false;
+            ButtonDeleteFromGroup.IsEnabled = false;       
+            ButtonChangeNameOfTest.IsEnabled = false;
+            ButtonAddQuestionToTest.IsEnabled = false;
+            ButtonContentOfQuestion.IsEnabled = false;
+            ButtonDeleteQuestionFromTest.IsEnabled = false;
+            
             ComboBoxListOfTests.IsEnabled = false;
+            ComboBoxChooseGroup.IsEnabled = false;
+
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += OnTick;
+            _timer.Tick += OnTick!;
             _timer.Start();
         }       
 
