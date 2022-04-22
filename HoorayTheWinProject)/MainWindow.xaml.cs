@@ -43,7 +43,9 @@ namespace HoorayTheWinProject_
 
             ListBoxGroups.ItemsSource = DataMock.groups;
             ComboBoxChooseGroup.ItemsSource = DataMock.groups;
-            ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;           
+            ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
+
+            LB.ItemsSource = _labels;
 
             TextBoxChageUserName.IsEnabled = false;
             TextBoxChangeGroupName.IsEnabled = false;
@@ -68,7 +70,7 @@ namespace HoorayTheWinProject_
 
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += OnTick!;
+            _timer.Tick += OnTick;
             _timer.Start();
         }       
 
@@ -203,7 +205,8 @@ namespace HoorayTheWinProject_
 
         private void ButtonSend_Click(object sender, RoutedEventArgs e)
         {
-            _telegramManager.Send(TBQuestion.Text);
+            
+            _telegramManager.Send(DataMock.qs);
         }
 
         public void OnMessage(string s)
@@ -228,8 +231,7 @@ namespace HoorayTheWinProject_
         }
 
         private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Group groupOfUser = (Group)ListBoxCheckBoxOfGroupForTest.SelectedItem;
+        {           
 
         }
         private void HideAllVariants()

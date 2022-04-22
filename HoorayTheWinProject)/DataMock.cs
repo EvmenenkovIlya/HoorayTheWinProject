@@ -11,7 +11,9 @@ using HoorayTheWinProjectLogic.Questions;
 namespace HoorayTheWinProject_
 {
     public static class DataMock
-    {             
+    {
+        public static Dictionary<long, User> DataBase { get; set; } = new Dictionary<long, User>() ;
+
         public static Group _other = new Group("Other");
 
         public static Group group1 = new Group("Hooray, the win!") 
@@ -34,6 +36,8 @@ namespace HoorayTheWinProject_
              }
         };
         public static List<Group> groups = new List<Group>() { _other, group1, group2 };
+
+        public static InSeries qs = new InSeries("Sort in right order the authors by their year of birth", "Mayakovskiy", "Pushkin", "Tyutchev", "Pelevin");
 
         public static Test _bankOfQuestions = new Test("Bank of Questions");
         
