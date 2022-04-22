@@ -521,19 +521,26 @@ namespace HoorayTheWinProject_
 
         private void ButtonContentOfQuestion_Click(object sender, RoutedEventArgs e)
         {
-            AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
-            TextBoxTextOfQuestion.Text = question.TextOfQuestion;
-            ComboBoxListOfTests.IsEnabled = false;
-            ButtonDeleteQuestionFromTest.IsEnabled = false;            
-            ListBoxListOfQuestions.IsEnabled = false;
-            ListBoxListOfTests.IsEnabled = false;
-            TextBoxChangeNameOfTest.IsEnabled = false;
-            ButtonDeleteTest.IsEnabled = false;
-            ButtonContentOfQuestion.IsEnabled = false;
-            ButtonNewQuestion.IsEnabled = false;
-            ButtonCreateAQuestion.IsEnabled = false;
-            ButtonSaveTheChanges.IsEnabled = true;
-            TextBoxTextOfQuestion.IsEnabled = true;            
+            if (ButtonCreateAQuestion.IsEnabled == true)
+            {
+                MessageBox.Show("Finish creating the question");
+            }
+            else
+            {
+                AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
+                TextBoxTextOfQuestion.Text = question.TextOfQuestion;
+                ComboBoxListOfTests.IsEnabled = false;
+                ButtonDeleteQuestionFromTest.IsEnabled = false;
+                ListBoxListOfQuestions.IsEnabled = false;
+                ListBoxListOfTests.IsEnabled = false;
+                TextBoxChangeNameOfTest.IsEnabled = false;
+                ButtonDeleteTest.IsEnabled = false;
+                ButtonContentOfQuestion.IsEnabled = false;
+                ButtonNewQuestion.IsEnabled = false;
+                ButtonCreateAQuestion.IsEnabled = false;
+                ButtonSaveTheChanges.IsEnabled = true;
+                TextBoxTextOfQuestion.IsEnabled = true;
+            }
         }
 
         private void ButtonSaveTheChanges_Click(object sender, RoutedEventArgs e)
