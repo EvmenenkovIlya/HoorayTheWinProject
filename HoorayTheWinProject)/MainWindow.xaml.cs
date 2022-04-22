@@ -467,56 +467,84 @@ namespace HoorayTheWinProject_
         }
 
         private void ButtonCreateAQuestion_Click(object sender, RoutedEventArgs e)
-        {
-            ComboBoxTypeOfQuestion.IsEnabled = false;           
-            TextBoxTextOfQuestion.IsEnabled = false;            
-            ButtonCreateAQuestion.IsEnabled = false;            
-            if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
+        {            
+            if (TextBoxTextOfQuestion.Text == "" || ComboBoxTypeOfQuestion.SelectedIndex == -1 || TextBoxOne.Text == "" || TextBoxTwo.Text == "" ||
+               TextBoxThree.Text == "" || TextBoxFour.Text == "")
             {
-                ChooseNumber chooseNumber = new ChooseNumber (TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text) ;
-                //chooseNumber.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
-                _bankOfQuestions.AddQuestion(chooseNumber);
-                ListBoxListOfQuestions.Items.Refresh();
-                TextBoxTextOfQuestion.Clear();
-                ComboBoxTypeOfQuestion.SelectedIndex = -1;
-                return;
+                MessageBox.Show("Finish creating the question");
             }
-            if (ComboBoxTypeOfQuestion.SelectedIndex == 1) //chooseOne
+            else
             {
-                ChooseOne chooseOne = new ChooseOne(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                _bankOfQuestions.AddQuestion(chooseOne);
-                ListBoxListOfQuestions.Items.Refresh();
-                TextBoxTextOfQuestion.Clear();
-                ComboBoxTypeOfQuestion.SelectedIndex = -1;
-                return;
+                ComboBoxTypeOfQuestion.IsEnabled = false;
+                TextBoxTextOfQuestion.IsEnabled = false;
+                ButtonCreateAQuestion.IsEnabled = false;
+                if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
+                {
+                    ChooseNumber chooseNumber = new ChooseNumber(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
+                    //chooseNumber.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
+                    _bankOfQuestions.AddQuestion(chooseNumber);
+                    ListBoxListOfQuestions.Items.Refresh();
+                    TextBoxTextOfQuestion.Clear();
+                    TextBoxOne.Clear();
+                    TextBoxTwo.Clear();
+                    TextBoxThree.Clear();
+                    TextBoxFour.Clear();
+                    ComboBoxTypeOfQuestion.SelectedIndex = -1;
+                    return;
+                }
+                if (ComboBoxTypeOfQuestion.SelectedIndex == 1) //chooseOne
+                {
+                    ChooseOne chooseOne = new ChooseOne(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
+                    _bankOfQuestions.AddQuestion(chooseOne);
+                    ListBoxListOfQuestions.Items.Refresh();
+                    TextBoxTextOfQuestion.Clear();
+                    TextBoxOne.Clear();
+                    TextBoxTwo.Clear();
+                    TextBoxThree.Clear();
+                    TextBoxFour.Clear();
+                    ComboBoxTypeOfQuestion.SelectedIndex = -1;
+                    return;
+                }
+                if (ComboBoxTypeOfQuestion.SelectedIndex == 2)//enteringAReponse
+                {
+                    EnteringAResponse enteringAResponse = new EnteringAResponse(TextBoxTextOfQuestion.Text, TextBoxOne.Text);
+                    _bankOfQuestions.AddQuestion(enteringAResponse);
+                    ListBoxListOfQuestions.Items.Refresh();
+                    TextBoxTextOfQuestion.Clear();
+                    TextBoxOne.Clear();
+                    TextBoxTwo.Clear();
+                    TextBoxThree.Clear();
+                    TextBoxFour.Clear();
+                    ComboBoxTypeOfQuestion.SelectedIndex = -1;
+                    return;
+                }
+                if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
+                {
+                    InSeries inSeries = new InSeries(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
+                    _bankOfQuestions.AddQuestion(inSeries);
+                    ListBoxListOfQuestions.Items.Refresh();
+                    TextBoxTextOfQuestion.Clear();
+                    TextBoxOne.Clear();
+                    TextBoxTwo.Clear();
+                    TextBoxThree.Clear();
+                    TextBoxFour.Clear();
+                    ComboBoxTypeOfQuestion.SelectedIndex = -1;
+                    return;
+                }
+                if (ComboBoxTypeOfQuestion.SelectedIndex == 4) //Yes/No
+                {
+                    YesNo yesNo = new YesNo(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text);
+                    _bankOfQuestions.AddQuestion(yesNo);
+                    ListBoxListOfQuestions.Items.Refresh();
+                    TextBoxTextOfQuestion.Clear();
+                    TextBoxOne.Clear();
+                    TextBoxTwo.Clear();
+                    TextBoxThree.Clear();
+                    TextBoxFour.Clear();
+                    ComboBoxTypeOfQuestion.SelectedIndex = -1;
+                    return;
+                }
             }
-            if (ComboBoxTypeOfQuestion.SelectedIndex == 2)//enteringAReponse
-            {
-                EnteringAResponse enteringAResponse = new EnteringAResponse(TextBoxTextOfQuestion.Text, TextBoxOne.Text);
-                _bankOfQuestions.AddQuestion(enteringAResponse);
-                ListBoxListOfQuestions.Items.Refresh();
-                TextBoxTextOfQuestion.Clear();
-                ComboBoxTypeOfQuestion.SelectedIndex = -1;
-                return;
-            }
-            if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
-            {
-                InSeries inSeries = new InSeries(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                _bankOfQuestions.AddQuestion(inSeries);
-                ListBoxListOfQuestions.Items.Refresh();
-                TextBoxTextOfQuestion.Clear();
-                ComboBoxTypeOfQuestion.SelectedIndex = -1;
-                return;
-            }
-            if(ComboBoxTypeOfQuestion.SelectedIndex == 4) //Yes/No
-            {
-                YesNo yesNo = new YesNo(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text);
-                _bankOfQuestions.AddQuestion(yesNo);
-                ListBoxListOfQuestions.Items.Refresh();
-                TextBoxTextOfQuestion.Clear();
-                ComboBoxTypeOfQuestion.SelectedIndex = -1;
-                return;
-            }            
         }
 
         private void ButtonContentOfQuestion_Click(object sender, RoutedEventArgs e)
