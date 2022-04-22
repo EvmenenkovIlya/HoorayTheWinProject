@@ -12,6 +12,7 @@ namespace HoorayTheWinProject_
 {
     public static class DataMock
     {
+        public static List<string> forComboBox = new List<string>() {"CHOOSE NUMBER", "CHOOSE ONE", "WRITE A REPONSE", "IN SERIES", "YES OR NO"};
         public static Dictionary<long, User> DataBase { get; set; } = new Dictionary<long, User>() ;
 
         public static Group _other = new Group("Other");

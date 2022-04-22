@@ -45,6 +45,7 @@ namespace HoorayTheWinProject_
             ComboBoxChooseGroup.ItemsSource = DataMock.groups;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
 
+            ComboBoxTypeOfQuestion.ItemsSource = DataMock.forComboBox;
             LB.ItemsSource = _labels;
 
             TextBoxChageUserName.IsEnabled = false;
