@@ -15,7 +15,6 @@ namespace HoorayTheWinProjectLogic.Questions
             TypeQuestion = "2";
             Answer.Add(answerOfUser);
             base.Answer = Answer;
-
         }
     }
 }

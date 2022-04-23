@@ -18,7 +18,6 @@ namespace HoorayTheWinProjectLogic.Questions
             Answer.Add(answerThree);
             Answer.Add(answerFour);
             base.Answer = Answer;
-
         }
     }
 }
