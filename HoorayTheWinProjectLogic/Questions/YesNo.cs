@@ -12,9 +12,9 @@ namespace HoorayTheWinProjectLogic.Questions
         {
             List<string> Answer = new List<string>();
             TextOfQuestion = question;
-            TypeQuestion = "4";
-            Answer.Add("Yes");
-            Answer.Add("No");
+            TypeQuestion = 4;
+            Answer.Add(answerOne);
+            Answer.Add(answerTwo);
             base.Answer = Answer;
         }
     }

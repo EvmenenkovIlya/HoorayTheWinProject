@@ -22,7 +22,7 @@ namespace HoorayTheWinProject_
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    
+
 
     public partial class MainWindow : Window
     {
@@ -38,7 +38,7 @@ namespace HoorayTheWinProject_
         Test test1 = QuestionsMock.ReturnTest();
         List<Group> groups = new List<Group>();
         List<Test> tests = new List<Test>();
-        
+
 
         public MainWindow()
         {
@@ -54,35 +54,36 @@ namespace HoorayTheWinProject_
             ComboBoxChooseTestForStart.ItemsSource = tests;
             ComboBoxListOfTests.ItemsSource = tests;
             ComboBoxChooseGroup.ItemsSource = groups;
-            ListBoxGroups.ItemsSource = groups;            
+            ListBoxGroups.ItemsSource = groups;
             ListBoxListOfTests.ItemsSource = tests;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = groups;
             TextBoxChageUserName.IsEnabled = false;
             TextBoxChangeGroupName.IsEnabled = false;
             TextBoxChangeNameOfTest.IsEnabled = false;
             TextBoxTextOfQuestion.IsEnabled = false;
-            ButtonChangeUserName.IsEnabled = false;            
+            ButtonChangeUserName.IsEnabled = false;
             ButtonDeleteGroup.IsEnabled = false;
             ButtonAddTest.IsEnabled = false;
             ButtonDeleteTest.IsEnabled = false;
-            ButtonChangeNameOfTest.IsEnabled = false;            
+            ButtonChangeNameOfTest.IsEnabled = false;
             ButtonDeleteQuestionFromTest.IsEnabled = false;
             ButtonAddQuestionToTest.IsEnabled = false;
             ButtonCreateNewGroup.IsEnabled = false;
-            ButtonChangeGroupName.IsEnabled = false;           
-            ButtonSaveTheChanges.IsEnabled= false;
+            ButtonChangeGroupName.IsEnabled = false;
+            ButtonSaveTheChanges.IsEnabled = false;
             ButtonContentOfQuestion.IsEnabled = false;
             ButtonAddToGroup.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;
             ButtonCreateAQuestion.IsEnabled = false;
+            ButtonResetQuestion.IsEnabled = false;
             ComboBoxChooseGroup.IsEnabled = false;
             ComboBoxListOfTests.IsEnabled = false;
-            ComboBoxTypeOfQuestion.IsEnabled = false;            
+            ComboBoxTypeOfQuestion.IsEnabled = false;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
             _timer.Start();
-        }       
+        }
 
         private void TextBoxTextOfQuestion_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -107,14 +108,14 @@ namespace HoorayTheWinProject_
             }
             if (ListBoxGroups.SelectedItem == _other)
             {
-                ButtonDeleteGroup.IsEnabled = false;                
+                ButtonDeleteGroup.IsEnabled = false;
                 TextBoxChangeGroupName.IsEnabled = false;
             }
             else
             {
-                ButtonDeleteGroup.IsEnabled = true;                
+                ButtonDeleteGroup.IsEnabled = true;
                 TextBoxChangeGroupName.IsEnabled = true;
-            }                        
+            }
             TextBoxChangeGroupName.Clear();
             TextBoxChageUserName.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;
@@ -132,7 +133,7 @@ namespace HoorayTheWinProject_
             else
             {
                 ButtonChangeGroupName.IsEnabled = true;
-            }           
+            }
         }
 
         private void ButtonChangeGroupName_Click(object sender, RoutedEventArgs e)
@@ -152,9 +153,9 @@ namespace HoorayTheWinProject_
             Group groupNew = new Group(TextBoxNewGroupName.Text);
             groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
-            ComboBoxChooseGroup.Items.Refresh();            
+            ComboBoxChooseGroup.Items.Refresh();
             ListBoxCheckBoxOfGroupForTest.Items.Refresh();
-            TextBoxNewGroupName.Clear();           
+            TextBoxNewGroupName.Clear();
             ButtonCreateNewGroup.IsEnabled = false;
         }
 
@@ -165,7 +166,7 @@ namespace HoorayTheWinProject_
             {
                 _other.AddUser(user);
             }
-             groups.Remove(groupOfUser);
+            groups.Remove(groupOfUser);
             ListBoxGroups.Items.Refresh();
             ComboBoxChooseGroup.Items.Refresh();
             ListBoxCheckBoxOfGroupForTest.Items.Refresh();
@@ -176,7 +177,7 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;            
+            Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;
             if (ListBoxListOfTests.SelectedItem == _bankOfQuestions)
             {
                 ButtonDeleteTest.IsEnabled = false;
@@ -192,13 +193,13 @@ namespace HoorayTheWinProject_
                 ListBoxListOfQuestions.ItemsSource = null;
             }
             else
-            { 
+            {
                 ListBoxListOfQuestions.ItemsSource = selectedTest.AbstractQuestions;
-            }            
+            }
             ButtonDeleteQuestionFromTest.IsEnabled = false;
             ComboBoxListOfTests.IsEnabled = false;
             ButtonContentOfQuestion.IsEnabled = false;
-            ListBoxListOfQuestions.SelectedItem = null;           
+            ListBoxListOfQuestions.SelectedItem = null;
         }
 
         private void OnTick(object sender, EventArgs e)
@@ -227,10 +228,10 @@ namespace HoorayTheWinProject_
 
         private void ListBoxListOfQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {            
-            ComboBoxListOfTests.IsEnabled = true;            
+            ComboBoxListOfTests.IsEnabled = true;
             ComboBoxListOfTests.SelectedIndex = -1;
             ButtonContentOfQuestion.IsEnabled = true;
-            ButtonDeleteQuestionFromTest.IsEnabled = true;
+            ButtonDeleteQuestionFromTest.IsEnabled = true;            
         }
 
         private void ListBoxCheckBoxOfGroupForTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -255,10 +256,18 @@ namespace HoorayTheWinProject_
             TextBoxThree.Visibility = Visibility.Hidden;
             TextBoxFour.Visibility = Visibility.Hidden;
         }
+        
         private void ComboBoxTypeOfQuestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             HideAllVariants();
-
+            if (ButtonCreateAQuestion.IsEnabled ==  true || ButtonSaveTheChanges.IsEnabled == true)
+            {
+                TextBoxOne.Clear();
+                TextBoxTwo.Clear();
+                TextBoxThree.Clear();
+                TextBoxFour.Clear();
+                TextBoxTextOfQuestion.Clear();
+            }
             if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
             {
                 CheckBoxOne.Visibility = Visibility.Visible;
@@ -269,7 +278,7 @@ namespace HoorayTheWinProject_
                 TextBoxOne.Visibility = Visibility.Visible;
                 TextBoxTwo.Visibility = Visibility.Visible;
                 TextBoxThree.Visibility = Visibility.Visible;
-                TextBoxFour.Visibility = Visibility.Visible;
+                TextBoxFour.Visibility = Visibility.Visible;                
                 return;
             }
             if (ComboBoxTypeOfQuestion.SelectedIndex == 1) //ChooseOne
@@ -282,12 +291,11 @@ namespace HoorayTheWinProject_
                 TextBoxOne.Visibility = Visibility.Visible;
                 TextBoxTwo.Visibility = Visibility.Visible;
                 TextBoxThree.Visibility = Visibility.Visible;
-                TextBoxFour.Visibility = Visibility.Visible;
+                TextBoxFour.Visibility = Visibility.Visible;                
                 return;
             }
             if (ComboBoxTypeOfQuestion.SelectedIndex == 2) //WriteReponse
             {
-                TextBoxOne.Visibility = Visibility.Visible;
                 return;
             }
             if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
@@ -295,24 +303,23 @@ namespace HoorayTheWinProject_
                 TextBoxOne.Visibility = Visibility.Visible;
                 TextBoxTwo.Visibility = Visibility.Visible;
                 TextBoxThree.Visibility = Visibility.Visible;
-                TextBoxFour.Visibility = Visibility.Visible;
+                TextBoxFour.Visibility = Visibility.Visible;               
                 return;
-
             }
             if (ComboBoxTypeOfQuestion.SelectedIndex == 4)//YesNo
             {
                 RadioButtonOne.Visibility = Visibility.Visible;
                 RadioButtonTwo.Visibility = Visibility.Visible;
 
-                TextBoxOne.Visibility = Visibility.Visible;
-                TextBoxTwo.Visibility = Visibility.Visible;
+                TextBoxOne.Visibility = Visibility.Visible;               
+                TextBoxTwo.Visibility = Visibility.Visible;                
                 return;
-            }
+            }            
         }
 
         private void ButtonStop_Click(object sender, RoutedEventArgs e)
         {
-           
+
 
         }
 
@@ -321,8 +328,8 @@ namespace HoorayTheWinProject_
             User user = (User)ListBoxListOfUsers.SelectedItem;
             user.NameUser = TextBoxChageUserName.Text;
             ListBoxListOfUsers.Items.Refresh();
-            TextBoxChageUserName.Clear();            
-            ButtonChangeUserName.IsEnabled = false;           
+            TextBoxChageUserName.Clear();
+            ButtonChangeUserName.IsEnabled = false;
             ListBoxListOfUsers.SelectedIndex = -1;
             TextBoxChageUserName.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;
@@ -371,7 +378,7 @@ namespace HoorayTheWinProject_
             Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             User user = (User)ListBoxListOfUsers.SelectedItem;
             _other.AddUser(user);
-            groupOfUser.RemoveUser(user);            
+            groupOfUser.RemoveUser(user);
             ListBoxListOfUsers.Items.Refresh();
             TextBoxChageUserName.IsEnabled = false;
             ComboBoxChooseGroup.IsEnabled = false;
@@ -381,9 +388,9 @@ namespace HoorayTheWinProject_
         private void ComboBoxChooseGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBoxGroups.Items.Refresh();
-            TextBoxChageUserName.IsEnabled = false;            
+            TextBoxChageUserName.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;
-            if(ComboBoxChooseGroup.SelectedIndex != -1)
+            if (ComboBoxChooseGroup.SelectedIndex != -1)
             {
                 ButtonAddToGroup.IsEnabled = true;
             }
@@ -406,8 +413,8 @@ namespace HoorayTheWinProject_
 
         private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int index = groups.FindIndex(x=>x.NameGroup==TextBoxNewGroupName.Text);
-            if(TextBoxNewGroupName.Text=="" || index >= 0)
+            int index = groups.FindIndex(x => x.NameGroup == TextBoxNewGroupName.Text);
+            if (TextBoxNewGroupName.Text == "" || index >= 0)
             {
                 ButtonCreateNewGroup.IsEnabled = false;
             }
@@ -419,26 +426,26 @@ namespace HoorayTheWinProject_
 
         private void ButtonDeleteTest_Click(object sender, RoutedEventArgs e)
         {
-            Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;           
+            Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
             tests.Remove(chosenTest);
             ListBoxListOfTests.Items.Refresh();
             ComboBoxListOfTests.Items.Refresh();
-            ComboBoxChooseTestForStart.Items.Refresh();       
+            ComboBoxChooseTestForStart.Items.Refresh();
             ListBoxListOfQuestions.ItemsSource = null;
             ButtonDeleteTest.IsEnabled = false;
         }
 
         private void ButtonDeleteQuestionFromTest_Click(object sender, RoutedEventArgs e)
-        {           
+        {
             Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
             AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
-            chosenTest.DeleteQuestion(question);            
+            chosenTest.DeleteQuestion(question);
             ListBoxListOfQuestions.Items.Refresh();
             ComboBoxListOfTests.IsEnabled = false;
             ButtonContentOfQuestion.IsEnabled = false;
             ButtonDeleteQuestionFromTest.IsEnabled = false;
         }
-       
+
         private void ButtonAddQuestionToTest_Click(object sender, RoutedEventArgs e)
         {
             Test chosenTest = (Test)ComboBoxListOfTests.SelectedItem;
@@ -457,7 +464,7 @@ namespace HoorayTheWinProject_
                 ButtonContentOfQuestion.IsEnabled = false;
                 ButtonDeleteQuestionFromTest.IsEnabled = false;
                 ComboBoxListOfTests.IsEnabled = false;
-            }            
+            }
         }
 
         private void ButtonStartNewTest_Click(object sender, RoutedEventArgs e)
@@ -465,86 +472,147 @@ namespace HoorayTheWinProject_
             var listForTest = groups.Where(x => x.IsSelected == true);
             ListBoxGroups.ItemsSource = listForTest;
         }
+       
+        private void Clear()
+        {           
+            TextBoxTextOfQuestion.Clear();            
+            ComboBoxTypeOfQuestion.SelectedIndex = -1;
+            ComboBoxTypeOfQuestion.IsEnabled = false;
+            TextBoxTextOfQuestion.IsEnabled = false;
+            ButtonCreateAQuestion.IsEnabled = false;
+            ButtonResetQuestion.IsEnabled = false;
+        }
 
         private void ButtonCreateAQuestion_Click(object sender, RoutedEventArgs e)
-        {            
-            if (TextBoxTextOfQuestion.Text == "" || ComboBoxTypeOfQuestion.SelectedIndex == -1 || TextBoxOne.Text == "" || TextBoxTwo.Text == "" ||
-               TextBoxThree.Text == "" || TextBoxFour.Text == "")
+        {
+            if (ComboBoxTypeOfQuestion.SelectedIndex == -1)
             {
-                MessageBox.Show("Finish creating the question");
+                MessageBox.Show("Finish creating the question");            
             }
-            else
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
             {
-                ComboBoxTypeOfQuestion.IsEnabled = false;
-                TextBoxTextOfQuestion.IsEnabled = false;
-                ButtonCreateAQuestion.IsEnabled = false;
-                if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
+                if (TextBoxTextOfQuestion.Text == "" || TextBoxOne.Text == "" || TextBoxTwo.Text == "" || TextBoxThree.Text == "" ||
+                    TextBoxFour.Text == "")
                 {
-                    ChooseNumber chooseNumber = new ChooseNumber(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    //chooseNumber.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
-                    _bankOfQuestions.AddQuestion(chooseNumber);
-                    ListBoxListOfQuestions.Items.Refresh();
-                    TextBoxTextOfQuestion.Clear();
-                    TextBoxOne.Clear();
-                    TextBoxTwo.Clear();
-                    TextBoxThree.Clear();
-                    TextBoxFour.Clear();
-                    ComboBoxTypeOfQuestion.SelectedIndex = -1;
-                    return;
+                    MessageBox.Show("Finish creating the question");
                 }
-                if (ComboBoxTypeOfQuestion.SelectedIndex == 1) //chooseOne
+                else
+                {                   
+                    
+                    ChooseNumber chooseNumber = new ChooseNumber(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
+                    int index = _bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseNumber.TextOfQuestion);
+                    if (index >= 0)
+                    {
+                        MessageBox.Show("There is such a question in this test");
+                    }
+                    else
+                    {
+                        _bankOfQuestions.AddQuestion(chooseNumber);
+                        ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        chooseNumber.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
+                        Clear();
+                        return;
+                    }
+                }
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 1) //chooseOne
+            {
+                if (TextBoxTextOfQuestion.Text == "" || TextBoxOne.Text == "" || TextBoxTwo.Text == "" || TextBoxThree.Text == "" ||
+                    TextBoxFour.Text == "")
+                {
+                    MessageBox.Show("Finish creating the question");
+                }
+                else
                 {
                     ChooseOne chooseOne = new ChooseOne(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    _bankOfQuestions.AddQuestion(chooseOne);
-                    ListBoxListOfQuestions.Items.Refresh();
-                    TextBoxTextOfQuestion.Clear();
-                    TextBoxOne.Clear();
-                    TextBoxTwo.Clear();
-                    TextBoxThree.Clear();
-                    TextBoxFour.Clear();
-                    ComboBoxTypeOfQuestion.SelectedIndex = -1;
-                    return;
-                }
-                if (ComboBoxTypeOfQuestion.SelectedIndex == 2)//enteringAReponse
-                {
-                    EnteringAResponse enteringAResponse = new EnteringAResponse(TextBoxTextOfQuestion.Text, TextBoxOne.Text);
-                    _bankOfQuestions.AddQuestion(enteringAResponse);
-                    ListBoxListOfQuestions.Items.Refresh();
-                    TextBoxTextOfQuestion.Clear();
-                    TextBoxOne.Clear();
-                    TextBoxTwo.Clear();
-                    TextBoxThree.Clear();
-                    TextBoxFour.Clear();
-                    ComboBoxTypeOfQuestion.SelectedIndex = -1;
-                    return;
-                }
-                if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
-                {
-                    InSeries inSeries = new InSeries(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    _bankOfQuestions.AddQuestion(inSeries);
-                    ListBoxListOfQuestions.Items.Refresh();
-                    TextBoxTextOfQuestion.Clear();
-                    TextBoxOne.Clear();
-                    TextBoxTwo.Clear();
-                    TextBoxThree.Clear();
-                    TextBoxFour.Clear();
-                    ComboBoxTypeOfQuestion.SelectedIndex = -1;
-                    return;
-                }
-                if (ComboBoxTypeOfQuestion.SelectedIndex == 4) //Yes/No
-                {
-                    YesNo yesNo = new YesNo(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text);
-                    _bankOfQuestions.AddQuestion(yesNo);
-                    ListBoxListOfQuestions.Items.Refresh();
-                    TextBoxTextOfQuestion.Clear();
-                    TextBoxOne.Clear();
-                    TextBoxTwo.Clear();
-                    TextBoxThree.Clear();
-                    TextBoxFour.Clear();
-                    ComboBoxTypeOfQuestion.SelectedIndex = -1;
-                    return;
+                    int index = _bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseOne.TextOfQuestion);
+                    if (index >= 0)
+                    {
+                        MessageBox.Show("There is such a question in this test");
+                    }
+                    else
+                    {
+                        _bankOfQuestions.AddQuestion(chooseOne);
+                        ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        chooseOne.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
+                        Clear();
+                        return;
+                    }
                 }
             }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 2)//enteringAReponse
+            {
+                if (TextBoxTextOfQuestion.Text == "")
+                {
+                    MessageBox.Show("Finish creating the question");
+                }
+                else
+                {
+                    EnteringAResponse enteringAResponse = new EnteringAResponse(TextBoxTextOfQuestion.Text);
+                    int index = _bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == enteringAResponse.TextOfQuestion);
+                    if (index >= 0)
+                    {
+                        MessageBox.Show("There is such a question in this test");
+                    }
+                    else
+                    {
+                        _bankOfQuestions.AddQuestion(enteringAResponse);
+                        ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        Clear();
+                        return;
+                    }
+                }
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
+            {
+                if (TextBoxTextOfQuestion.Text == "" || TextBoxOne.Text == "" || TextBoxTwo.Text == "" || TextBoxThree.Text == ""
+                    || TextBoxFour.Text == "")
+                {
+                    MessageBox.Show("Finish creating the question");
+                }
+                else
+                {
+                    InSeries inSeries = new InSeries(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
+                    int index = _bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == inSeries.TextOfQuestion);
+                    if (index >= 0)
+                    {
+                        MessageBox.Show("There is such a question in this test");
+                    }
+                    else
+                    {
+                        _bankOfQuestions.AddQuestion(inSeries);
+                        ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        inSeries.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
+                        Clear();
+                        return;
+                    }
+                }
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 4) //Yes/No
+            {
+                if (TextBoxTextOfQuestion.Text == "" || TextBoxOne.Text == "" || TextBoxTwo.Text == "")
+                {
+                    MessageBox.Show("Finish creating the question");
+                }
+                else
+                {
+                    YesNo yesNo = new YesNo(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text);
+                    int index = _bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == yesNo.TextOfQuestion);
+                    if (index >= 0)
+                    {
+                        MessageBox.Show("There is such a question in this test");
+                    }
+                    else
+                    {
+                        _bankOfQuestions.AddQuestion(yesNo);
+                        ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        yesNo.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text };
+                        Clear();
+                        
+                        return;
+                    }
+                }
+            }            
         }
 
         private void ButtonContentOfQuestion_Click(object sender, RoutedEventArgs e)
@@ -557,6 +625,37 @@ namespace HoorayTheWinProject_
             {
                 AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
                 TextBoxTextOfQuestion.Text = question.TextOfQuestion;
+                ComboBoxTypeOfQuestion.SelectedIndex = question.TypeQuestion;                
+                if (question.TypeQuestion == 0)
+                {
+                    TextBoxOne.Text = question.Answer[0];
+                    TextBoxTwo.Text = question.Answer[1];
+                    TextBoxThree.Text = question.Answer[2];
+                    TextBoxFour.Text = question.Answer[3];
+                }
+                if (question.TypeQuestion == 1)
+                {
+                    TextBoxOne.Text = question.Answer[0];
+                    TextBoxTwo.Text = question.Answer[1];
+                    TextBoxThree.Text = question.Answer[2];
+                    TextBoxFour.Text = question.Answer[3];
+                }
+                if (question.TypeQuestion == 2)
+                {
+                    
+                }
+                if (question.TypeQuestion == 3)
+                {
+                    TextBoxOne.Text = question.Answer[0];
+                    TextBoxTwo.Text = question.Answer[1];
+                    TextBoxThree.Text = question.Answer[2];
+                    TextBoxFour.Text = question.Answer[3];
+                }
+                if (question.TypeQuestion == 4)
+                {
+                    TextBoxOne.Text = question.Answer[0];
+                    TextBoxTwo.Text = question.Answer[1];                    
+                }
                 ComboBoxListOfTests.IsEnabled = false;
                 ButtonDeleteQuestionFromTest.IsEnabled = false;
                 ListBoxListOfQuestions.IsEnabled = false;
@@ -568,25 +667,170 @@ namespace HoorayTheWinProject_
                 ButtonCreateAQuestion.IsEnabled = false;
                 ButtonSaveTheChanges.IsEnabled = true;
                 TextBoxTextOfQuestion.IsEnabled = true;
+                ComboBoxTypeOfQuestion.IsEnabled = true;
             }
         }
-
-        private void ButtonSaveTheChanges_Click(object sender, RoutedEventArgs e)
-        {
-            AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
-            question.TextOfQuestion = TextBoxTextOfQuestion.Text;
-            ListBoxListOfQuestions.Items.Refresh();            
+        private void Open()
+        {            
+            ListBoxListOfQuestions.Items.Refresh();
             TextBoxTextOfQuestion.Clear();
-            TextBoxTextOfQuestion.IsEnabled=false;            
+            TextBoxTextOfQuestion.IsEnabled = false;
             ButtonSaveTheChanges.IsEnabled = false;
+            ComboBoxTypeOfQuestion.IsEnabled = false;
+            ComboBoxTypeOfQuestion.SelectedIndex = -1;
             ListBoxListOfQuestions.IsEnabled = true;
             ListBoxListOfTests.IsEnabled = true;
             TextBoxChangeNameOfTest.IsEnabled = true;
             ButtonDeleteTest.IsEnabled = true;
             ButtonDeleteQuestionFromTest.IsEnabled = true;
-            ComboBoxListOfTests.IsEnabled = true;            
+            ComboBoxListOfTests.IsEnabled = true;
             ButtonContentOfQuestion.IsEnabled = true;
             ButtonNewQuestion.IsEnabled = true;
+        }
+        private void ButtonSaveTheChanges_Click(object sender, RoutedEventArgs e)
+        {
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
+            {
+                if (TextBoxTextOfQuestion.Text == "" || TextBoxOne.Text == "" || TextBoxTwo.Text == "" || TextBoxThree.Text == "" ||
+                    TextBoxFour.Text == "")
+                {
+                    MessageBox.Show("Finish changing the question");
+                }
+                else
+                {
+                    Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
+                    AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;                    
+                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
+                    if (index >= 0)
+                    {
+                        MessageBox.Show("There is such a question in this test");
+                    }
+                    else
+                    {
+                        question.TextOfQuestion = TextBoxTextOfQuestion.Text;
+                        question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;
+                        question.Answer[0] = TextBoxOne.Text;
+                        question.Answer[1] = TextBoxTwo.Text;
+                        question.Answer[2] = TextBoxThree.Text;
+                        question.Answer[3] = TextBoxFour.Text;
+                        Open();
+                        //HideAllVariants();
+                        return;
+                    }
+                }
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 1) //chooseOne
+            {
+                if (TextBoxTextOfQuestion.Text == "" || TextBoxOne.Text == "" || TextBoxTwo.Text == "" || TextBoxThree.Text == "" ||
+                    TextBoxFour.Text == "")
+                {
+                    MessageBox.Show("Finish changing the question");
+                }
+                else
+                {
+                    Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
+                    AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
+                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
+                    if (index >= 0)
+                    {
+                        MessageBox.Show("There is such a question in this test");
+                    }
+                    else
+                    {
+                        question.TextOfQuestion = TextBoxTextOfQuestion.Text;
+                        question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;
+                        question.Answer[0] = TextBoxOne.Text;
+                        question.Answer[1] = TextBoxTwo.Text;
+                        question.Answer[2] = TextBoxThree.Text;
+                        question.Answer[3] = TextBoxFour.Text;
+                        Open();
+                        //HideAllVariants();
+                        return;
+                    }
+                }
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 2)//enteringAReponse
+            {
+                if (TextBoxTextOfQuestion.Text == "")
+                {
+                    MessageBox.Show("Finish changing the question");
+                }
+                else
+                {
+                    Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
+                    AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
+                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
+                    if (index >= 0)
+                    {
+                        MessageBox.Show("There is such a question in this test");
+                    }
+                    else
+                    {
+                        question.TextOfQuestion = TextBoxTextOfQuestion.Text;
+                        question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;                        
+                        Open();
+                        //HideAllVariants();
+                        return;
+                    }
+                }
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 3) //InSeries
+            {
+                if (TextBoxTextOfQuestion.Text == "" || TextBoxOne.Text == "" || TextBoxTwo.Text == "" || TextBoxThree.Text == ""
+                    || TextBoxFour.Text == "")
+                {
+                    MessageBox.Show("Finish changing the question");
+                }
+                else
+                {
+                    Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
+                    AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
+                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
+                    if (index >= 0)
+                    {
+                        MessageBox.Show("There is such a question in this test");
+                    }
+                    else
+                    {
+                        question.TextOfQuestion = TextBoxTextOfQuestion.Text;
+                        question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;
+                        question.Answer[0] = TextBoxOne.Text;
+                        question.Answer[1] = TextBoxTwo.Text;
+                        question.Answer[2] = TextBoxThree.Text;
+                        question.Answer[3] = TextBoxFour.Text;
+                        Open();
+                        //HideAllVariants();
+                        return;
+                    }
+                }
+            }
+            if (ComboBoxTypeOfQuestion.SelectedIndex == 4) //Yes/No
+            {
+                if (TextBoxTextOfQuestion.Text == "" || TextBoxOne.Text == "" || TextBoxTwo.Text == "")
+                {
+                    MessageBox.Show("Finish changing the question");
+                }
+                else
+                {
+                    Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
+                    AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
+                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
+                    if (index >= 0)
+                    {
+                        MessageBox.Show("There is such a question in this test");
+                    }
+                    else
+                    {
+                        question.TextOfQuestion = TextBoxTextOfQuestion.Text;
+                        question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;
+                        question.Answer[0] = TextBoxOne.Text;
+                        question.Answer[1] = TextBoxTwo.Text;                        
+                        Open();
+                        //HideAllVariants();
+                        return;
+                    }
+                }
+            }
         }
 
         private void TextBoxChangeNameOfTest_TextChanged(object sender, TextChangedEventArgs e)
@@ -657,6 +901,25 @@ namespace HoorayTheWinProject_
             ComboBoxTypeOfQuestion.IsEnabled = true;
             TextBoxTextOfQuestion.IsEnabled = true;
             ButtonCreateAQuestion.IsEnabled = true;
+            ButtonResetQuestion.IsEnabled = true;
+            TextBoxOne.Clear();
+            TextBoxTwo.Clear();
+            TextBoxThree.Clear();
+            TextBoxFour.Clear();
+        }
+
+        private void ButtonResetQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBoxTypeOfQuestion.IsEnabled = false;
+            ComboBoxTypeOfQuestion.SelectedIndex = -1;
+            TextBoxTextOfQuestion.IsEnabled = false;
+            TextBoxTextOfQuestion.Clear();
+            TextBoxOne.Clear();
+            TextBoxTwo.Clear();
+            TextBoxThree.Clear();
+            TextBoxFour.Clear();
+            ButtonCreateAQuestion.IsEnabled = false;
+            ButtonResetQuestion.IsEnabled = false;
         }
     }
 }

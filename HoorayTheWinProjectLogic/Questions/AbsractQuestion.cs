@@ -4,7 +4,7 @@
     {
         public string TextOfQuestion { get; set; }
 
-        public string TypeQuestion { get; set; }
+        public int TypeQuestion { get; set; }
 
         public List <string> Answer { get; set; }
 

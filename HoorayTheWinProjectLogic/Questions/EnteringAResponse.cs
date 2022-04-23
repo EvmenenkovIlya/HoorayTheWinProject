@@ -8,12 +8,11 @@ namespace HoorayTheWinProjectLogic.Questions
 {
     public class EnteringAResponse : AbstractQuestion
     {
-        public EnteringAResponse(string question, string answerOfUser)
+        public EnteringAResponse(string question)
         {
             List<string> Answer = new List<string>();
             TextOfQuestion = question;
-            TypeQuestion = "2";
-            Answer.Add(answerOfUser);
+            TypeQuestion = 2;           
             base.Answer = Answer;
 
         }
