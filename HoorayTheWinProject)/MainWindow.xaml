@@ -109,10 +109,7 @@
                     <Button x:Name="ButtonSend" Content="Отправить" HorizontalAlignment="Left" Margin="106,343,0,0" VerticalAlignment="Top" FontSize="16" Height="40" Width="125" Grid.Column="1" Click="ButtonSend_Click"/>
                     <Button x:Name="ButtonStart" Content="Старт" HorizontalAlignment="Left" Margin="30,89,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16" Height="42" Width="182" Grid.ColumnSpan="2" Click="ButtonStart_Click"/>
                     <Button x:Name="ButtonStop" Content="Стоп" HorizontalAlignment="Left" Margin="60,89,0,0" Grid.Row="1" VerticalAlignment="Top" Height="42" Width="173" FontSize="16" Grid.Column="1" Click="ButtonStop_Click"/>
-                    <ListBox Grid.Column="2" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
-                        <TextBox/>
-                        <TextBox/>
-                    </ListBox>
+                    <ListBox Grid.Column="2" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"/>
                 </Grid>
             </TabItem>
         </TabControl>
