@@ -508,7 +508,11 @@ namespace HoorayTheWinProject_
                     else
                     {
                         _bankOfQuestions.AddQuestion(chooseNumber);
-                        ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        if (ListBoxListOfTests.SelectedIndex == 0)
+                        {
+                            ListBoxListOfQuestions.Items.Refresh();
+                            ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        }
                         chooseNumber.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
                         Clear();
                         return;
@@ -533,7 +537,11 @@ namespace HoorayTheWinProject_
                     else
                     {
                         _bankOfQuestions.AddQuestion(chooseOne);
-                        ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        if (ListBoxListOfTests.SelectedIndex == 0)
+                        {
+                            ListBoxListOfQuestions.Items.Refresh();
+                            ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        }
                         chooseOne.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
                         Clear();
                         return;
@@ -557,7 +565,11 @@ namespace HoorayTheWinProject_
                     else
                     {
                         _bankOfQuestions.AddQuestion(enteringAResponse);
-                        ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        if (ListBoxListOfTests.SelectedIndex == 0)
+                        {
+                            ListBoxListOfQuestions.Items.Refresh();
+                            ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        }
                         Clear();
                         return;
                     }
@@ -581,7 +593,11 @@ namespace HoorayTheWinProject_
                     else
                     {
                         _bankOfQuestions.AddQuestion(inSeries);
-                        ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        if (ListBoxListOfTests.SelectedIndex == 0)
+                        {
+                            ListBoxListOfQuestions.Items.Refresh();
+                            ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        }
                         inSeries.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
                         Clear();
                         return;
@@ -605,7 +621,11 @@ namespace HoorayTheWinProject_
                     else
                     {
                         _bankOfQuestions.AddQuestion(yesNo);
-                        ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        if (ListBoxListOfTests.SelectedIndex == 0)
+                        {
+                            ListBoxListOfQuestions.Items.Refresh();
+                            ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                        }
                         yesNo.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text };
                         Clear();
                         
