@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HoorayTheWinProject_.TestLogicInTG;
+using HoorayTheWinProjectLogic.Questions;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,26 +26,13 @@ namespace HoorayTheWinProject_
             _ids = new List<long>();
         }
 
-        public async void Send(string s)
+        public async void Send(AbstractQuestion abstractQuestion)
         {
+            InSeries qs = (InSeries)abstractQuestion;
             foreach (var id in _ids)
             {
-                InlineKeyboardMarkup inlineKeyboard = new(
-                       new[]
-                       {
-                            new []
-                            {
-                                InlineKeyboardButton.WithCallbackData("Q", "QQQQQ"),
-                                InlineKeyboardButton.WithCallbackData("W", "WWWWW"),
-                                InlineKeyboardButton.WithCallbackData("E", "EEEEE"),
-                            },
-                            new []
-                            {
-                                InlineKeyboardButton.WithCallbackData("R", "RRRRR"),
-                                InlineKeyboardButton.WithCallbackData("T", "TTTTT"),
-                            }
-                       });
-                await _client.SendTextMessageAsync(new ChatId(id), s, replyMarkup: inlineKeyboard);
+                InlineKeyboardMarkup inlineKeyboard = InSeriesTG.InlineKM(qs);               
+                await _client.SendTextMessageAsync(new ChatId(id), abstractQuestion.TextOfQuestion, replyMarkup: inlineKeyboard);
             }
         }
 
@@ -65,6 +54,41 @@ namespace HoorayTheWinProject_
                 string s = update.Message.Chat.FirstName + " "
                     + update.Message.Chat.LastName + " "
                     + update.Message.Text;
+                _onMessage(s);
+
+                if (!DataMock.DataBase.ContainsKey(update.Message.Chat.Id))
+                {
+                    DataMock.DataBase.Add(update.Message.Chat.Id, new HoorayTheWinProjectLogic.User((string)update.Message.Chat.Username!));
+                }
+            }
+            else if (update.CallbackQuery != null)
+            {
+                InlineKeyboardMarkup inlineKeyboard = new(
+                      new[]
+                      {
+                            new []
+                            {
+                                InlineKeyboardButton.WithCallbackData("+Q", "QQQQQ"),
+                                InlineKeyboardButton.WithCallbackData("+W", "WWWWW"),
+                                InlineKeyboardButton.WithCallbackData("+E", "EEEEE"),
+                            },
+                            new []
+                            {
+                                InlineKeyboardButton.WithCallbackData("+R", "RRRRR"),
+                                InlineKeyboardButton.WithCallbackData("+T", "TTTTT"),
+                            }
+                      });
+                await botClient.EditMessageTextAsync(
+                    update.CallbackQuery.Message!.Chat.Id,
+                    update.CallbackQuery.Message!.MessageId,
+                    update.CallbackQuery.Message!.Text!,
+                    replyMarkup: null
+                    );
+
+
+                string s = update.CallbackQuery.From.FirstName + " "
+                    + update.CallbackQuery.From.LastName + " нажал на "
+                    + update.CallbackQuery.Data;
                 _onMessage(s);
             }
         }
