@@ -490,18 +490,18 @@ namespace HoorayTheWinProject_
                 {                   
                     
                     ChooseNumber chooseNumber = new ChooseNumber(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    int index = _bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseNumber.TextOfQuestion);
+                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseNumber.TextOfQuestion);
                     if (index >= 0)
                     {
                         MessageBox.Show("There is such a question in this test");
                     }
                     else
                     {
-                        _bankOfQuestions.AddQuestion(chooseNumber);
+                        DataMock._bankOfQuestions.AddQuestion(chooseNumber);
                         if (ListBoxListOfTests.SelectedIndex == 0)
                         {
                             ListBoxListOfQuestions.Items.Refresh();
-                            ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                            ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
                         }
                         chooseNumber.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
                         Clear();
@@ -519,18 +519,18 @@ namespace HoorayTheWinProject_
                 else
                 {
                     ChooseOne chooseOne = new ChooseOne(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    int index = _bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseOne.TextOfQuestion);
+                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseOne.TextOfQuestion);
                     if (index >= 0)
                     {
                         MessageBox.Show("There is such a question in this test");
                     }
                     else
                     {
-                        _bankOfQuestions.AddQuestion(chooseOne);
+                        DataMock._bankOfQuestions.AddQuestion(chooseOne);
                         if (ListBoxListOfTests.SelectedIndex == 0)
                         {
                             ListBoxListOfQuestions.Items.Refresh();
-                            ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                            ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
                         }
                         chooseOne.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
                         Clear();
@@ -547,18 +547,18 @@ namespace HoorayTheWinProject_
                 else
                 {
                     EnteringAResponse enteringAResponse = new EnteringAResponse(TextBoxTextOfQuestion.Text);
-                    int index = _bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == enteringAResponse.TextOfQuestion);
+                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == enteringAResponse.TextOfQuestion);
                     if (index >= 0)
                     {
                         MessageBox.Show("There is such a question in this test");
                     }
                     else
                     {
-                        _bankOfQuestions.AddQuestion(enteringAResponse);
+                        DataMock._bankOfQuestions.AddQuestion(enteringAResponse);
                         if (ListBoxListOfTests.SelectedIndex == 0)
                         {
                             ListBoxListOfQuestions.Items.Refresh();
-                            ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                            ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
                         }
                         Clear();
                         return;
@@ -575,18 +575,18 @@ namespace HoorayTheWinProject_
                 else
                 {
                     InSeries inSeries = new InSeries(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    int index = _bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == inSeries.TextOfQuestion);
+                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == inSeries.TextOfQuestion);
                     if (index >= 0)
                     {
                         MessageBox.Show("There is such a question in this test");
                     }
                     else
                     {
-                        _bankOfQuestions.AddQuestion(inSeries);
+                        DataMock._bankOfQuestions.AddQuestion(inSeries);
                         if (ListBoxListOfTests.SelectedIndex == 0)
                         {
                             ListBoxListOfQuestions.Items.Refresh();
-                            ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                            ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
                         }
                         inSeries.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
                         Clear();
@@ -603,18 +603,18 @@ namespace HoorayTheWinProject_
                 else
                 {
                     YesNo yesNo = new YesNo(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text);
-                    int index = _bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == yesNo.TextOfQuestion);
+                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == yesNo.TextOfQuestion);
                     if (index >= 0)
                     {
                         MessageBox.Show("There is such a question in this test");
                     }
                     else
                     {
-                        _bankOfQuestions.AddQuestion(yesNo);
+                        DataMock._bankOfQuestions.AddQuestion(yesNo);
                         if (ListBoxListOfTests.SelectedIndex == 0)
                         {
                             ListBoxListOfQuestions.Items.Refresh();
-                            ListBoxListOfQuestions.ItemsSource = _bankOfQuestions.AbstractQuestions;
+                            ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
                         }
                         yesNo.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text };
                         Clear();
@@ -870,7 +870,7 @@ namespace HoorayTheWinProject_
 
         private void TextBoxAddTest_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int index = tests.FindIndex(x => x.NameTest == TextBoxAddTest.Text);
+            int index = DataMock.tests.FindIndex(x => x.NameTest == TextBoxAddTest.Text);
             if (TextBoxAddTest.Text == "" || index >= 0)
             {
                 ButtonAddTest.IsEnabled = false;

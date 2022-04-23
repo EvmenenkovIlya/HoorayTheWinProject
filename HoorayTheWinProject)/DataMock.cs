@@ -48,7 +48,7 @@ namespace HoorayTheWinProject_
                                   new ChooseNumber("What kind of animal have a four legs?", "Fish", "Kangaroo", "Tiger", "Panda"),
                                   new InSeries("Sort in right order the authors by their year of birth", "Mayakovskiy", "Pushkin", "Tyutchev", "Pelevin"),
                                   new YesNo("Is an year contains 365 days?", "yes", "no"),
-                                  new EnteringAResponse("What is the color of banan?", "Yellow")
+                                  new EnteringAResponse("What is the color of banan?")
             }            
         };
 
