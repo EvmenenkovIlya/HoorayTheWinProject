@@ -440,10 +440,11 @@ namespace HoorayTheWinProject_
         {
             Test chosenTest = (Test)ComboBoxListOfTests.SelectedItem;
             AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
-            int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == question.TextOfQuestion);
+            int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == question.TextOfQuestion
+            && x.TypeQuestion == question.TypeQuestion);
             if (index >= 0)
             {
-                MessageBox.Show("There is such a question in this test");
+                MessageBox.Show("A question with this type is already in the test");
             }
             else
             {
@@ -490,10 +491,11 @@ namespace HoorayTheWinProject_
                 {                   
                     
                     ChooseNumber chooseNumber = new ChooseNumber(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseNumber.TextOfQuestion);
+                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseNumber.TextOfQuestion
+                    && x.TypeQuestion == chooseNumber.TypeQuestion);
                     if (index >= 0)
                     {
-                        MessageBox.Show("There is such a question in this test");
+                        MessageBox.Show("A question with this type is already in the question bank");
                     }
                     else
                     {
@@ -519,10 +521,11 @@ namespace HoorayTheWinProject_
                 else
                 {
                     ChooseOne chooseOne = new ChooseOne(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseOne.TextOfQuestion);
+                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseOne.TextOfQuestion
+                    && x.TypeQuestion == chooseOne.TypeQuestion);
                     if (index >= 0)
                     {
-                        MessageBox.Show("There is such a question in this test");
+                        MessageBox.Show("A question with this type is already in the question bank");
                     }
                     else
                     {
@@ -547,10 +550,11 @@ namespace HoorayTheWinProject_
                 else
                 {
                     EnteringAResponse enteringAResponse = new EnteringAResponse(TextBoxTextOfQuestion.Text);
-                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == enteringAResponse.TextOfQuestion);
+                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == enteringAResponse.TextOfQuestion
+                    && x.TypeQuestion == enteringAResponse.TypeQuestion);
                     if (index >= 0)
                     {
-                        MessageBox.Show("There is such a question in this test");
+                        MessageBox.Show("A question with this type is already in the question bank");
                     }
                     else
                     {
@@ -575,10 +579,11 @@ namespace HoorayTheWinProject_
                 else
                 {
                     InSeries inSeries = new InSeries(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == inSeries.TextOfQuestion);
+                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == inSeries.TextOfQuestion
+                    && x.TypeQuestion == inSeries.TypeQuestion);
                     if (index >= 0)
                     {
-                        MessageBox.Show("There is such a question in this test");
+                        MessageBox.Show("A question with this type is already in the question bank");
                     }
                     else
                     {
@@ -603,10 +608,11 @@ namespace HoorayTheWinProject_
                 else
                 {
                     YesNo yesNo = new YesNo(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text);
-                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == yesNo.TextOfQuestion);
+                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == yesNo.TextOfQuestion
+                    && x.TypeQuestion == yesNo.TypeQuestion);
                     if (index >= 0)
                     {
-                        MessageBox.Show("There is such a question in this test");
+                        MessageBox.Show("A question with this type is already in the question bank");
                     }
                     else
                     {
@@ -710,10 +716,12 @@ namespace HoorayTheWinProject_
                 {
                     Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
                     AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;                    
-                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
+                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text
+                    && x.TypeQuestion == ComboBoxTypeOfQuestion.SelectedIndex && x.Answer[0] == TextBoxOne.Text
+                    && x.Answer[1] == TextBoxTwo.Text && x.Answer[2] == TextBoxThree.Text && x.Answer[3] == TextBoxFour.Text);
                     if (index >= 0)
                     {
-                        MessageBox.Show("There is such a question in this test");
+                        MessageBox.Show("A question with this type and such answer options is already in the test");
                     }
                     else
                     {
@@ -743,7 +751,7 @@ namespace HoorayTheWinProject_
                     int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
                     if (index >= 0)
                     {
-                        MessageBox.Show("There is such a question in this test");
+                        MessageBox.Show("A question with this type and such answer options is already in the test");
                     }
                     else
                     {
@@ -772,7 +780,7 @@ namespace HoorayTheWinProject_
                     int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
                     if (index >= 0)
                     {
-                        MessageBox.Show("There is such a question in this test");
+                        MessageBox.Show("A question with this type is already in the test");
                     }
                     else
                     {
@@ -798,7 +806,7 @@ namespace HoorayTheWinProject_
                     int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
                     if (index >= 0)
                     {
-                        MessageBox.Show("There is such a question in this test");
+                        MessageBox.Show("A question with this type and such answer options is already in the test");
                     }
                     else
                     {
@@ -827,7 +835,7 @@ namespace HoorayTheWinProject_
                     int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
                     if (index >= 0)
                     {
-                        MessageBox.Show("There is such a question in this test");
+                        MessageBox.Show("A question with this type and such answer options is already in the test");
                     }
                     else
                     {
