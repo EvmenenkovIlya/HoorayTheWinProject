@@ -564,6 +564,7 @@ namespace HoorayTheWinProject_
                             ListBoxListOfQuestions.Items.Refresh();
                             ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
                         }
+                        enteringAResponse.Answer = new List<string> { };
                         Clear();
                         return;
                     }
@@ -623,8 +624,7 @@ namespace HoorayTheWinProject_
                             ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
                         }
                         yesNo.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text };
-                        Clear();
-                        
+                        Clear();                        
                         return;
                     }
                 }
@@ -727,10 +727,11 @@ namespace HoorayTheWinProject_
                     {
                         question.TextOfQuestion = TextBoxTextOfQuestion.Text;
                         question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;
-                        question.Answer[0] = TextBoxOne.Text;
-                        question.Answer[1] = TextBoxTwo.Text;
-                        question.Answer[2] = TextBoxThree.Text;
-                        question.Answer[3] = TextBoxFour.Text;
+                        question.Answer.Clear();
+                        question.Answer.Add(TextBoxOne.Text);
+                        question.Answer.Add(TextBoxTwo.Text);
+                        question.Answer.Add(TextBoxThree.Text);
+                        question.Answer.Add(TextBoxFour.Text);
                         Open();
                         //HideAllVariants();
                         return;
@@ -759,10 +760,11 @@ namespace HoorayTheWinProject_
                     {
                         question.TextOfQuestion = TextBoxTextOfQuestion.Text;
                         question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;
-                        question.Answer[0] = TextBoxOne.Text;
-                        question.Answer[1] = TextBoxTwo.Text;
-                        question.Answer[2] = TextBoxThree.Text;
-                        question.Answer[3] = TextBoxFour.Text;
+                        question.Answer.Clear();
+                        question.Answer.Add(TextBoxOne.Text);
+                        question.Answer.Add(TextBoxTwo.Text);
+                        question.Answer.Add(TextBoxThree.Text);
+                        question.Answer.Add(TextBoxFour.Text);
                         Open();
                         //HideAllVariants();
                         return;
@@ -788,7 +790,8 @@ namespace HoorayTheWinProject_
                     else
                     {
                         question.TextOfQuestion = TextBoxTextOfQuestion.Text;
-                        question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;                        
+                        question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;
+                        question.Answer.Clear();
                         Open();
                         //HideAllVariants();
                         return;
@@ -817,10 +820,11 @@ namespace HoorayTheWinProject_
                     {
                         question.TextOfQuestion = TextBoxTextOfQuestion.Text;
                         question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;
-                        question.Answer[0] = TextBoxOne.Text;
-                        question.Answer[1] = TextBoxTwo.Text;
-                        question.Answer[2] = TextBoxThree.Text;
-                        question.Answer[3] = TextBoxFour.Text;
+                        question.Answer.Clear();
+                        question.Answer.Add(TextBoxOne.Text);
+                        question.Answer.Add(TextBoxTwo.Text);
+                        question.Answer.Add(TextBoxThree.Text);
+                        question.Answer.Add(TextBoxFour.Text);
                         Open();
                         //HideAllVariants();
                         return;
@@ -848,8 +852,9 @@ namespace HoorayTheWinProject_
                     {
                         question.TextOfQuestion = TextBoxTextOfQuestion.Text;
                         question.TypeQuestion = ComboBoxTypeOfQuestion.SelectedIndex;
-                        question.Answer[0] = TextBoxOne.Text;
-                        question.Answer[1] = TextBoxTwo.Text;                        
+                        question.Answer.Clear();
+                        question.Answer.Add(TextBoxOne.Text);
+                        question.Answer.Add(TextBoxTwo.Text);                        
                         Open();
                         //HideAllVariants();
                         return;
