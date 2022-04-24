@@ -748,7 +748,9 @@ namespace HoorayTheWinProject_
                 {
                     Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
                     AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
-                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
+                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text
+                    && x.TypeQuestion == ComboBoxTypeOfQuestion.SelectedIndex && x.Answer[0] == TextBoxOne.Text
+                    && x.Answer[1] == TextBoxTwo.Text && x.Answer[2] == TextBoxThree.Text && x.Answer[3] == TextBoxFour.Text);
                     if (index >= 0)
                     {
                         MessageBox.Show("A question with this type and such answer options is already in the test");
@@ -777,7 +779,8 @@ namespace HoorayTheWinProject_
                 {
                     Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
                     AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
-                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
+                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text
+                    && x.TypeQuestion == ComboBoxTypeOfQuestion.SelectedIndex);
                     if (index >= 0)
                     {
                         MessageBox.Show("A question with this type is already in the test");
@@ -803,7 +806,9 @@ namespace HoorayTheWinProject_
                 {
                     Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
                     AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
-                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
+                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text
+                    && x.TypeQuestion == ComboBoxTypeOfQuestion.SelectedIndex && x.Answer[0] == TextBoxOne.Text
+                    && x.Answer[1] == TextBoxTwo.Text && x.Answer[2] == TextBoxThree.Text && x.Answer[3] == TextBoxFour.Text);
                     if (index >= 0)
                     {
                         MessageBox.Show("A question with this type and such answer options is already in the test");
@@ -832,7 +837,9 @@ namespace HoorayTheWinProject_
                 {
                     Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
                     AbstractQuestion question = (AbstractQuestion)ListBoxListOfQuestions.SelectedItem;
-                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text);
+                    int index = chosenTest.AbstractQuestions.FindIndex(x => x.TextOfQuestion == TextBoxTextOfQuestion.Text
+                    && x.TypeQuestion == ComboBoxTypeOfQuestion.SelectedIndex && x.Answer[0] == TextBoxOne.Text
+                    && x.Answer[1] == TextBoxTwo.Text);
                     if (index >= 0)
                     {
                         MessageBox.Show("A question with this type and such answer options is already in the test");
