@@ -13,11 +13,36 @@ namespace HoorayTheWinProjectLogic
         public List<Group> Groups { get; set; }
         public List<AbstractQuestion> AbstractQuestions { get; set; }
         public bool IsSelected { get; set; }
+        public Dictionary<long, List<string>> AnswerBase { get; set; } = new Dictionary<long, List<string>>();
         public Test(string nameTest)
         {
             NameTest = nameTest;
             Groups = new List<Group>();
             AbstractQuestions = new List<AbstractQuestion>();
+        }
+
+        public void AddDictionary()
+        {
+            AnswerBase = new Dictionary<long, List<string>>();
+        }
+        public Test GetClone()
+        {
+            List<AbstractQuestion> newQuestions = new List<AbstractQuestion>();
+            foreach (AbstractQuestion question in AbstractQuestions)
+            {
+                newQuestions.Add(question);
+            }
+            List<Group> newGroups = new List<Group>();
+            foreach (Group group in Groups)
+            {
+                newGroups.Add(group);
+            }
+            return new Test(NameTest)
+            {
+                NameTest = NameTest,
+                Groups = newGroups,
+                AbstractQuestions = newQuestions
+            };
         }
 
         public void AddQuestion(AbstractQuestion abstractQuestion)
@@ -33,7 +58,7 @@ namespace HoorayTheWinProjectLogic
         {
             if (AbstractQuestions.Count < 1)
             {
-                throw new Exception("The group is empty");
+                throw new Exception("There are no questions in the test");
             }
 
             AbstractQuestions.Remove(abstractQuestion);
@@ -52,7 +77,7 @@ namespace HoorayTheWinProjectLogic
         {
             if (Groups.Count < 1)
             {
-                throw new Exception("The group is empty");
+                throw new Exception("There are no groups in the test");
             }
 
             Groups.Remove(group);
