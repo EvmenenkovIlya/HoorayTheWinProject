@@ -12,10 +12,12 @@ namespace HoorayTheWinProjectLogic.Questions
     {
         public YesNo(string question, string answerOne, string answerTwo)
         {
+            List<string> Answer = new List<string>();
             TextOfQuestion = question;
             TypeQuestion = 3;
             Answer.Add(answerOne);
             Answer.Add(answerTwo);
+            base.Answer = Answer;
         }
 
         public override InlineKeyboardMarkup GetInlineKM()

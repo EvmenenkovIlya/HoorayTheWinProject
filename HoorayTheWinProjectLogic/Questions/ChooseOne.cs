@@ -12,12 +12,14 @@ namespace HoorayTheWinProjectLogic.Questions
     {       
         public ChooseOne (string question, string answerOne, string answerTwo, string answerThree, string answerFour)
         {
+            List<string> Answer = new List<string>();
             TextOfQuestion = question;
             TypeQuestion = 1;
             Answer.Add(answerOne);
             Answer.Add(answerTwo);
             Answer.Add(answerThree);
-            Answer.Add(answerFour);  
+            Answer.Add(answerFour);
+            base.Answer = Answer;
         }
         public override InlineKeyboardMarkup GetInlineKM()
         {

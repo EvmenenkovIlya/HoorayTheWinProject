@@ -11,13 +11,15 @@ namespace HoorayTheWinProjectLogic.Questions
     public class ChooseNumber : AbstractQuestion
     {
         public ChooseNumber(string question, string answerOne, string answerTwo, string answerThree, string answerFour)
-        {                        
+        {
+            List<string> Answer = new List<string>();
             TextOfQuestion = question;
             TypeQuestion = 0;
             Answer.Add(answerOne);
             Answer.Add(answerTwo);
             Answer.Add(answerThree);
-            Answer.Add(answerFour);           
+            Answer.Add(answerFour);
+            base.Answer = Answer;
         }
         
         public override InlineKeyboardMarkup GetInlineKM()

@@ -11,9 +11,11 @@ namespace HoorayTheWinProjectLogic.Questions
     public class EnteringAResponse : AbstractQuestion
     {
         public EnteringAResponse(string question)
-        {            
+        {
+            List<string> Answer = new List<string>();
             TextOfQuestion = question;
             TypeQuestion = 2;
+            base.Answer = Answer;
         }
         public override InlineKeyboardMarkup GetInlineKM()
         {

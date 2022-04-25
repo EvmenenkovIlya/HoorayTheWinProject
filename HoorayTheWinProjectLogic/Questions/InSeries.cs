@@ -12,7 +12,7 @@ namespace HoorayTheWinProjectLogic.Questions
     {
         public InSeries(string question, string answerOne, string answerTwo, string answerThree, string answerFour)
         {
-            List<string> Answer = new List<string>() { };
+            List<string> Answer = new List<string>();
             TextOfQuestion = question;
             TypeQuestion = 3;
             Answer.Add(answerOne);
