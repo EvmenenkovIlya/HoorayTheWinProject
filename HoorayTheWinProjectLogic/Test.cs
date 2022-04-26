@@ -25,6 +25,8 @@ namespace HoorayTheWinProjectLogic
         {
             AnswerBase = new Dictionary<long, List<string>>();
         }
+
+
         public Test GetClone()
         {
             List<AbstractQuestion> newQuestions = new List<AbstractQuestion>();
