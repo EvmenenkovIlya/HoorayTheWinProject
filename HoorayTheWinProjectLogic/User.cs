@@ -11,6 +11,9 @@ namespace HoorayTheWinProjectLogic
         public string NameUser { get; set; }
 
         public long ChatId { get; private set; }
+
+        public List<string> Answers { get; set; }
+
         public User(string nameUser)
         {
             NameUser = nameUser;

@@ -27,12 +27,11 @@ namespace HoorayTheWinProject_
             _ids = new List<long>();
         }
 
-        public async void Send(AbstractQuestion abstractQuestion)
+        public async void Send<T>( T abstractQuestion) where T : AbstractQuestion
         {
-            InSeries qs = (InSeries)abstractQuestion;
             foreach (var id in _ids)
             {
-                InlineKeyboardMarkup inlineKeyboard = InSeriesTG.InlineKM(qs);               
+                InlineKeyboardMarkup inlineKeyboard = abstractQuestion.GetInlineKM();              
                 await _client.SendTextMessageAsync(new ChatId(id), abstractQuestion.TextOfQuestion, replyMarkup: inlineKeyboard);
             }
         }
