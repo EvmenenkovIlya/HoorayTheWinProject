@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telegram.Bot.Types;
 
 namespace HoorayTheWinProjectLogic
 {
@@ -11,14 +12,11 @@ namespace HoorayTheWinProjectLogic
         public string NameUser { get; set; }
 
         public long ChatId { get; private set; }
-        public User(string nameUser)
+
+        public User(Chat chat)
         {
-            NameUser = nameUser;
-        }
-        public User(string nameUser, long chatId)
-        {
-            NameUser = nameUser;
-            ChatId = 1;
+            NameUser = chat.Username!;
+            ChatId = chat.Id;
         }
         public override string ToString()
         {
