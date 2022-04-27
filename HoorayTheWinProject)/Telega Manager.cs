@@ -1,4 +1,5 @@
 ﻿using HoorayTheWinProject_.TestLogicInTG;
+using HoorayTheWinProjectLogic;
 using HoorayTheWinProjectLogic.Questions;
 using System;
 using System.Collections.Generic;
@@ -26,12 +27,11 @@ namespace HoorayTheWinProject_
             _ids = new List<long>();
         }
 
-        public async void Send(AbstractQuestion abstractQuestion)
+        public async void Send<T>( T abstractQuestion) where T : AbstractQuestion
         {
-            InSeries qs = (InSeries)abstractQuestion;
             foreach (var id in _ids)
             {
-                InlineKeyboardMarkup inlineKeyboard = InSeriesTG.InlineKM(qs);               
+                InlineKeyboardMarkup inlineKeyboard = abstractQuestion.GetInlineKM();              
                 await _client.SendTextMessageAsync(new ChatId(id), abstractQuestion.TextOfQuestion, replyMarkup: inlineKeyboard);
             }
         }
@@ -62,22 +62,7 @@ namespace HoorayTheWinProject_
                 }
             }
             else if (update.CallbackQuery != null)
-            {
-                InlineKeyboardMarkup inlineKeyboard = new(
-                      new[]
-                      {
-                            new []
-                            {
-                                InlineKeyboardButton.WithCallbackData("+Q", "QQQQQ"),
-                                InlineKeyboardButton.WithCallbackData("+W", "WWWWW"),
-                                InlineKeyboardButton.WithCallbackData("+E", "EEEEE"),
-                            },
-                            new []
-                            {
-                                InlineKeyboardButton.WithCallbackData("+R", "RRRRR"),
-                                InlineKeyboardButton.WithCallbackData("+T", "TTTTT"),
-                            }
-                      });
+            {                
                 await botClient.EditMessageTextAsync(
                     update.CallbackQuery.Message!.Chat.Id,
                     update.CallbackQuery.Message!.MessageId,
@@ -87,7 +72,7 @@ namespace HoorayTheWinProject_
 
 
                 string s = update.CallbackQuery.From.FirstName + " "
-                    + update.CallbackQuery.From.LastName + " нажал на "
+                    + update.CallbackQuery.From.LastName + "на вопрос" + DataMock.testMock.AbstractQuestions + "ответил"
                     + update.CallbackQuery.Data;
                 _onMessage(s);
             }
