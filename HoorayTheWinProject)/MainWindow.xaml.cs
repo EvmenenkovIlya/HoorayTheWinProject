@@ -26,17 +26,14 @@ namespace HoorayTheWinProject_
     public partial class MainWindow : Window
     {
         private TelegramManager _telegramManager;
-        private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
-        private List<string> _labels;
+        private Test _test;       
         private DispatcherTimer _timer;
       
         public MainWindow()
         {
-
-            _telegramManager = new TelegramManager(_token, OnMessage);
-            _labels = new List<string>();
+            _telegramManager = new TelegramManager(_test!);
+            _telegramManager.Start();
             InitializeComponent();
-
             ListBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxChooseTestForStart.ItemsSource = DataMock.tests;
@@ -44,7 +41,6 @@ namespace HoorayTheWinProject_
             ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
             ComboBoxChooseGroup.ItemsSource = DataMock.groups;
             ComboBoxTypeOfQuestion.ItemsSource = DataMock.forComboBox;
-            LB.ItemsSource = _labels;
             TextBoxChageUserName.IsEnabled = false;
             TextBoxChangeGroupName.IsEnabled = false;
             TextBoxChangeNameOfTest.IsEnabled = false;
@@ -114,9 +110,8 @@ namespace HoorayTheWinProject_
 
         private void TextBoxChangeGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string tmp = TextBoxChangeGroupName.Text;
-            int index = DataMock.groups.FindIndex(x => x.NameGroup == tmp);
-            if (tmp == "" || index >= 0)
+            int index = DataMock.groups.FindIndex(x => x.NameGroup == TextBoxChangeGroupName.Text);
+            if (TextBoxChangeGroupName.Text == "" || index >= 0)
             {
                 ButtonChangeGroupName.IsEnabled = false;
             }
@@ -155,8 +150,8 @@ namespace HoorayTheWinProject_
             foreach (User user in groupOfUser.Users)
             {
                 DataMock._other.AddUser(user);
-             }
-             DataMock.groups.Remove(groupOfUser);
+            }
+            DataMock.groups.Remove(groupOfUser);
             ListBoxGroups.Items.Refresh();
             ComboBoxChooseGroup.Items.Refresh();
             ListBoxCheckBoxOfGroupForTest.Items.Refresh();
@@ -194,7 +189,11 @@ namespace HoorayTheWinProject_
 
         private void OnTick(object sender, EventArgs e)
         {
-            LB.Items.Refresh();
+            if (ListBoxGroups.SelectedItem == DataMock._other)
+            {
+                ListBoxListOfUsers.Items.Refresh();
+                ListBoxListOfUsers.ItemsSource = DataMock._other.Users;
+            }
         }
 
         private void ButtonSend_Click(object sender, RoutedEventArgs e)
@@ -203,13 +202,9 @@ namespace HoorayTheWinProject_
             _telegramManager.Send(DataMock.qs);
         }
 
-        public void OnMessage(string s)
-        {
-            _labels.Add(s);
-        }
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
-            _telegramManager.Start();
+            //_telegramManager.Start();
         }
 
         private void TextBoxTextOfQuestion_TextChanged_1(object sender, TextChangedEventArgs e)
@@ -257,6 +252,14 @@ namespace HoorayTheWinProject_
                 TextBoxThree.Clear();
                 TextBoxFour.Clear();
                 TextBoxTextOfQuestion.Clear();
+                RadioButtonOne.IsChecked = false;
+                RadioButtonTwo.IsChecked = false;
+                RadioButtonThree.IsChecked = false;
+                RadioButtonFour.IsChecked = false;
+                CheckBoxOne.IsChecked = false;
+                CheckBoxTwo.IsChecked = false;
+                CheckBoxThree.IsChecked = false;
+                CheckBoxFour.IsChecked = false;
             }
             if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
             {
@@ -334,8 +337,7 @@ namespace HoorayTheWinProject_
                 ComboBoxChooseGroup.IsEnabled = false;
             }
             User user = (User)ListBoxListOfUsers.SelectedItem;
-            string tmp = TextBoxChageUserName.Text;
-            if (tmp == "" || tmp == user.NameUser)
+            if (TextBoxChageUserName.Text == "" || TextBoxChageUserName.Text == user.NameUser)
             {
                 ButtonChangeUserName.IsEnabled = false;
             }
@@ -472,6 +474,14 @@ namespace HoorayTheWinProject_
             TextBoxTextOfQuestion.IsEnabled = false;
             ButtonCreateAQuestion.IsEnabled = false;
             ButtonResetQuestion.IsEnabled = false;
+            RadioButtonOne.IsChecked = false;
+            RadioButtonTwo.IsChecked = false;
+            RadioButtonThree.IsChecked = false;
+            RadioButtonFour.IsChecked = false;
+            CheckBoxOne.IsChecked = false;
+            CheckBoxTwo.IsChecked = false;
+            CheckBoxThree.IsChecked = false;
+            CheckBoxFour.IsChecked = false;
         }
 
         private void ButtonCreateAQuestion_Click(object sender, RoutedEventArgs e)
@@ -948,6 +958,14 @@ namespace HoorayTheWinProject_
             TextBoxTwo.Clear();
             TextBoxThree.Clear();
             TextBoxFour.Clear();
+            RadioButtonOne.IsChecked = false;
+            RadioButtonTwo.IsChecked = false;
+            RadioButtonThree.IsChecked = false;
+            RadioButtonFour.IsChecked = false;
+            CheckBoxOne.IsChecked = false;
+            CheckBoxTwo.IsChecked = false;
+            CheckBoxThree.IsChecked = false;
+            CheckBoxFour.IsChecked = false;
             ButtonCreateAQuestion.IsEnabled = false;
             ButtonResetQuestion.IsEnabled = false;
         }
