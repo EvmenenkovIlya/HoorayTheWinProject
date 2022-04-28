@@ -11,10 +11,12 @@ namespace HoorayTheWinProjectLogic
     public static class DataMock
     {
         public static List<string> forComboBox = new List<string>() { "CHOOSE NUMBER", "CHOOSE ONE", "WRITE A REPONSE", "IN SERIES", "YES OR NO" };
-               
+          
         public static List<long> DataBase { get; set; } = new List<long>();
 
         public static Group _other = new Group("Other");
+
+        public static bool IsTesting = false;
 
         //public static Group group1 = new Group("Hooray, the win!")
         //{

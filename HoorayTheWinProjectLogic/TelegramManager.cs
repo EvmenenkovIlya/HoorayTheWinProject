@@ -17,7 +17,7 @@ namespace HoorayTheWinProjectLogic
     {
         private TelegramBotClient _client;
         private Test _test;        
-        private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
+        private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";     
 
         public TelegramManager(Test test)
         {
@@ -30,7 +30,7 @@ namespace HoorayTheWinProjectLogic
             _client.StartReceiving(HandleRecieve, HandleError);
         }
 
-        public async void Send<T>(T abstractQuestion) where T : AbstractQuestion
+        public async void Send(AbstractQuestion abstractQuestion)
         {
             foreach (var id in DataMock.DataBase)
             {
@@ -40,18 +40,23 @@ namespace HoorayTheWinProjectLogic
         }
        
         private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
-        {
-            if (update.Message == null || update.Message.Text == null)
-            {
-                await _client.SendTextMessageAsync(update.Message!.Chat.Id, "Enter text or emoji",  replyMarkup: null);
-                return;
-            }
+        {           
             if (DataMock.DataBase.Contains(update.Message.Chat.Id) == false)
             {
                 DataMock.DataBase.Add(update.Message.Chat.Id);
                 DataMock._other.AddUser(new User(update.Message.Chat));
             }
+            if (update.Message == null || update.Message.Text == null)
+            {
+                //await _client.SendTextMessageAsync(update.Message!.Chat.Id, "Enter text or emoji",  replyMarkup: null);
+                return;
+            }
+
+            if (DataMock.IsTesting)
+            {
+                
             
+            }
             //else if (update.CallbackQuery != null)
             //{
             //    await botClient.EditMessageTextAsync(

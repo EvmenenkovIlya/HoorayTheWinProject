@@ -22,7 +22,7 @@ namespace HoorayTheWinProjectLogic.Questions
             return null;
         }
 
-        public override bool SetAnswer(Update update, Test test)
+        public override bool SetAnswer(Update update, TestManager test)
         {
             List<string> answers;
             test.AnswerBase.TryGetValue(update.Message!.Chat.Id, out answers!);
