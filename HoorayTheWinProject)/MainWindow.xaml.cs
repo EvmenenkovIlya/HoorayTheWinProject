@@ -252,6 +252,14 @@ namespace HoorayTheWinProject_
                 TextBoxThree.Clear();
                 TextBoxFour.Clear();
                 TextBoxTextOfQuestion.Clear();
+                RadioButtonOne.IsChecked = false;
+                RadioButtonTwo.IsChecked = false;
+                RadioButtonThree.IsChecked = false;
+                RadioButtonFour.IsChecked = false;
+                CheckBoxOne.IsChecked = false;
+                CheckBoxTwo.IsChecked = false;
+                CheckBoxThree.IsChecked = false;
+                CheckBoxFour.IsChecked = false;
             }
             if (ComboBoxTypeOfQuestion.SelectedIndex == 0) //chooseNumber
             {
@@ -466,6 +474,14 @@ namespace HoorayTheWinProject_
             TextBoxTextOfQuestion.IsEnabled = false;
             ButtonCreateAQuestion.IsEnabled = false;
             ButtonResetQuestion.IsEnabled = false;
+            RadioButtonOne.IsChecked = false;
+            RadioButtonTwo.IsChecked = false;
+            RadioButtonThree.IsChecked = false;
+            RadioButtonFour.IsChecked = false;
+            CheckBoxOne.IsChecked = false;
+            CheckBoxTwo.IsChecked = false;
+            CheckBoxThree.IsChecked = false;
+            CheckBoxFour.IsChecked = false;
         }
 
         private void ButtonCreateAQuestion_Click(object sender, RoutedEventArgs e)
@@ -942,6 +958,14 @@ namespace HoorayTheWinProject_
             TextBoxTwo.Clear();
             TextBoxThree.Clear();
             TextBoxFour.Clear();
+            RadioButtonOne.IsChecked = false;
+            RadioButtonTwo.IsChecked = false;
+            RadioButtonThree.IsChecked = false;
+            RadioButtonFour.IsChecked = false;
+            CheckBoxOne.IsChecked = false;
+            CheckBoxTwo.IsChecked = false;
+            CheckBoxThree.IsChecked = false;
+            CheckBoxFour.IsChecked = false;
             ButtonCreateAQuestion.IsEnabled = false;
             ButtonResetQuestion.IsEnabled = false;
         }
