@@ -12,7 +12,7 @@ namespace HoorayTheWinProjectLogic.Questions
         public List <string> Answer { get; set; }       
         
         public abstract InlineKeyboardMarkup GetInlineKM();
-        public abstract bool SetAnswer(Update update, Test test);
+        public abstract bool SetAnswer(Update update, TestManager test);
 
         public override string ToString()
         {

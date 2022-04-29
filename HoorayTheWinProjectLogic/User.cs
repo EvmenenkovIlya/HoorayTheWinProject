@@ -15,12 +15,13 @@ namespace HoorayTheWinProjectLogic
 
         public User(Chat chat)
         {
-            NameUser = chat.Username!;
+            NameUser = $"{chat.FirstName} {chat.LastName}";
             ChatId = chat.Id;
         }
         public override string ToString()
         {
             return NameUser;
         }
+        
     }
 }

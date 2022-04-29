@@ -34,36 +34,40 @@ namespace HoorayTheWinProject_
             _telegramManager = new TelegramManager(_test!);
             _telegramManager.Start();
             InitializeComponent();
+
             ListBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxChooseTestForStart.ItemsSource = DataMock.tests;
             ListBoxGroups.ItemsSource = DataMock.groups;
-            ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
             ComboBoxChooseGroup.ItemsSource = DataMock.groups;
+            ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
             ComboBoxTypeOfQuestion.ItemsSource = DataMock.forComboBox;
+
             TextBoxChageUserName.IsEnabled = false;
+            TextBoxTextOfQuestion.IsEnabled = false;
             TextBoxChangeGroupName.IsEnabled = false;
             TextBoxChangeNameOfTest.IsEnabled = false;
-            TextBoxTextOfQuestion.IsEnabled = false;
-            ButtonChangeUserName.IsEnabled = false;
-            ButtonDeleteGroup.IsEnabled = false;
             ButtonAddTest.IsEnabled = false;
             ButtonDeleteTest.IsEnabled = false;
-            ButtonChangeNameOfTest.IsEnabled = false;
-            ButtonDeleteQuestionFromTest.IsEnabled = false;
-            ButtonAddQuestionToTest.IsEnabled = false;
+            ButtonAddToGroup.IsEnabled = false;
+            ButtonDeleteGroup.IsEnabled = false;
+            ButtonFinishNewTest.IsEnabled = false;
+            ButtonResetQuestion.IsEnabled = false;
+            ButtonChangeUserName.IsEnabled = false;
             ButtonCreateNewGroup.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;            
-            ButtonChangeGroupName.IsEnabled = false;
             ButtonSaveTheChanges.IsEnabled = false;
-            ButtonContentOfQuestion.IsEnabled = false;
-            ButtonAddToGroup.IsEnabled = false;
+            ButtonChangeGroupName.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;
             ButtonCreateAQuestion.IsEnabled = false;
-            ButtonResetQuestion.IsEnabled = false;
+            ButtonChangeNameOfTest.IsEnabled = false;
+            ButtonAddQuestionToTest.IsEnabled = false;
+            ButtonContentOfQuestion.IsEnabled = false;
+            ButtonDeleteQuestionFromTest.IsEnabled = false;
             ComboBoxChooseGroup.IsEnabled = false;
             ComboBoxListOfTests.IsEnabled = false;
             ComboBoxTypeOfQuestion.IsEnabled = false;
+
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
@@ -199,7 +203,7 @@ namespace HoorayTheWinProject_
         private void ButtonSend_Click(object sender, RoutedEventArgs e)
         {
             
-            _telegramManager.Send(DataMock.qs);
+            _telegramManager.Send(DataMock.qs, 296570604);
         }
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
@@ -462,10 +466,19 @@ namespace HoorayTheWinProject_
 
         private void ButtonStartNewTest_Click(object sender, RoutedEventArgs e)
         {
-            var listForTest = DataMock.groups.Where(x => x.IsSelected == true);
-            ListBoxGroups.ItemsSource = listForTest;
+            DataMock.IsTesting = true;
+            DataMock._testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);           
+            ButtonStartNewTest.IsEnabled = false;
+            ButtonFinishNewTest.IsEnabled = true;
         }
-       
+
+        private void ButtonFinishNewTest_Click(object sender, RoutedEventArgs e)
+        {
+            DataMock.IsTesting = false;
+            ButtonStartNewTest.IsEnabled = true;
+            ButtonFinishNewTest.IsEnabled = false;
+        }
+
         private void Clear()
         {           
             TextBoxTextOfQuestion.Clear();            

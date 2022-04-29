@@ -44,7 +44,7 @@ namespace HoorayTheWinProjectLogic.Questions
             return inlineKeyboard;
         }
 
-        public override bool SetAnswer(Update update, Test test)
+        public override bool SetAnswer(Update update, TestManager test)
         {
             foreach (var item in Answer)
             {
