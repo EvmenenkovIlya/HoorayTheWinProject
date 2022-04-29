@@ -14,7 +14,7 @@ namespace HoorayTheWinProjectLogic.Questions
         {
             List<string> Answer = new List<string>();
             TextOfQuestion = question;
-            TypeQuestion = 3;
+            TypeQuestion = 4;
             Answer.Add(answerOne);
             Answer.Add(answerTwo);
             base.Answer = Answer;
@@ -38,7 +38,7 @@ namespace HoorayTheWinProjectLogic.Questions
             return inlineKeyboard;
         }
 
-        public override bool SetAnswer(Update update, Test test)
+        public override bool SetAnswer(Update update, TestManager test)
         {
             foreach (var item in Answer)
             {

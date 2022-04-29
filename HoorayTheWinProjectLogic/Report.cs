@@ -10,20 +10,15 @@ namespace HoorayTheWinProjectLogic
 {
     public class Report
     {
-        public string Name { get; private set; }
-        public string Question { get; private set; }
-        public List<string> UserAnswer { get; private set; }
+        public string Name { get; set; }
+        public string Question { get; set; }
+        public List<string> UserAnswer { get; set; }
 
         public Report(User user, AbstractQuestion question, AbstractQuestion answer)
         {
             Name = user.NameUser;
             Question = question.TextOfQuestion;
             UserAnswer = answer.Answer;
-        }
-
-        public void GetReport()
-        {
-        
         }
 
     }
