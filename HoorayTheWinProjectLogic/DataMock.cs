@@ -16,6 +16,8 @@ namespace HoorayTheWinProjectLogic
 
         public static Group _other = new Group("Other");
 
+        public static TestManager _testToStart;
+
         public static bool IsTesting = false;
 
         //public static Group group1 = new Group("Hooray, the win!")

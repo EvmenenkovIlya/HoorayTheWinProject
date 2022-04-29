@@ -203,7 +203,7 @@ namespace HoorayTheWinProject_
         private void ButtonSend_Click(object sender, RoutedEventArgs e)
         {
             
-            _telegramManager.Send(DataMock.qs);
+            _telegramManager.Send(DataMock.qs, 296570604);
         }
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
@@ -467,8 +467,7 @@ namespace HoorayTheWinProject_
         private void ButtonStartNewTest_Click(object sender, RoutedEventArgs e)
         {
             DataMock.IsTesting = true;
-            TestManager testForStart = new TestManager();
-            testForStart.TestForStart = (Test)ComboBoxChooseTestForStart.SelectedItem;
+            DataMock._testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);           
             ButtonStartNewTest.IsEnabled = false;
             ButtonFinishNewTest.IsEnabled = true;
         }

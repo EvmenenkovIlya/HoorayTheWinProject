@@ -35,8 +35,8 @@
                     </ListBox>
                     <Label Grid.Column='1' Name="LabelChooseTest" Content="Choose Test:" VerticalAlignment="Top"  Margin="20,300,20,0" FontFamily="Arial Black" FontSize="20"/>
                     <ComboBox Grid.Column='1' Name='ComboBoxChooseTestForStart' VerticalAlignment="Top" Margin="20,336,20,0" FontSize="16"/>
-                    <Button Grid.Column="1" Name="ButtonStartNewTest" Grid.Row="1" Content="Start Test" VerticalAlignment="Top" HorizontalAlignment="Center" Height="80" Width="120" Margin="-50,139,0,0" FontFamily="Arial Black" FontSize="20" Click="ButtonStartNewTest_Click"/>
-                    <Button Grid.Column="1" Name="ButtonFinishNewTest" Grid.Row="1" Content="Finish Test" VerticalAlignment="Top" HorizontalAlignment="Right" Height="80" Width="120" Margin="0,139,90,0" FontFamily="Arial Black" FontSize="20" Click="ButtonFinishNewTest_Click"/>
+                    <Button Grid.Column="1" Name="ButtonStartNewTest" Grid.Row="1" Content="Start Test" VerticalAlignment="Top" HorizontalAlignment="Left" Height="80" Width="120" Margin="100,139,0,0" FontFamily="Arial Black" FontSize="20" Click="ButtonStartNewTest_Click"/>
+                    <Button Grid.Column="1" Name="ButtonFinishNewTest" Grid.Row="1" Content="Finish Test" VerticalAlignment="Top" HorizontalAlignment="Right" Height="80" Width="120" Margin="0,139,100,0" FontFamily="Arial Black" FontSize="20" Click="ButtonFinishNewTest_Click"/>
                     <Label Grid.Row='1' Name="LabelListOfUser" Content="List of Users:" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
                     <Button Grid.Row='1' Name="ButtonChangeUserName" Content="Change User Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160" Height="25" Margin="0, 0, 20, 45" FontWeight="Normal" FontFamily="Arial Black" FontSize="14" Click="ButtonChangeUserName_Click" />
                     <Button Grid.Row='1' Name="ButtonAddToGroup" Content="Add To Group" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="130" Height="25" Margin="0,0,50,10" FontWeight="Bold" FontSize="14" FontFamily="Arial Black" Click="ButtonAddToGroup_Click"/>
