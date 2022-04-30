@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Security.Principal;
 
 namespace HoorayTheWinProjectLogic.DataStorage
 {
     [Serializable]
     public class ReportStorage
     {
-        private const string filePath = @"..\..\..\..\Reports.json";
+        private string filePath= Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)+@"\Report.json";
         public List<Report> Reports { get; private set; }
 
         private static ReportStorage _instance;

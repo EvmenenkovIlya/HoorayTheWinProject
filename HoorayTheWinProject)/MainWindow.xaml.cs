@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using HoorayTheWinProjectLogic.Questions;
 using System.Windows.Threading;
 using HoorayTheWinProjectLogic.DataStorage;
+using Microsoft.Win32;
 
 namespace HoorayTheWinProject_
 {
@@ -30,15 +31,12 @@ namespace HoorayTheWinProject_
         private Test _test;       
         private DispatcherTimer _timer;
 
-        ReportStorage reports = ReportStorage.GetInstance();
-      
         GroupStorage groups = GroupStorage.GetInstance();
         public MainWindow()
         {
             _telegramManager = new TelegramManager(_test!);
             _telegramManager.Start();
             InitializeComponent();
-            reports.Save();
             groups.Save();
 
             ListBoxListOfTests.ItemsSource = DataMock.tests;
@@ -987,6 +985,14 @@ namespace HoorayTheWinProject_
             CheckBoxFour.IsChecked = false;
             ButtonCreateAQuestion.IsEnabled = false;
             ButtonResetQuestion.IsEnabled = false;
+        }
+
+        private void ButtonReport_Click(object sender, RoutedEventArgs e)
+        {
+            //SaveFileDialog saveFileDialog = new SaveFileDialog();
+            //saveFileDialog.ShowDialog();
+            ReportStorage reports = ReportStorage.GetInstance();
+            reports.Save();
         }
     }
 }

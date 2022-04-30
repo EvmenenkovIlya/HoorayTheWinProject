@@ -18,7 +18,7 @@ namespace HoorayTheWinProjectLogic.DataStorage
         public static List<long> DataBase { get; set; } = new List<long>();
         private GroupStorage()
         {
-            groups = Load();
+            groups = DataMock.groups;
         }
 
         public static GroupStorage GetInstance()
