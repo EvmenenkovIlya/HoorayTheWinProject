@@ -27,14 +27,13 @@ namespace HoorayTheWinProject_
     public partial class MainWindow : Window
     {
         private TelegramManager _telegramManager;
-        private Test _test;       
         private DispatcherTimer _timer;
         TestsStorage tests = TestsStorage.GetInstance();
 
         GroupStorage groups = GroupStorage.GetInstance();
         public MainWindow()
         {
-            _telegramManager = new TelegramManager(_test!);
+            _telegramManager = new TelegramManager();
             _telegramManager.Start();
 
             InitializeComponent();
@@ -56,6 +55,7 @@ namespace HoorayTheWinProject_
             ButtonDeleteTest.IsEnabled = false;
             ButtonAddToGroup.IsEnabled = false;
             ButtonDeleteGroup.IsEnabled = false;
+            ButtonStartNewTest.IsEnabled = false;
             ButtonFinishNewTest.IsEnabled = false;
             ButtonResetQuestion.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;
@@ -80,11 +80,6 @@ namespace HoorayTheWinProject_
         }
 
         private void TextBoxTextOfQuestion_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
@@ -208,7 +203,7 @@ namespace HoorayTheWinProject_
         private void ButtonSend_Click(object sender, RoutedEventArgs e)
         {
             
-            _telegramManager.Send(DataMock.qs, 296570604);
+            //_telegramManager.Send(DataMock.qs, 296570604);
         }
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
@@ -394,7 +389,12 @@ namespace HoorayTheWinProject_
             ListBoxGroups.Items.Refresh();
             TextBoxChageUserName.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;
-            if (ComboBoxChooseGroup.SelectedIndex != -1)
+            if (ComboBoxChooseGroup.SelectedIndex == -1
+            || (ListBoxGroups.SelectedItem == ComboBoxChooseGroup.SelectedItem))
+            {
+                ButtonAddToGroup.IsEnabled = false;
+            }
+            else
             {
                 ButtonAddToGroup.IsEnabled = true;
             }
@@ -475,18 +475,33 @@ namespace HoorayTheWinProject_
         private void ButtonStartNewTest_Click(object sender, RoutedEventArgs e)
         {
             DataMock.IsTesting = true;
-            DataMock._testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);           
-            ButtonStartNewTest.IsEnabled = false;
+            DataMock._testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);
+            _telegramManager.SendNextQuestion(DataMock._testToStart);
             ButtonFinishNewTest.IsEnabled = true;
+            ButtonStartNewTest.IsEnabled = false;
+            ComboBoxChooseTestForStart.IsEnabled = false;
+            ListBoxCheckBoxOfGroupForTest.IsEnabled = false;
         }
 
         private void ButtonFinishNewTest_Click(object sender, RoutedEventArgs e)
         {
             DataMock.IsTesting = false;
-            ButtonStartNewTest.IsEnabled = true;
+            ComboBoxChooseTestForStart.IsEnabled = true;
+            ListBoxCheckBoxOfGroupForTest.IsEnabled = true;
+            ComboBoxChooseTestForStart.SelectedIndex = -1;
             ButtonFinishNewTest.IsEnabled = false;
         }
-
+        private void ComboBoxChooseTestForStart_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComboBoxChooseTestForStart.SelectedIndex == -1)
+            {
+                ButtonStartNewTest.IsEnabled = false;
+            }
+            else
+            {
+                ButtonStartNewTest.IsEnabled = true;
+            }
+        }
         private void Clear()
         {           
             TextBoxTextOfQuestion.Clear();            
