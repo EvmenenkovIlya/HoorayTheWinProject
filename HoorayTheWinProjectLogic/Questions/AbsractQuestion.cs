@@ -14,6 +14,9 @@ namespace HoorayTheWinProjectLogic.Questions
         public abstract InlineKeyboardMarkup GetInlineKM();
         public abstract bool SetAnswer(Update update, TestManager test);
 
+        public AbstractQuestion()
+        { 
+        }
         public override string ToString()
         {
             return TextOfQuestion;

@@ -12,15 +12,11 @@ namespace HoorayTheWinProjectLogic.Questions
     {
         public InSeries(string question, string answerOne, string answerTwo, string answerThree, string answerFour)
         {
-            List<string> Answer = new List<string>();
+            base.Answer = new List<string>() { answerOne, answerTwo, answerThree, answerFour };
             TextOfQuestion = question;
             TypeQuestion = 3;
-            Answer.Add(answerOne);
-            Answer.Add(answerTwo);
-            Answer.Add(answerThree);
-            Answer.Add(answerFour);
-            base.Answer = Answer;
         }
+        public InSeries() { }
         public override InlineKeyboardMarkup GetInlineKM()
         {
             InlineKeyboardMarkup inlineKeyboard = new(

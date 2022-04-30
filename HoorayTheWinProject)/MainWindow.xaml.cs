@@ -16,6 +16,7 @@ using HoorayTheWinProjectLogic;
 using System.Collections.ObjectModel;
 using HoorayTheWinProjectLogic.Questions;
 using System.Windows.Threading;
+using HoorayTheWinProjectLogic.Data;
 
 namespace HoorayTheWinProject_
 {
@@ -28,11 +29,12 @@ namespace HoorayTheWinProject_
         private TelegramManager _telegramManager;
         private Test _test;       
         private DispatcherTimer _timer;
-      
+        TestsStorage tests = TestsStorage.GetInstance();
         public MainWindow()
         {
             _telegramManager = new TelegramManager(_test!);
             _telegramManager.Start();
+
             InitializeComponent();
 
             ListBoxListOfTests.ItemsSource = DataMock.tests;
@@ -208,6 +210,9 @@ namespace HoorayTheWinProject_
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
+            
+            tests.SaveInstance();
+           
             //_telegramManager.Start();
         }
 
