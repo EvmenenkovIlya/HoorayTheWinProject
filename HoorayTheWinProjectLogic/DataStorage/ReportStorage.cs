@@ -10,7 +10,7 @@ namespace HoorayTheWinProjectLogic.DataStorage
     [Serializable]
     public class ReportStorage
     {
-        private const string filePath = @"Report.json";
+        private const string filePath = @"..\..\..\..\Reports.json";
         public List<Report> Reports { get; private set; }
 
         private static ReportStorage _instance;
