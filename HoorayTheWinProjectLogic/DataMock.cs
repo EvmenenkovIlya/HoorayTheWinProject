@@ -41,8 +41,6 @@ namespace HoorayTheWinProjectLogic
         //};
         public static List<Group> groups = new List<Group>() { _other };
 
-        public static InSeries qs = new InSeries("Sort in right order the authors by their year of birth", "Mayakovskiy", "Pushkin", "Tyutchev", "Pelevin");
-
         public static Test _bankOfQuestions = new Test("Bank of Questions");
 
         public static Test testMock = new Test("TestForTest")
