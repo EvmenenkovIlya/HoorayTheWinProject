@@ -9,7 +9,7 @@ namespace HoorayTheWinProjectLogic.DataStorage
 {
     public class GroupStorage
     {
-        private const string filePath = @"C:\Users\vit20\filefile.Popa";
+        private const string filePath = @"filefile.json";
 
         private static GroupStorage _instance;
 
@@ -18,7 +18,7 @@ namespace HoorayTheWinProjectLogic.DataStorage
         public static List<long> DataBase { get; set; } = new List<long>();
         private GroupStorage()
         {
-            groups = new List<Group>();
+            groups = Load();
         }
 
         public static GroupStorage GetInstance()
@@ -31,7 +31,7 @@ namespace HoorayTheWinProjectLogic.DataStorage
         }
 
 
-        public string Serialize(List<Group> groups)
+        public string Serialize()
         {
             return JsonSerializer.Serialize<List<Group>>(groups);
         }
@@ -47,9 +47,9 @@ namespace HoorayTheWinProjectLogic.DataStorage
                 return JsonSerializer.Deserialize<List<Group>>(json);
             }
         }
-        public void Save(List<Group> groups)
+        public void Save()
         {
-            string json = Serialize(groups);
+            string json = Serialize();
 
             using (StreamWriter sw = new StreamWriter(filePath, false))
             {

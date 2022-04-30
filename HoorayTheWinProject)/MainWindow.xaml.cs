@@ -16,6 +16,7 @@ using HoorayTheWinProjectLogic;
 using System.Collections.ObjectModel;
 using HoorayTheWinProjectLogic.Questions;
 using System.Windows.Threading;
+using HoorayTheWinProjectLogic.DataStorage;
 
 namespace HoorayTheWinProject_
 {
@@ -29,16 +30,18 @@ namespace HoorayTheWinProject_
         private Test _test;       
         private DispatcherTimer _timer;
       
+        GroupStorage groups = GroupStorage.GetInstance();
         public MainWindow()
         {
             _telegramManager = new TelegramManager(_test!);
             _telegramManager.Start();
             InitializeComponent();
+            groups.Save();
 
             ListBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxChooseTestForStart.ItemsSource = DataMock.tests;
-            ListBoxGroups.ItemsSource = DataMock.groups;
+            ListBoxGroups.ItemsSource = groups.groups;
             ComboBoxChooseGroup.ItemsSource = DataMock.groups;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
             ComboBoxTypeOfQuestion.ItemsSource = DataMock.forComboBox;
