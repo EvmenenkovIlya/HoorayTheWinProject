@@ -32,17 +32,19 @@ namespace HoorayTheWinProject_
 
         ReportStorage reports = ReportStorage.GetInstance();
       
+        GroupStorage groups = GroupStorage.GetInstance();
         public MainWindow()
         {
             _telegramManager = new TelegramManager(_test!);
             _telegramManager.Start();
             InitializeComponent();
             reports.Save();
+            groups.Save();
 
             ListBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxChooseTestForStart.ItemsSource = DataMock.tests;
-            ListBoxGroups.ItemsSource = DataMock.groups;
+            ListBoxGroups.ItemsSource = groups.groups;
             ComboBoxChooseGroup.ItemsSource = DataMock.groups;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
             ComboBoxTypeOfQuestion.ItemsSource = DataMock.forComboBox;
