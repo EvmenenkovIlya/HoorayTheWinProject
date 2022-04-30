@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Security.Principal;
 
-namespace HoorayTheWinProjectLogic.DataStorage
+namespace HoorayTheWinProjectLogic.Data
 {
     [Serializable]
     public class ReportStorage

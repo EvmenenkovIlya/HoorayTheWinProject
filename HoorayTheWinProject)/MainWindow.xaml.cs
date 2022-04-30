@@ -17,8 +17,6 @@ using System.Collections.ObjectModel;
 using HoorayTheWinProjectLogic.Questions;
 using System.Windows.Threading;
 using HoorayTheWinProjectLogic.Data;
-using HoorayTheWinProjectLogic.DataStorage;
-using Microsoft.Win32;
 
 namespace HoorayTheWinProject_
 {

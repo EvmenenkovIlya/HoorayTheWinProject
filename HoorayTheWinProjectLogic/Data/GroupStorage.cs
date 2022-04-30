@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 
-namespace HoorayTheWinProjectLogic.DataStorage
+namespace HoorayTheWinProjectLogic.Data
 {
     public class GroupStorage
     {
