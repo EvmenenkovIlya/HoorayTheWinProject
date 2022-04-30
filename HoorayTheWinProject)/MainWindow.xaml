@@ -44,7 +44,12 @@
                     <TextBox Grid.Row='1' Name="TextBoxChageUserName" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="25" Width="270" Margin="20, 0, 0, 45" FontSize="20" TextChanged="TextBoxChageUserName_TextChanged"/>
                     <ComboBox Grid.Row='1' Name='ComboBoxChooseGroup' VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="270" Margin="20, 0, 0, 10" FontSize="16" SelectionChanged="ComboBoxChooseGroup_SelectionChanged"/>
                     <ListBox Grid.Row='1' Name='ListBoxListOfUsers' Margin="20, 40, 20, 80" d:ItemsSource="{d:SampleData ItemCount=5}" FontSize="20" SelectionChanged="ListBoxListOfUsers_SelectionChanged" />
-                    <Button x:Name="ButtonReport" Grid.Column="1" Content="Get Report" Margin="100,249,100,75" Grid.Row="1" FontWeight="Bold" FontFamily="Arial Black" FontSize="20" Click="ButtonReport_Click"/>
+                    <Button x:Name="ButtonReport" Grid.Column="1" Content="Get Report" Margin="181,249,100,75" Grid.Row="1" FontWeight="Bold" FontFamily="Arial Black" FontSize="20" Click="ButtonReport_Click"/>
+                    <Button x:Name="ButtonSave" Grid.Column="1" Margin="100,249,340,75" Grid.Row="1" BorderBrush="{x:Null}" Click="ButtonSave_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/savedisk_floppydisk_guardar_1543.png"/>
+                        </Button.Background>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem Header="QUESTIONS">

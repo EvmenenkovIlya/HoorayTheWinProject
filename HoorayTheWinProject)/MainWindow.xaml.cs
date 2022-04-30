@@ -31,18 +31,16 @@ namespace HoorayTheWinProject_
         private Test _test;       
         private DispatcherTimer _timer;
 
-        GroupStorage groups = GroupStorage.GetInstance();
         public MainWindow()
         {
             _telegramManager = new TelegramManager(_test!);
             _telegramManager.Start();
             InitializeComponent();
-            groups.Save();
 
             ListBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxChooseTestForStart.ItemsSource = DataMock.tests;
-            ListBoxGroups.ItemsSource = groups.groups;
+            ListBoxGroups.ItemsSource = DataMock.groups;
             ComboBoxChooseGroup.ItemsSource = DataMock.groups;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
             ComboBoxTypeOfQuestion.ItemsSource = DataMock.forComboBox;
@@ -989,10 +987,14 @@ namespace HoorayTheWinProject_
 
         private void ButtonReport_Click(object sender, RoutedEventArgs e)
         {
-            //SaveFileDialog saveFileDialog = new SaveFileDialog();
-            //saveFileDialog.ShowDialog();
             ReportStorage reports = ReportStorage.GetInstance();
             reports.Save();
+        }
+
+        private void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            GroupStorage groups = GroupStorage.GetInstance();
+            groups.Save();
         }
     }
 }
