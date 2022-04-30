@@ -10,7 +10,7 @@ namespace HoorayTheWinProjectLogic.DataStorage
     [Serializable]
     public class ReportStorage
     {
-        private const string filePath = @"hoorayProject.";
+        private const string filePath = @"Report.json";
         public List<Report> Reports { get; private set; }
 
         private static ReportStorage _instance;
@@ -29,9 +29,9 @@ namespace HoorayTheWinProjectLogic.DataStorage
             return _instance;
         }
 
-        public string Serialize(List<Report> reports)
+        public string Serialize()
         {
-            return JsonSerializer.Serialize<List<Report>>(reports);
+            return JsonSerializer.Serialize<List<Report>>(Reports);
         }
 
         public List<Report> Decerialize(string json)
@@ -44,9 +44,23 @@ namespace HoorayTheWinProjectLogic.DataStorage
 
         }
 
-        public static void SaveInstance()
+        public void Save()
         {
+            string json = Serialize();
 
+            using (StreamWriter sw = new StreamWriter(filePath, false))
+            {
+                sw.WriteLine(json);
+            }
+        }
+
+        public List<Report> Load()
+        {
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                string json = sr.ReadLine();
+                return Decerialize(json);
+            }
         }
 
     }
