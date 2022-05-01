@@ -32,7 +32,7 @@ namespace HoorayTheWinProjectLogic.Data
             return _instance;
         }
 
-        public void SaveInstance()
+        public void Save()
         {
             string json = Serialize();
 

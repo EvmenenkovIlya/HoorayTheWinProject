@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoorayTheWinProjectLogic.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace HoorayTheWinProjectLogic
 {
     public class TestManager
     {
+        GroupStorage groups = GroupStorage.GetInstance();
         public Test Test { get; set; }
 
         public long ChatId { get; set; }
@@ -21,7 +23,7 @@ namespace HoorayTheWinProjectLogic
 
         public TestManager(Test test)
         {
-            List<Group> groupsForTest = (DataMock.groups.Where(x => x.IsSelected == true)).ToList();
+            List<Group> groupsForTest = (groups.groups.Where(x => x.IsSelected == true)).ToList();
             Groups = groupsForTest;
             foreach (Group group in groupsForTest)
             {

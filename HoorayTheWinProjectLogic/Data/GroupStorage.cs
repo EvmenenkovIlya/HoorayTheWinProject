@@ -9,23 +9,27 @@ namespace HoorayTheWinProjectLogic.Data
 {
     public class GroupStorage
     {
-        private const string filePath = @"..\..\..\..\Group.json";
+        private const string filePath = @"..\..\..\..\Groups.json";
 
         private static GroupStorage _instance;
+        private static Group _other = new Group("Other");
+        public List<Group> groups { get; set; } = new List<Group>() {_other};
+        public List<long> DataBase { get; set; }  = new List<long>();
 
-        public List<Group> groups = new List<Group>();
-
-        public static List<long> DataBase { get; set; } = new List<long>();
-        private GroupStorage()
+        private GroupStorage(int tmp)
         {
-            groups = DataMock.groups;
+            var loadData = Load();
+            groups = loadData.groups;
+            DataBase = loadData.DataBase;
         }
+        public GroupStorage()
+        { }
 
         public static GroupStorage GetInstance()
         {
             if (_instance == null)
             {
-                _instance = new GroupStorage();
+                _instance = new GroupStorage(1);
             }
             return _instance;
         }
@@ -33,10 +37,10 @@ namespace HoorayTheWinProjectLogic.Data
 
         public string Serialize()
         {
-            return JsonSerializer.Serialize<List<Group>>(groups);
+            return JsonSerializer.Serialize<GroupStorage>(_instance);
         }
 
-        public List<Group> Deserialize(string json)
+        public GroupStorage Deserialize(string json)
         {
             if (json == null)
             {
@@ -44,7 +48,7 @@ namespace HoorayTheWinProjectLogic.Data
             }
             else
             {
-                return JsonSerializer.Deserialize<List<Group>>(json);
+                return JsonSerializer.Deserialize<GroupStorage>(json);
             }
         }
         public void Save()
@@ -57,7 +61,7 @@ namespace HoorayTheWinProjectLogic.Data
             }
         }
 
-        public List<Group> Load()
+        public GroupStorage Load()
         {
             using (StreamReader sr = new StreamReader(filePath))
             {

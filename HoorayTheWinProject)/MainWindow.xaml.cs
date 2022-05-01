@@ -29,6 +29,8 @@ namespace HoorayTheWinProject_
         private TelegramManager _telegramManager;
         private DispatcherTimer _timer;
         TestsStorage tests = TestsStorage.GetInstance();
+        GroupStorage groups = GroupStorage.GetInstance();
+        ReportStorage reports = ReportStorage.GetInstance();
 
         public MainWindow()
         {
@@ -40,9 +42,9 @@ namespace HoorayTheWinProject_
             ListBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxListOfTests.ItemsSource = DataMock.tests;
             ComboBoxChooseTestForStart.ItemsSource = DataMock.tests;
-            ListBoxGroups.ItemsSource = DataMock.groups;
-            ComboBoxChooseGroup.ItemsSource = DataMock.groups;
-            ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
+            ListBoxGroups.ItemsSource = groups.groups;
+            ComboBoxChooseGroup.ItemsSource = groups.groups;
+            ListBoxCheckBoxOfGroupForTest.ItemsSource = groups.groups;
             ComboBoxTypeOfQuestion.ItemsSource = DataMock.forComboBox;
 
             TextBoxChageUserName.IsEnabled = false;
@@ -93,7 +95,7 @@ namespace HoorayTheWinProject_
             {
                 ListBoxListOfUsers.ItemsSource = groupOfUser.Users;
             }
-            if (ListBoxGroups.SelectedItem == DataMock._other)
+            if (ListBoxGroups.SelectedItem == groups.groups[0])
             {
                 ButtonDeleteGroup.IsEnabled = false;
                 TextBoxChangeGroupName.IsEnabled = false;
@@ -112,7 +114,7 @@ namespace HoorayTheWinProject_
 
         private void TextBoxChangeGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int index = DataMock.groups.FindIndex(x => x.NameGroup == TextBoxChangeGroupName.Text);
+            int index = groups.groups.FindIndex(x => x.NameGroup == TextBoxChangeGroupName.Text);
             if (TextBoxChangeGroupName.Text == "" || index >= 0)
             {
                 ButtonChangeGroupName.IsEnabled = false;
@@ -138,7 +140,7 @@ namespace HoorayTheWinProject_
         private void ButtonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
             Group groupNew = new Group(TextBoxNewGroupName.Text);
-            DataMock.groups.Add(groupNew);
+            groups.groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
             ComboBoxChooseGroup.Items.Refresh();
             ListBoxCheckBoxOfGroupForTest.Items.Refresh();
@@ -151,9 +153,9 @@ namespace HoorayTheWinProject_
             Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             foreach (User user in groupOfUser.Users)
             {
-                DataMock._other.AddUser(user);
+                groups.groups[0].AddUser(user);
             }
-            DataMock.groups.Remove(groupOfUser);
+            groups.groups.Remove(groupOfUser);
             ListBoxGroups.Items.Refresh();
             ComboBoxChooseGroup.Items.Refresh();
             ListBoxCheckBoxOfGroupForTest.Items.Refresh();
@@ -191,24 +193,20 @@ namespace HoorayTheWinProject_
 
         private void OnTick(object sender, EventArgs e)
         {
-            if (ListBoxGroups.SelectedItem == DataMock._other)
+            if (ListBoxGroups.SelectedItem == groups.groups[0])
             {
                 ListBoxListOfUsers.Items.Refresh();
-                ListBoxListOfUsers.ItemsSource = DataMock._other.Users;
+                ListBoxListOfUsers.ItemsSource = groups.groups[0].Users;
             }
         }
 
         private void ButtonSend_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {          
             //_telegramManager.Send(DataMock.qs, 296570604);
         }
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
-        {
-            
-            tests.SaveInstance();
-           
+        {          
             //_telegramManager.Start();
         }
 
@@ -360,7 +358,7 @@ namespace HoorayTheWinProject_
             TextBoxChageUserName.IsEnabled = true;
             ButtonDeleteFromGroup.IsEnabled = true;
             ComboBoxChooseGroup.IsEnabled = true;
-            if (ListBoxGroups.SelectedItem == DataMock._other)
+            if (ListBoxGroups.SelectedItem == groups.groups[0])
             {
                 ButtonDeleteFromGroup.IsEnabled = false;
             }
@@ -374,7 +372,7 @@ namespace HoorayTheWinProject_
         {
             Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             User user = (User)ListBoxListOfUsers.SelectedItem;
-            DataMock._other.AddUser(user);
+            groups.groups[0].AddUser(user);
             groupOfUser.RemoveUser(user);
             ListBoxListOfUsers.Items.Refresh();
             TextBoxChageUserName.IsEnabled = false;
@@ -415,7 +413,7 @@ namespace HoorayTheWinProject_
 
         private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int index = DataMock.groups.FindIndex(x=>x.NameGroup==TextBoxNewGroupName.Text);
+            int index = groups.groups.FindIndex(x=>x.NameGroup==TextBoxNewGroupName.Text);
             if (TextBoxNewGroupName.Text == "" || index >= 0)
             {
                 ButtonCreateNewGroup.IsEnabled = false;
@@ -474,7 +472,10 @@ namespace HoorayTheWinProject_
         {
             DataMock.IsTesting = true;
             DataMock._testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);
-            _telegramManager.SendNextQuestion(DataMock._testToStart);
+            foreach (long chatId in DataMock._testToStart.AnswerBase.Keys)
+            { 
+                _telegramManager.SendNextQuestion(chatId, DataMock._testToStart);
+            }
             ButtonFinishNewTest.IsEnabled = true;
             ButtonStartNewTest.IsEnabled = false;
             ComboBoxChooseTestForStart.IsEnabled = false;
@@ -1012,8 +1013,9 @@ namespace HoorayTheWinProject_
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            GroupStorage groups = GroupStorage.GetInstance();
+            tests.Save();
             groups.Save();
+            reports.Save();
         }
     }
 }

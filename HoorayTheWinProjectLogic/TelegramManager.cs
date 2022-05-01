@@ -1,4 +1,5 @@
 ﻿using HoorayTheWinProjectLogic;
+using HoorayTheWinProjectLogic.Data;
 using HoorayTheWinProjectLogic.Questions;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace HoorayTheWinProjectLogic
 {
     public class TelegramManager
     {
+        GroupStorage groups = GroupStorage.GetInstance();
         private TelegramBotClient _client;
         private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
         Dictionary<long, TestManager> Tests { get; set; } = new Dictionary<long, TestManager>();
@@ -42,9 +44,9 @@ namespace HoorayTheWinProjectLogic
         //    }
         //}
 
-        public  void SendNextQuestion(TestManager testManager)
+        public  void SendNextQuestion(long chatId, TestManager testManager)
         {
-            _client.SendTextMessageAsync(testManager.ChatId,
+            _client.SendTextMessageAsync(chatId,
             testManager.Test.AbstractQuestions[testManager.QuestionIndex].TextOfQuestion,
             replyMarkup: testManager.Test.AbstractQuestions[testManager.QuestionIndex].GetInlineKM());
             testManager.QuestionIndex++;
@@ -57,19 +59,14 @@ namespace HoorayTheWinProjectLogic
                 if(update.Message.Text == null)
                 return;
                 long chatId = update.Message.Chat.Id;
-                if (DataMock.DataBase.Contains(chatId) == false)
+                if (groups.DataBase.Contains(chatId) == false)
                 {
-                    DataMock.DataBase.Add(chatId);
-                    DataMock._other.AddUser(new User(update.Message.Chat));
+                    groups.DataBase.Add(chatId);
+                    groups.groups[0].AddUser(new User(update.Message.Chat));
                 }
                 if (DataMock.IsTesting == true)
-                {
-                    if (Tests.ContainsKey(chatId) == false)
-                    {
-                        Tests.Add(chatId, DataMock._testToStart);
-                    }
-                    var crntTest = Tests[chatId];
-                    SendNextQuestion(crntTest);
+                {                 
+                    SendNextQuestion(chatId, DataMock._testToStart);
                     //SendNextQuestion(update.Id);
                     //int numberOfQuestion = 0;
                     //foreach (long id in DataMock._testToStart.AnswerBase.Keys)
