@@ -44,12 +44,12 @@ namespace HoorayTheWinProjectLogic
         //    }
         //}
 
-        public  void SendNextQuestion(long chatId, TestManager testManager)
+        public  void SendNextQuestion(long chatId, TestManager testManager, int id)
         {
             _client.SendTextMessageAsync(chatId,
-            testManager.Test.AbstractQuestions[testManager.QuestionIndex].TextOfQuestion,
-            replyMarkup: testManager.Test.AbstractQuestions[testManager.QuestionIndex].GetInlineKM());
-            testManager.QuestionIndex++;
+            testManager.Test.AbstractQuestions[id].TextOfQuestion,
+            replyMarkup: testManager.Test.AbstractQuestions[id].GetInlineKM());
+            
         }
 
         private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -64,9 +64,18 @@ namespace HoorayTheWinProjectLogic
                     groups.DataBase.Add(chatId);
                     groups.groups[0].AddUser(new User(update.Message.Chat));
                 }
-                if (DataMock.IsTesting == true)
-                {                 
-                    SendNextQuestion(chatId, DataMock._testToStart);
+                if (DataMock.IsTesting)
+                {
+                    if (DataMock._testToStart.AnswerBase[chatId].Count() != DataMock._testToStart.Test.AbstractQuestions.Count())
+                    {
+                        DataMock._testToStart.AnswerBase[chatId].Add(update.Message.Text);
+                        int id = DataMock._testToStart.AnswerBase[chatId].Count();
+                        SendNextQuestion(chatId, DataMock._testToStart, id);
+                    }
+                    else
+                    {
+                        _client.SendTextMessageAsync(chatId, "Уходи, ты все!",replyMarkup: null);
+                    }
                     //SendNextQuestion(update.Id);
                     //int numberOfQuestion = 0;
                     //foreach (long id in DataMock._testToStart.AnswerBase.Keys)
@@ -94,6 +103,14 @@ namespace HoorayTheWinProjectLogic
             //        replyMarkup: null
             //        );
             //}
+        }
+
+        public void SendMessageWhenTestNotFinished(long chatId)
+        {
+            _client.SendTextMessageAsync(chatId,
+           "Хаха, не успел",
+            replyMarkup: null);
+
         }
 
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)

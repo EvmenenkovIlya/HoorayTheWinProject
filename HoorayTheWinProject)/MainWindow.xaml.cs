@@ -474,7 +474,7 @@ namespace HoorayTheWinProject_
             DataMock._testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);
             foreach (long chatId in DataMock._testToStart.AnswerBase.Keys)
             { 
-                _telegramManager.SendNextQuestion(chatId, DataMock._testToStart);
+                _telegramManager.SendNextQuestion(chatId, DataMock._testToStart, 0);
             }
             ButtonFinishNewTest.IsEnabled = true;
             ButtonStartNewTest.IsEnabled = false;
@@ -489,6 +489,13 @@ namespace HoorayTheWinProject_
             ListBoxCheckBoxOfGroupForTest.IsEnabled = true;
             ComboBoxChooseTestForStart.SelectedIndex = -1;
             ButtonFinishNewTest.IsEnabled = false;
+            foreach (long chatId in DataMock._testToStart.AnswerBase.Keys)
+            {
+                if  (DataMock._testToStart.AnswerBase[chatId].Count() != DataMock._testToStart.Test.AbstractQuestions.Count())
+                {
+                    _telegramManager.SendMessageWhenTestNotFinished(chatId);
+                }
+            }
         }
         private void ComboBoxChooseTestForStart_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
