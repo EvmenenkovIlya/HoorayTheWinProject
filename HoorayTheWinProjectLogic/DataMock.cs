@@ -47,6 +47,7 @@ namespace HoorayTheWinProjectLogic
         {
             AbstractQuestions = { new ChooseOne("Who is the author of War and Peace?", "Lermontov", "Dostoevskiy", "Tolstoy", "Leskov"),
                                   new ChooseNumber("What kind of animal have a four legs?", "Fish", "Kangaroo", "Tiger", "Panda"),
+                                  new EnteringAResponse("What is the color of orange?"),
                                   new InSeries("Sort in right order the authors by their year of birth", "Mayakovskiy", "Pushkin", "Tyutchev", "Pelevin"),
                                   new YesNo("Is an year contains 365 days?", "yes", "no"),
                                   new EnteringAResponse("What is the color of banan?")

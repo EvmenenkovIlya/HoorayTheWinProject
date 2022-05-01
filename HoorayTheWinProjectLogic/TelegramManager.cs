@@ -61,42 +61,48 @@ namespace HoorayTheWinProjectLogic
                 {
                     DataMock.DataBase.Add(chatId);
                     DataMock._other.AddUser(new User(update.Message.Chat));
-                }
+                }                
                 if (DataMock.IsTesting == true)
                 {
                     if (Tests.ContainsKey(chatId) == false)
                     {
                         Tests.Add(chatId, DataMock._testToStart);
                     }
-                    var crntTest = Tests[chatId];
-                    SendNextQuestion(crntTest);
-                    //SendNextQuestion(update.Id);
-                    //int numberOfQuestion = 0;
-                    //foreach (long id in DataMock._testToStart.AnswerBase.Keys)
-                    //{
-                    //    int numberOfAnswer = (DataMock._testToStart.AnswerBase[id]).Count;
-                    //    if (numberOfAnswer == numberOfQuestion)
-                    //    {
-                    //        Send(DataMock._testToStart.FinalTest.AbstractQuestions[numberOfQuestion], id);
-                    //        numberOfQuestion++;
-                    //    }
-                    //    else
-                    //    {
-                    //        // try to set answer
-                    //        (DataMock._testToStart.AnswerBase[id]).Add(update.Message.Text);
-                    //    }
-                    //}
+                    if (Tests[chatId].QuestionIndex <= Tests[chatId].Test.AbstractQuestions.Count - 1)
+                    {
+                        var crntTest = Tests[chatId];
+                        SendNextQuestion(crntTest);
+                    }
+                    else
+                    {
+                        await _client.SendTextMessageAsync(Tests[chatId].ChatId, "Тест окончен!!!");
+
+                    }
                 }
             }
-            //else if (update.CallbackQuery != null)
-            //{
-            //    await botClient.EditMessageTextAsync(
-            //        update.CallbackQuery.Message!.Chat.Id,
-            //        update.CallbackQuery.Message!.MessageId,
-            //        update.CallbackQuery.Message!.Text!,
-            //        replyMarkup: null
-            //        );
-            //}
+            else if (update.CallbackQuery != null && DataMock.IsTesting == true)
+            {
+                long chatId = update.CallbackQuery!.Message!.Chat.Id;
+                if (Tests.ContainsKey(chatId) == false)
+                {
+                    Tests.Add(chatId, DataMock._testToStart);
+                }
+                if (Tests[chatId].QuestionIndex <= Tests[chatId].Test.AbstractQuestions.Count - 1)
+                {
+                    var crntTest = Tests[chatId];
+                    SendNextQuestion(crntTest);
+                    await botClient.EditMessageReplyMarkupAsync(
+                        update.CallbackQuery.Message!.Chat.Id,
+                        update.CallbackQuery.Message!.MessageId,
+                        null
+                        );
+                }
+                else
+                {
+                    await _client.SendTextMessageAsync(Tests[chatId].ChatId, "Тест окончен!!!");
+
+                }
+            }
         }
 
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
