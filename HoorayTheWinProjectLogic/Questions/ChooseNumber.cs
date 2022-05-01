@@ -49,11 +49,11 @@ namespace HoorayTheWinProjectLogic.Questions
         {     
             foreach (var item in Answer)
             {
-                if (update.Message!.Text == item || update.Message.Text == "Done")
+                if (update.CallbackQuery!.Data == item || update.CallbackQuery!.Data == "Done")
                 {
                     List<string> answers;
-                    test.AnswerBase.TryGetValue(update.Message.Chat.Id, out answers!);
-                    answers.Add(update.Message.Text);                    
+                    test.AnswerBase.TryGetValue(update.CallbackQuery.Message!.Chat.Id, out answers!);
+                    answers.Add(update.CallbackQuery.Data!);                    
                     return true;
                 }
             }

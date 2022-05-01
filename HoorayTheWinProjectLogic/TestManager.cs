@@ -11,8 +11,6 @@ namespace HoorayTheWinProjectLogic
     {
         public Test Test { get; set; }
 
-        public long ChatId { get; set; }
-
         public List<Group> Groups { get; set; }
 
         public Dictionary<long, List<string>> AnswerBase { get; set; } = new Dictionary<long, List<string>>();
@@ -27,7 +25,6 @@ namespace HoorayTheWinProjectLogic
             {
                 foreach (User user in group.Users)
                 {
-                    ChatId = user.ChatId;
                     AnswerBase.Add(user.ChatId, new List<string>());
                 }
             }

@@ -29,10 +29,7 @@ namespace HoorayTheWinProjectLogic.Questions
              {
                  InlineKeyboardButton.WithCallbackData(Answer[0], Answer[0]),
                  InlineKeyboardButton.WithCallbackData(Answer[1], Answer[1]),
-             },
-             new []
-             {
-                 InlineKeyboardButton.WithCallbackData("Done", "Done")}
+             }
              });
 
             return inlineKeyboard;
@@ -42,11 +39,11 @@ namespace HoorayTheWinProjectLogic.Questions
         {
             foreach (var item in Answer)
             {
-                if (update.Message!.Text == item || update.Message.Text == "Done")
+                if (update.CallbackQuery!.Data == item)
                 {
                     List<string> answers;
-                    test.AnswerBase.TryGetValue(update.Message.Chat.Id, out answers!);
-                    answers.Add(update.Message.Text!);
+                    test.AnswerBase.TryGetValue(update.CallbackQuery.Message!.Chat.Id, out answers!);
+                    answers.Add(update.CallbackQuery.Data);
                     return true;
                 }
             }

@@ -468,7 +468,10 @@ namespace HoorayTheWinProject_
         {
             DataMock.IsTesting = true;
             DataMock._testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);
-            _telegramManager.SendNextQuestion(DataMock._testToStart);
+            foreach(long chatid in DataMock._testToStart.AnswerBase.Keys)
+            {
+                _telegramManager.SendNextQuestion(chatid, DataMock._testToStart);
+            }
             ButtonFinishNewTest.IsEnabled = true;
             ButtonStartNewTest.IsEnabled = false;
             ComboBoxChooseTestForStart.IsEnabled = false;

@@ -42,12 +42,11 @@ namespace HoorayTheWinProjectLogic
         //    }
         //}
 
-        public  void SendNextQuestion(TestManager testManager)
+        public  void SendNextQuestion(long chatid, TestManager testManager)
         {
-            _client.SendTextMessageAsync(testManager.ChatId,
+            _client.SendTextMessageAsync(chatid,
             testManager.Test.AbstractQuestions[testManager.QuestionIndex].TextOfQuestion,
             replyMarkup: testManager.Test.AbstractQuestions[testManager.QuestionIndex].GetInlineKM());
-            testManager.QuestionIndex++;
         }
 
         private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -68,14 +67,18 @@ namespace HoorayTheWinProjectLogic
                     {
                         Tests.Add(chatId, DataMock._testToStart);
                     }
+                    var crntTest = Tests[chatId];
+                    if (Tests[chatId].Test.AbstractQuestions[Tests[chatId].QuestionIndex].SetAnswer(update, crntTest))
+                    {
+                        crntTest.QuestionIndex++;
+                    }
                     if (Tests[chatId].QuestionIndex <= Tests[chatId].Test.AbstractQuestions.Count - 1)
                     {
-                        var crntTest = Tests[chatId];
-                        SendNextQuestion(crntTest);
+                        SendNextQuestion(chatId, crntTest);
                     }
                     else
                     {
-                        await _client.SendTextMessageAsync(Tests[chatId].ChatId, "Тест окончен!!!");
+                        await _client.SendTextMessageAsync(chatId, "Тест окончен!!!");
 
                     }
                 }
@@ -87,10 +90,14 @@ namespace HoorayTheWinProjectLogic
                 {
                     Tests.Add(chatId, DataMock._testToStart);
                 }
+                var crntTest = Tests[chatId];
+                if (Tests[chatId].Test.AbstractQuestions[Tests[chatId].QuestionIndex].SetAnswer(update, crntTest))
+                {
+                    crntTest.QuestionIndex++;
+                }
                 if (Tests[chatId].QuestionIndex <= Tests[chatId].Test.AbstractQuestions.Count - 1)
                 {
-                    var crntTest = Tests[chatId];
-                    SendNextQuestion(crntTest);
+                    SendNextQuestion(chatId, crntTest);
                     await botClient.EditMessageReplyMarkupAsync(
                         update.CallbackQuery.Message!.Chat.Id,
                         update.CallbackQuery.Message!.MessageId,
@@ -99,7 +106,7 @@ namespace HoorayTheWinProjectLogic
                 }
                 else
                 {
-                    await _client.SendTextMessageAsync(Tests[chatId].ChatId, "Тест окончен!!!");
+                    await _client.SendTextMessageAsync(chatId, "Тест окончен!!!");
 
                 }
             }
