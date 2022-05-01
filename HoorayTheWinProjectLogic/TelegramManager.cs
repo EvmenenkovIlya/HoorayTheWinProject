@@ -18,7 +18,7 @@ namespace HoorayTheWinProjectLogic
     {
         GroupStorage groups = GroupStorage.GetInstance();
         private TelegramBotClient _client;
-        private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
+        private const string _token = "5288577080:AAHCDVW3HZbXAHdYgI5zYQQwBBatWYjhf1g";
         Dictionary<long, TestManager> Tests { get; set; } = new Dictionary<long, TestManager>();
 
         public TelegramManager()
@@ -66,16 +66,21 @@ namespace HoorayTheWinProjectLogic
                 }
                 if (DataMock.IsTesting)
                 {
-                    if (DataMock._testToStart.AnswerBase[chatId].Count() != DataMock._testToStart.Test.AbstractQuestions.Count())
+                    if ((DataMock._testToStart.AnswerBase[chatId]).Count() != DataMock._testToStart.Test.AbstractQuestions.Count())
                     {
                         DataMock._testToStart.AnswerBase[chatId].Add(update.Message.Text);
                         int id = DataMock._testToStart.AnswerBase[chatId].Count();
+                        if (IsFinished(chatId))
+                        {
+                            return;
+                        }
                         SendNextQuestion(chatId, DataMock._testToStart, id);
                     }
-                    else
+                    if (IsFinished(chatId))
                     {
-                        _client.SendTextMessageAsync(chatId, "Уходи, ты все!",replyMarkup: null);
+                        return;
                     }
+
                     //SendNextQuestion(update.Id);
                     //int numberOfQuestion = 0;
                     //foreach (long id in DataMock._testToStart.AnswerBase.Keys)
@@ -117,6 +122,20 @@ namespace HoorayTheWinProjectLogic
         {
 
             return Task.CompletedTask;
+        }
+
+        private bool IsFinished(long chatId) 
+        {
+            if ((DataMock._testToStart.AnswerBase[chatId]).Count() == DataMock._testToStart.Test.AbstractQuestions.Count())
+            {
+                _client.SendTextMessageAsync(chatId, "Уходи, ты все!", replyMarkup: null);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }
