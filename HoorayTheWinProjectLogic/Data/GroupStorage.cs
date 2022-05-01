@@ -9,7 +9,7 @@ namespace HoorayTheWinProjectLogic.Data
 {
     public class GroupStorage
     {
-        private const string filePath = @"filefile.json";
+        private const string filePath = @"..\..\..\..\Group.json";
 
         private static GroupStorage _instance;
 
