@@ -45,7 +45,7 @@ namespace HoorayTheWinProjectLogic.Questions
             long chatId = update.CallbackQuery!.Message!.Chat.Id;
             string message = update.CallbackQuery.Data!;
             List<string> answers;
-            DataMock._testToStart.AnswerBase.TryGetValue(chatId, out answers!);
+            DataMock.testToStart.AnswerBase.TryGetValue(chatId, out answers!);
             string pastString = answers[answers.Count - 1];
             if (update.Message != null)
             {

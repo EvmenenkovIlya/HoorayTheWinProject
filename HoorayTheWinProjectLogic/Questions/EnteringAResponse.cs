@@ -27,7 +27,7 @@ namespace HoorayTheWinProjectLogic.Questions
             long chatId = update.Message!.Chat.Id;
             string message = update.Message.Text!;
             List<string> answers;
-            DataMock._testToStart.AnswerBase.TryGetValue(chatId, out answers!);
+            DataMock.testToStart.AnswerBase.TryGetValue(chatId, out answers!);
             answers.Add(message);
             return Enums.BehaviorOptions.nextQuestoin;
         }

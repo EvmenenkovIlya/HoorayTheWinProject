@@ -50,7 +50,7 @@ namespace HoorayTheWinProjectLogic.Questions
                 if (message == item)
                 {
                     List<string> answers;
-                    DataMock._testToStart.AnswerBase.TryGetValue(chatId, out answers!);
+                    DataMock.testToStart.AnswerBase.TryGetValue(chatId, out answers!);
                     answers.Add(message);
                     return Enums.BehaviorOptions.nextQuestoin;
                 }

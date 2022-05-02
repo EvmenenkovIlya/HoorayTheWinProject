@@ -33,10 +33,10 @@ namespace HoorayTheWinProjectLogic
 
         public  void SendNextQuestion(long chatId)
         {
-            int numberOfQuestion = (DataMock._testToStart.AnswerBase[chatId]).Count();
+            int numberOfQuestion = (DataMock.testToStart.AnswerBase[chatId]).Count();
             _client.SendTextMessageAsync(chatId,
-            DataMock._testToStart.Test.AbstractQuestions[numberOfQuestion].TextOfQuestion,
-            replyMarkup: DataMock._testToStart.Test.AbstractQuestions[numberOfQuestion].GetInlineKM());
+            DataMock.testToStart.Test.AbstractQuestions[numberOfQuestion].TextOfQuestion,
+            replyMarkup: DataMock.testToStart.Test.AbstractQuestions[numberOfQuestion].GetInlineKM());
         }
 
         private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -56,9 +56,9 @@ namespace HoorayTheWinProjectLogic
                 }
                 if (DataMock.IsTesting)
                 {
-                    if ((DataMock._testToStart.AnswerBase[chatId]).Count() < DataMock._testToStart.Test.AbstractQuestions.Count())
+                    if ((DataMock.testToStart.AnswerBase[chatId]).Count() < DataMock.testToStart.Test.AbstractQuestions.Count())
                     {
-                        Enums.BehaviorOptions behaviorOption = DataMock._testToStart.Test.AbstractQuestions[(DataMock._testToStart.AnswerBase[chatId]).Count()].SetAnswer(update);
+                        Enums.BehaviorOptions behaviorOption = DataMock.testToStart.Test.AbstractQuestions[(DataMock.testToStart.AnswerBase[chatId]).Count()].SetAnswer(update);
                         if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
                         {
                             SendNextQuestion(chatId);
@@ -78,7 +78,7 @@ namespace HoorayTheWinProjectLogic
                             return;
                         }
                     }
-                    else if ((DataMock._testToStart.AnswerBase[chatId]).Count() == DataMock._testToStart.Test.AbstractQuestions.Count())
+                    else if ((DataMock.testToStart.AnswerBase[chatId]).Count() == DataMock.testToStart.Test.AbstractQuestions.Count())
                     {
                         await _client.SendTextMessageAsync(chatId, "The test is over!!!");
                     }
@@ -87,9 +87,9 @@ namespace HoorayTheWinProjectLogic
             else if (update.CallbackQuery != null)
             {
                 long chatId = update.CallbackQuery.Message!.Chat.Id;
-                if ((DataMock._testToStart.AnswerBase[chatId]).Count() < DataMock._testToStart.Test.AbstractQuestions.Count())
+                if ((DataMock.testToStart.AnswerBase[chatId]).Count() < DataMock.testToStart.Test.AbstractQuestions.Count())
                 {
-                    Enums.BehaviorOptions behaviorOption = DataMock._testToStart.Test.AbstractQuestions[(DataMock._testToStart.AnswerBase[chatId]).Count()+tmp].SetAnswer(update);
+                    Enums.BehaviorOptions behaviorOption = DataMock.testToStart.Test.AbstractQuestions[(DataMock.testToStart.AnswerBase[chatId]).Count()+tmp].SetAnswer(update);
                     if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
                     {
                         SendNextQuestion(chatId);
@@ -111,7 +111,7 @@ namespace HoorayTheWinProjectLogic
                         return;
                     }
                 }
-                else if ((DataMock._testToStart.AnswerBase[chatId]).Count() == DataMock._testToStart.Test.AbstractQuestions.Count())
+                else if ((DataMock.testToStart.AnswerBase[chatId]).Count() == DataMock.testToStart.Test.AbstractQuestions.Count())
                 {
                     await _client.SendTextMessageAsync(chatId, "The test is over!!!");
                 }
