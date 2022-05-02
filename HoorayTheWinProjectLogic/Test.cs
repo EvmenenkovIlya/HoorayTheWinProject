@@ -16,8 +16,11 @@ namespace HoorayTheWinProjectLogic
         {
             NameTest = nameTest;
             AbstractQuestions = new List<AbstractQuestion>();
-        }     
-
+        }
+        public Test()
+        { 
+        
+        }
         public void AddQuestion(AbstractQuestion abstractQuestion)
         {
             if (abstractQuestion == null)

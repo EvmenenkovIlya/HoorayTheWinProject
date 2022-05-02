@@ -39,8 +39,8 @@
                     </ListBox>
                     <Label Grid.Column='1' Name="LabelChooseTest" Content="Choose Test:" VerticalAlignment="Top"  Margin="20,300,20,0" FontFamily="Arial Black" FontSize="20"/>
                     <ComboBox Grid.Column='1' Name='ComboBoxChooseTestForStart' VerticalAlignment="Top" Margin="20,336,20,0" FontSize="16" SelectionChanged="ComboBoxChooseTestForStart_SelectionChanged"/>
-                    <Button Grid.Column="1" Name="ButtonStartNewTest" Grid.Row="1" Content="Start Test" VerticalAlignment="Top" HorizontalAlignment="Left" Height="80" Width="120" Margin="100,139,0,0" FontFamily="Arial Black" FontSize="20" Click="ButtonStartNewTest_Click"/>
-                    <Button Grid.Column="1" Name="ButtonFinishNewTest" Grid.Row="1" Content="Finish Test" VerticalAlignment="Top" HorizontalAlignment="Right" Height="80" Width="120" Margin="0,139,100,0" FontFamily="Arial Black" FontSize="20" Click="ButtonFinishNewTest_Click"/>
+                    <Button Grid.Column="1" Name="ButtonStartNewTest" Grid.Row="1" Content="Start Test" VerticalAlignment="Top" HorizontalAlignment="Left" Height="80" Width="133" Margin="100,139,0,0" FontFamily="Arial Black" FontSize="20" Click="ButtonStartNewTest_Click"/>
+                    <Button Grid.Column="1" Name="ButtonFinishNewTest" Grid.Row="1" Content="Finish Test" VerticalAlignment="Top" HorizontalAlignment="Right" Height="80" Width="133" Margin="0,139,100,0" FontFamily="Arial Black" FontSize="20" Click="ButtonFinishNewTest_Click"/>
                     <Label Grid.Row='1' Name="LabelListOfUser" Content="List of Users:" Margin="20,0,20,0" FontFamily="Arial Black" FontSize="20"/>
                     <Button Grid.Row='1' Name="ButtonChangeUserName" Content="Change User Name" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160" Height="25" Margin="0, 0, 20, 45" FontWeight="Normal" FontFamily="Arial Black" FontSize="14" Click="ButtonChangeUserName_Click" />
                     <Button Grid.Row='1' Name="ButtonAddToGroup" Content="Add To Group" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="130" Height="25" Margin="0,0,50,10" FontWeight="Bold" FontSize="14" FontFamily="Arial Black" Click="ButtonAddToGroup_Click"/>
@@ -48,6 +48,12 @@
                     <TextBox Grid.Row='1' Name="TextBoxChageUserName" VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="25" Width="270" Margin="20, 0, 0, 45" FontSize="20" TextChanged="TextBoxChageUserName_TextChanged"/>
                     <ComboBox Grid.Row='1' Name='ComboBoxChooseGroup' VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="270" Margin="20, 0, 0, 10" FontSize="16" SelectionChanged="ComboBoxChooseGroup_SelectionChanged"/>
                     <ListBox Grid.Row='1' Name='ListBoxListOfUsers' Margin="20, 40, 20, 80" d:ItemsSource="{d:SampleData ItemCount=5}" FontSize="20" SelectionChanged="ListBoxListOfUsers_SelectionChanged" />
+                    <Button x:Name="ButtonReport" Grid.Column="1" Content="Get Report" Margin="181,249,100,75" Grid.Row="1" FontWeight="Bold" FontFamily="Arial Black" FontSize="20" Click="ButtonReport_Click"/>
+                    <Button x:Name="ButtonSave" Grid.Column="1" Margin="100,249,340,75" Grid.Row="1" BorderBrush="{x:Null}" Click="ButtonSave_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/savedisk_floppydisk_guardar_1543.png"/>
+                        </Button.Background>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem Header="QUESTIONS">

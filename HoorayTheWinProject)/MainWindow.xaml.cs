@@ -16,6 +16,7 @@ using HoorayTheWinProjectLogic;
 using System.Collections.ObjectModel;
 using HoorayTheWinProjectLogic.Questions;
 using System.Windows.Threading;
+using HoorayTheWinProjectLogic.Data;
 
 namespace HoorayTheWinProject_
 {
@@ -27,19 +28,23 @@ namespace HoorayTheWinProject_
     {
         private TelegramManager _telegramManager;
         private DispatcherTimer _timer;
-      
+        TestsStorage tests = TestsStorage.GetInstance();
+        GroupStorage groups = GroupStorage.GetInstance();
+        ReportStorage reports = ReportStorage.GetInstance();
+
         public MainWindow()
         {
             _telegramManager = new TelegramManager();
             _telegramManager.Start();
+
             InitializeComponent();
 
-            ListBoxListOfTests.ItemsSource = DataMock.tests;
-            ComboBoxListOfTests.ItemsSource = DataMock.tests;
-            ComboBoxChooseTestForStart.ItemsSource = DataMock.tests;
-            ListBoxGroups.ItemsSource = DataMock.groups;
-            ComboBoxChooseGroup.ItemsSource = DataMock.groups;
-            ListBoxCheckBoxOfGroupForTest.ItemsSource = DataMock.groups;
+            ListBoxListOfTests.ItemsSource = tests.Tests;
+            ComboBoxListOfTests.ItemsSource = tests.Tests;
+            ComboBoxChooseTestForStart.ItemsSource = tests.Tests;
+            ListBoxGroups.ItemsSource = groups.groups;
+            ComboBoxChooseGroup.ItemsSource = groups.groups;
+            ListBoxCheckBoxOfGroupForTest.ItemsSource = groups.groups;
             ComboBoxTypeOfQuestion.ItemsSource = DataMock.forComboBox;
 
             TextBoxChageUserName.IsEnabled = false;
@@ -90,7 +95,7 @@ namespace HoorayTheWinProject_
             {
                 ListBoxListOfUsers.ItemsSource = groupOfUser.Users;
             }
-            if (ListBoxGroups.SelectedItem == DataMock._other)
+            if (ListBoxGroups.SelectedItem == groups.groups[0])
             {
                 ButtonDeleteGroup.IsEnabled = false;
                 TextBoxChangeGroupName.IsEnabled = false;
@@ -109,7 +114,7 @@ namespace HoorayTheWinProject_
 
         private void TextBoxChangeGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int index = DataMock.groups.FindIndex(x => x.NameGroup == TextBoxChangeGroupName.Text);
+            int index = groups.groups.FindIndex(x => x.NameGroup == TextBoxChangeGroupName.Text);
             if (TextBoxChangeGroupName.Text == "" || index >= 0)
             {
                 ButtonChangeGroupName.IsEnabled = false;
@@ -135,7 +140,7 @@ namespace HoorayTheWinProject_
         private void ButtonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
             Group groupNew = new Group(TextBoxNewGroupName.Text);
-            DataMock.groups.Add(groupNew);
+            groups.groups.Add(groupNew);
             ListBoxGroups.Items.Refresh();
             ComboBoxChooseGroup.Items.Refresh();
             ListBoxCheckBoxOfGroupForTest.Items.Refresh();
@@ -148,9 +153,9 @@ namespace HoorayTheWinProject_
             Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             foreach (User user in groupOfUser.Users)
             {
-                DataMock._other.AddUser(user);
+                groups.groups[0].AddUser(user);
             }
-            DataMock.groups.Remove(groupOfUser);
+            groups.groups.Remove(groupOfUser);
             ListBoxGroups.Items.Refresh();
             ComboBoxChooseGroup.Items.Refresh();
             ListBoxCheckBoxOfGroupForTest.Items.Refresh();
@@ -162,7 +167,7 @@ namespace HoorayTheWinProject_
         private void ListBoxListOfTests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Test selectedTest = (Test)ListBoxListOfTests.SelectedItem;            
-            if (ListBoxListOfTests.SelectedItem == DataMock._bankOfQuestions)
+            if (ListBoxListOfTests.SelectedItem == tests.Tests[0])
             {
                 ButtonDeleteTest.IsEnabled = false;
                 TextBoxChangeNameOfTest.IsEnabled = false;
@@ -188,21 +193,20 @@ namespace HoorayTheWinProject_
 
         private void OnTick(object sender, EventArgs e)
         {
-            if (ListBoxGroups.SelectedItem == DataMock._other)
+            if (ListBoxGroups.SelectedItem == groups.groups[0])
             {
                 ListBoxListOfUsers.Items.Refresh();
-                ListBoxListOfUsers.ItemsSource = DataMock._other.Users;
+                ListBoxListOfUsers.ItemsSource = groups.groups[0].Users;
             }
         }
 
         private void ButtonSend_Click(object sender, RoutedEventArgs e)
-        {
-            
+        {          
             //_telegramManager.Send(DataMock.qs, 296570604);
         }
 
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
-        {
+        {          
             //_telegramManager.Start();
         }
 
@@ -354,7 +358,7 @@ namespace HoorayTheWinProject_
             TextBoxChageUserName.IsEnabled = true;
             ButtonDeleteFromGroup.IsEnabled = true;
             ComboBoxChooseGroup.IsEnabled = true;
-            if (ListBoxGroups.SelectedItem == DataMock._other)
+            if (ListBoxGroups.SelectedItem == groups.groups[0])
             {
                 ButtonDeleteFromGroup.IsEnabled = false;
             }
@@ -368,7 +372,7 @@ namespace HoorayTheWinProject_
         {
             Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
             User user = (User)ListBoxListOfUsers.SelectedItem;
-            DataMock._other.AddUser(user);
+            groups.groups[0].AddUser(user);
             groupOfUser.RemoveUser(user);
             ListBoxListOfUsers.Items.Refresh();
             TextBoxChageUserName.IsEnabled = false;
@@ -409,7 +413,7 @@ namespace HoorayTheWinProject_
 
         private void TextBoxNewGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int index = DataMock.groups.FindIndex(x=>x.NameGroup==TextBoxNewGroupName.Text);
+            int index = groups.groups.FindIndex(x=>x.NameGroup==TextBoxNewGroupName.Text);
             if (TextBoxNewGroupName.Text == "" || index >= 0)
             {
                 ButtonCreateNewGroup.IsEnabled = false;
@@ -423,7 +427,7 @@ namespace HoorayTheWinProject_
         private void ButtonDeleteTest_Click(object sender, RoutedEventArgs e)
         {
             Test chosenTest = (Test)ListBoxListOfTests.SelectedItem;
-            DataMock.tests.Remove(chosenTest);
+            tests.Tests.Remove(chosenTest);
             ListBoxListOfTests.Items.Refresh();
             ComboBoxListOfTests.Items.Refresh();
             ComboBoxChooseTestForStart.Items.Refresh();
@@ -467,9 +471,9 @@ namespace HoorayTheWinProject_
         private void ButtonStartNewTest_Click(object sender, RoutedEventArgs e)
         {
             DataMock.IsTesting = true;
-            DataMock._testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);
-            foreach(long chatId in DataMock._testToStart.AnswerBase.Keys)
-            {
+            DataMock.testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);
+            foreach (long chatId in DataMock.testToStart.AnswerBase.Keys)
+            { 
                 _telegramManager.SendNextQuestion(chatId);
             }
             ButtonFinishNewTest.IsEnabled = true;
@@ -485,6 +489,13 @@ namespace HoorayTheWinProject_
             ListBoxCheckBoxOfGroupForTest.IsEnabled = true;
             ComboBoxChooseTestForStart.SelectedIndex = -1;
             ButtonFinishNewTest.IsEnabled = false;
+            foreach (long chatId in DataMock.testToStart.AnswerBase.Keys)
+            {
+                if  (DataMock.testToStart.AnswerBase[chatId].Count() != DataMock.testToStart.Test.AbstractQuestions.Count())
+                {
+                    _telegramManager.SendMessageWhenTestNotFinished(chatId);
+                }
+            }
         }
         private void ComboBoxChooseTestForStart_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -532,7 +543,7 @@ namespace HoorayTheWinProject_
                 {                   
                     
                     ChooseNumber chooseNumber = new ChooseNumber(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseNumber.TextOfQuestion
+                    int index = tests.Tests[0].AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseNumber.TextOfQuestion
                     && x.TypeQuestion == chooseNumber.TypeQuestion);
                     if (index >= 0)
                     {
@@ -540,11 +551,11 @@ namespace HoorayTheWinProject_
                     }
                     else
                     {
-                        DataMock._bankOfQuestions.AddQuestion(chooseNumber);
+                        tests.Tests[0].AddQuestion(chooseNumber);
                         if (ListBoxListOfTests.SelectedIndex == 0)
                         {
                             ListBoxListOfQuestions.Items.Refresh();
-                            ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
+                            ListBoxListOfQuestions.ItemsSource = tests.Tests[0].AbstractQuestions;
                         }
                         chooseNumber.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
                         Clear();
@@ -562,7 +573,7 @@ namespace HoorayTheWinProject_
                 else
                 {
                     ChooseOne chooseOne = new ChooseOne(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseOne.TextOfQuestion
+                    int index = tests.Tests[0].AbstractQuestions.FindIndex(x => x.TextOfQuestion == chooseOne.TextOfQuestion
                     && x.TypeQuestion == chooseOne.TypeQuestion);
                     if (index >= 0)
                     {
@@ -570,11 +581,11 @@ namespace HoorayTheWinProject_
                     }
                     else
                     {
-                        DataMock._bankOfQuestions.AddQuestion(chooseOne);
+                        tests.Tests[0].AddQuestion(chooseOne);
                         if (ListBoxListOfTests.SelectedIndex == 0)
                         {
                             ListBoxListOfQuestions.Items.Refresh();
-                            ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
+                            ListBoxListOfQuestions.ItemsSource = tests.Tests[0].AbstractQuestions;
                         }
                         chooseOne.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
                         Clear();
@@ -591,7 +602,7 @@ namespace HoorayTheWinProject_
                 else
                 {
                     EnteringAResponse enteringAResponse = new EnteringAResponse(TextBoxTextOfQuestion.Text);
-                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == enteringAResponse.TextOfQuestion
+                    int index = tests.Tests[0].AbstractQuestions.FindIndex(x => x.TextOfQuestion == enteringAResponse.TextOfQuestion
                     && x.TypeQuestion == enteringAResponse.TypeQuestion);
                     if (index >= 0)
                     {
@@ -599,11 +610,11 @@ namespace HoorayTheWinProject_
                     }
                     else
                     {
-                        DataMock._bankOfQuestions.AddQuestion(enteringAResponse);
+                        tests.Tests[0].AddQuestion(enteringAResponse);
                         if (ListBoxListOfTests.SelectedIndex == 0)
                         {
                             ListBoxListOfQuestions.Items.Refresh();
-                            ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
+                            ListBoxListOfQuestions.ItemsSource = tests.Tests[0].AbstractQuestions;
                         }
                         enteringAResponse.Answer = new List<string> { };
                         Clear();
@@ -621,7 +632,7 @@ namespace HoorayTheWinProject_
                 else
                 {
                     InSeries inSeries = new InSeries(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text);
-                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == inSeries.TextOfQuestion
+                    int index = tests.Tests[0].AbstractQuestions.FindIndex(x => x.TextOfQuestion == inSeries.TextOfQuestion
                     && x.TypeQuestion == inSeries.TypeQuestion);
                     if (index >= 0)
                     {
@@ -629,11 +640,11 @@ namespace HoorayTheWinProject_
                     }
                     else
                     {
-                        DataMock._bankOfQuestions.AddQuestion(inSeries);
+                        tests.Tests[0].AddQuestion(inSeries);
                         if (ListBoxListOfTests.SelectedIndex == 0)
                         {
                             ListBoxListOfQuestions.Items.Refresh();
-                            ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
+                            ListBoxListOfQuestions.ItemsSource = tests.Tests[0].AbstractQuestions;
                         }
                         inSeries.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text, TextBoxThree.Text, TextBoxFour.Text };
                         Clear();
@@ -650,7 +661,7 @@ namespace HoorayTheWinProject_
                 else
                 {
                     YesNo yesNo = new YesNo(TextBoxTextOfQuestion.Text, TextBoxOne.Text, TextBoxTwo.Text);
-                    int index = DataMock._bankOfQuestions.AbstractQuestions.FindIndex(x => x.TextOfQuestion == yesNo.TextOfQuestion
+                    int index = tests.Tests[0].AbstractQuestions.FindIndex(x => x.TextOfQuestion == yesNo.TextOfQuestion
                     && x.TypeQuestion == yesNo.TypeQuestion);
                     if (index >= 0)
                     {
@@ -658,11 +669,11 @@ namespace HoorayTheWinProject_
                     }
                     else
                     {
-                        DataMock._bankOfQuestions.AddQuestion(yesNo);
+                        tests.Tests[0].AddQuestion(yesNo);
                         if (ListBoxListOfTests.SelectedIndex == 0)
                         {
                             ListBoxListOfQuestions.Items.Refresh();
-                            ListBoxListOfQuestions.ItemsSource = DataMock._bankOfQuestions.AbstractQuestions;
+                            ListBoxListOfQuestions.ItemsSource = tests.Tests[0].AbstractQuestions;
                         }
                         yesNo.Answer = new List<string> { TextBoxOne.Text, TextBoxTwo.Text };
                         Clear();                        
@@ -906,7 +917,7 @@ namespace HoorayTheWinProject_
 
         private void TextBoxChangeNameOfTest_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int index = DataMock.tests.FindIndex(x => x.NameTest == TextBoxChangeNameOfTest.Text);
+            int index = tests.Tests.FindIndex(x => x.NameTest == TextBoxChangeNameOfTest.Text);
             if (TextBoxChangeNameOfTest.Text == "" || index >=0)
             {
                 ButtonChangeNameOfTest.IsEnabled = false;
@@ -931,7 +942,7 @@ namespace HoorayTheWinProject_
 
         private void TextBoxAddTest_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int index = DataMock.tests.FindIndex(x => x.NameTest == TextBoxAddTest.Text);
+            int index = tests.Tests.FindIndex(x => x.NameTest == TextBoxAddTest.Text);
             if (TextBoxAddTest.Text == "" || index >= 0)
             {
                 ButtonAddTest.IsEnabled = false;
@@ -945,7 +956,7 @@ namespace HoorayTheWinProject_
         private void ButtonAddTest_Click(object sender, RoutedEventArgs e)
         {
             Test chosenTest = new Test(TextBoxAddTest.Text);
-            DataMock.tests.Add(chosenTest);
+            tests.Tests.Add(chosenTest);
             ListBoxListOfTests.Items.Refresh();
             ComboBoxListOfTests.Items.Refresh();
             ComboBoxChooseTestForStart.Items.Refresh();
@@ -999,6 +1010,19 @@ namespace HoorayTheWinProject_
             CheckBoxFour.IsChecked = false;
             ButtonCreateAQuestion.IsEnabled = false;
             ButtonResetQuestion.IsEnabled = false;
+        }
+
+        private void ButtonReport_Click(object sender, RoutedEventArgs e)
+        {
+            ReportStorage reports = ReportStorage.GetInstance();
+            reports.Save();
+        }
+
+        private void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            tests.Save();
+            groups.Save();
+            reports.Save();
         }
     }
 }

@@ -12,14 +12,11 @@ namespace HoorayTheWinProjectLogic.Questions
     {
         public YesNo(string question, string answerOne, string answerTwo)
         {
-            List<string> Answer = new List<string>();
+            base.Answer = new List<string>() {"Yes", "No" };
             TextOfQuestion = question;
             TypeQuestion = 4;
-            Answer.Add(answerOne);
-            Answer.Add(answerTwo);
-            base.Answer = Answer;
         }
-
+        public YesNo() { }
         public override InlineKeyboardMarkup GetInlineKM()
         {
             InlineKeyboardMarkup inlineKeyboard = new(

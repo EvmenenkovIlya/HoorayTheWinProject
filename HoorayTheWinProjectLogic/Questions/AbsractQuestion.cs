@@ -14,6 +14,8 @@ namespace HoorayTheWinProjectLogic.Questions
         public abstract InlineKeyboardMarkup GetInlineKM();
         public abstract Enums.BehaviorOptions SetAnswer(Update update);
 
+        public AbstractQuestion() { }
+
         public override string ToString()
         {
             return TextOfQuestion;

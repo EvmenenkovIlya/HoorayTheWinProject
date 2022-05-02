@@ -1,4 +1,5 @@
 ﻿using HoorayTheWinProjectLogic;
+using HoorayTheWinProjectLogic.Data;
 using HoorayTheWinProjectLogic.Questions;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace HoorayTheWinProjectLogic
 {
     public class TelegramManager
     {
+        GroupStorage groups = GroupStorage.GetInstance();
         private TelegramBotClient _client;
         private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
         private int tmp = 0;
@@ -46,12 +48,13 @@ namespace HoorayTheWinProjectLogic
                     return;
                 }
                 long chatId = update.Message.Chat.Id;
-                if (DataMock.DataBase.Contains(chatId) == false)
+
+                if (!groups.IsInBase(chatId))
                 {
-                    DataMock.DataBase.Add(chatId);
-                    DataMock._other.AddUser(new User(update.Message.Chat));
+                    groups.Add(chatId);
+                    groups.groups[0].AddUser(new User(update.Message.Chat));
                 }
-                if (DataMock.IsTesting == true)
+                if (DataMock.IsTesting)
                 {
                     if ((DataMock._testToStart.AnswerBase[chatId]).Count() < DataMock._testToStart.Test.AbstractQuestions.Count())
                     {
@@ -116,10 +119,32 @@ namespace HoorayTheWinProjectLogic
 
         }
 
+        public void SendMessageWhenTestNotFinished(long chatId)
+        {
+            _client.SendTextMessageAsync(chatId,
+           "Хаха, не успел",
+            replyMarkup: null);
+
+        }
+
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
 
             return Task.CompletedTask;
+        }
+
+        private bool IsFinished(long chatId)
+        {
+            if ((DataMock.testToStart.AnswerBase[chatId]).Count() == DataMock.testToStart.Test.AbstractQuestions.Count())
+            {
+                _client.SendTextMessageAsync(chatId, "Уходи, ты все!", replyMarkup: null);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }
