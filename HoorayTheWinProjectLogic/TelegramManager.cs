@@ -18,7 +18,7 @@ namespace HoorayTheWinProjectLogic
     {
         GroupStorage groups = GroupStorage.GetInstance();
         private TelegramBotClient _client;
-        private const string _token = "5288577080:AAHCDVW3HZbXAHdYgI5zYQQwBBatWYjhf1g";
+        private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
         Dictionary<long, TestManager> Tests { get; set; } = new Dictionary<long, TestManager>();
 
         public TelegramManager()
@@ -61,7 +61,7 @@ namespace HoorayTheWinProjectLogic
                     return;
                 long chatId = update.Message.Chat.Id;
 
-                if (!groups.IsInBase(chatId)
+                if (!groups.IsInBase(chatId))
                 {
                     groups.Add(chatId);
                     groups.groups[0].AddUser(new User(update.Message.Chat));
