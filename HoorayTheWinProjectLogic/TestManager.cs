@@ -27,7 +27,6 @@ namespace HoorayTheWinProjectLogic
                 }
             }
             Test = test;
-            QuestionIndex = 0;
         }
 
         public void GetReport()

@@ -17,6 +17,7 @@ namespace HoorayTheWinProjectLogic
     {
         private TelegramBotClient _client;
         private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
+        private int tmp = 0;
 
         public TelegramManager()
         {
@@ -85,13 +86,14 @@ namespace HoorayTheWinProjectLogic
                 long chatId = update.CallbackQuery.Message!.Chat.Id;
                 if ((DataMock._testToStart.AnswerBase[chatId]).Count() < DataMock._testToStart.Test.AbstractQuestions.Count())
                 {
-                    Enums.BehaviorOptions behaviorOption = DataMock._testToStart.Test.AbstractQuestions[(DataMock._testToStart.AnswerBase[chatId]).Count()].SetAnswer(update);
+                    Enums.BehaviorOptions behaviorOption = DataMock._testToStart.Test.AbstractQuestions[(DataMock._testToStart.AnswerBase[chatId]).Count()+tmp].SetAnswer(update);
                     if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
                     {
                         SendNextQuestion(chatId);
                     }
                     else if (behaviorOption == Enums.BehaviorOptions.nextQuestoin)
                     {
+                        tmp = 0;
                         await botClient.EditMessageTextAsync(
                         update.CallbackQuery.Message!.Chat.Id,
                         update.CallbackQuery.Message!.MessageId,
@@ -101,7 +103,8 @@ namespace HoorayTheWinProjectLogic
                         SendNextQuestion(chatId);
                     }
                     else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
-                    {                        
+                    {
+                        tmp = -1;
                         return;
                     }
                 }
