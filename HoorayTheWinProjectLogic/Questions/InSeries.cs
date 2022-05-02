@@ -24,35 +24,68 @@ namespace HoorayTheWinProjectLogic.Questions
              {
              new []
              {
-                 InlineKeyboardButton.WithCallbackData(Answer[0], Answer[0]),
-                 InlineKeyboardButton.WithCallbackData(Answer[1], Answer[1]),
+                 InlineKeyboardButton.WithCallbackData(Answer[0]),
+                 InlineKeyboardButton.WithCallbackData(Answer[1]),
              },
              new []
              {
-                 InlineKeyboardButton.WithCallbackData(Answer[2], Answer[2]),
-                 InlineKeyboardButton.WithCallbackData(Answer[3], Answer[3]),
+                 InlineKeyboardButton.WithCallbackData(Answer[2]),
+                 InlineKeyboardButton.WithCallbackData(Answer[3]),
              },
              new []
              {
-                 InlineKeyboardButton.WithCallbackData("Done", "Done")}
+                 InlineKeyboardButton.WithCallbackData("Done")}
              });
 
             return inlineKeyboard;
         }
 
-        public override bool SetAnswer(Update update, TestManager test)
+        public override Enums.BehaviorOptions SetAnswer(Update update)
         {
-            foreach (var item in Answer)
+            long chatId = update.CallbackQuery!.Message!.Chat.Id;
+            string message = update.CallbackQuery.Data!;
+            List<string> answers;
+            DataMock.testToStart.AnswerBase.TryGetValue(chatId, out answers!);
+            string pastString = answers[answers.Count - 1];
+            if (update.Message != null)
             {
-                if (update.Message!.Text == item || update.Message.Text == "Done")
+                return Enums.BehaviorOptions.invalidAnswer;
+            }
+            if (message != "Done")
+            {
+                if (answers.Count == 0)
                 {
-                    List<string> answers;
-                    test.AnswerBase.TryGetValue(update.Message.Chat.Id, out answers!);
-                    answers.Add(update.Message.Text);
-                    return true;
+                    answers.Add(message);
+                }
+                else
+                {
+                    foreach (var item in Answer)
+                    {
+                        if (!pastString.Contains(item))
+                        {
+                            answers.Add(message);
+                            return Enums.BehaviorOptions.refreshKeybord;
+                        }
+                        else
+                        {
+                            if (pastString.Contains(message))
+                            {
+                                return Enums.BehaviorOptions.refreshKeybord;
+                            }
+                            pastString = pastString + ", " + message;
+                            answers.Insert(answers.Count - 1, pastString);
+                            answers.RemoveAt(answers.Count - 1);
+                            return Enums.BehaviorOptions.refreshKeybord;
+                        }
+                    }
                 }
             }
-            return false;
+            else
+            {
+                answers.Add("No answer");
+                return Enums.BehaviorOptions.nextQuestoin;
+            }
+            return Enums.BehaviorOptions.invalidAnswer;
         }
     }
 }

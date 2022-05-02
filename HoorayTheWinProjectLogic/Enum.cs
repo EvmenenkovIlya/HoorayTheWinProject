@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace HoorayTheWinProjectLogic
 {
-    internal class Telega
-    {
-    }
+	public static class Enums
+	{
+		public enum BehaviorOptions
+		{
+			nextQuestoin,
+			invalidAnswer,
+			refreshKeybord
+		}
+	}
 }

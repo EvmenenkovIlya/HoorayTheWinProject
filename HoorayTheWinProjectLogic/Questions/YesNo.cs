@@ -24,26 +24,33 @@ namespace HoorayTheWinProjectLogic.Questions
              {
              new []
              {
-                 InlineKeyboardButton.WithCallbackData(Answer[0], Answer[0]),
-                 InlineKeyboardButton.WithCallbackData(Answer[1], Answer[1])
-             } });
+                 InlineKeyboardButton.WithCallbackData(Answer[0]),
+                 InlineKeyboardButton.WithCallbackData(Answer[1]),
+             }
+             });
 
             return inlineKeyboard;
         }
 
-        public override bool SetAnswer(Update update, TestManager test)
+        public override Enums.BehaviorOptions SetAnswer(Update update)
         {
+            long chatId = update.CallbackQuery!.Message!.Chat.Id;
+            string message = update.CallbackQuery.Data!;
+            if (update.Message != null)
+            {
+                return Enums.BehaviorOptions.invalidAnswer;
+            }
             foreach (var item in Answer)
             {
-                if (update.Message!.Text == item || update.Message.Text == "Done")
+                if (message == item)
                 {
                     List<string> answers;
-                    test.AnswerBase.TryGetValue(update.Message.Chat.Id, out answers!);
-                    answers.Add(update.Message.Text!);
-                    return true;
+                    DataMock.testToStart.AnswerBase.TryGetValue(chatId, out answers!);
+                    answers.Add(message);
+                    return Enums.BehaviorOptions.nextQuestoin;
                 }
             }
-            return false;
+            return Enums.BehaviorOptions.invalidAnswer;
         }
     }
 }
