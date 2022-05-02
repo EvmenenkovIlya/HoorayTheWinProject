@@ -44,24 +44,26 @@ namespace HoorayTheWinProjectLogic
         //    }
         //}
 
-        public  void SendNextQuestion(long chatId, TestManager testManager, int id)
+        public void SendNextQuestion(long chatId, TestManager testManager, int id)
         {
             _client.SendTextMessageAsync(chatId,
             testManager.Test.AbstractQuestions[id].TextOfQuestion,
             replyMarkup: testManager.Test.AbstractQuestions[id].GetInlineKM());
-            
+
         }
 
         private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             if (update.Message != null)
             {
-                if(update.Message.Text == null)
-                return;
+                if (update.Message.Text == null)
+                    
+                    return;
                 long chatId = update.Message.Chat.Id;
-                if (groups.DataBase.Contains(chatId) == false)
+
+                if (!groups.IsInBase(chatId)
                 {
-                    groups.DataBase.Add(chatId);
+                    groups.Add(chatId);
                     groups.groups[0].AddUser(new User(update.Message.Chat));
                 }
                 if (DataMock.IsTesting)
@@ -124,7 +126,7 @@ namespace HoorayTheWinProjectLogic
             return Task.CompletedTask;
         }
 
-        private bool IsFinished(long chatId) 
+        private bool IsFinished(long chatId)
         {
             if ((DataMock._testToStart.AnswerBase[chatId]).Count() == DataMock._testToStart.Test.AbstractQuestions.Count())
             {

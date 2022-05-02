@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using Telegram.Bot.Types;
 
 namespace HoorayTheWinProjectLogic.Data
 {
@@ -29,9 +30,13 @@ namespace HoorayTheWinProjectLogic.Data
             }
             DataBase = loadData.DataBase;
         }
-        public bool IsInBase()
+        public bool IsInBase(long chatId)
         {
-
+            return DataBase.Contains(chatId);
+        }
+        public void Add(long chatId)
+        {
+            DataBase.Add(chatId);
         }
         public GroupStorage()
         { }
