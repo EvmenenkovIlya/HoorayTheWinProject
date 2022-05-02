@@ -14,13 +14,24 @@ namespace HoorayTheWinProjectLogic.Data
         private static GroupStorage _instance;
         private static Group _other = new Group("Other");
         public List<Group> groups { get; set; } = new List<Group>() {_other};
-        public List<long> DataBase { get; set; }  = new List<long>();
+        private List<long> DataBase { get; set; }  = new List<long>();
 
         private GroupStorage(int tmp)
         {
             var loadData = Load();
             groups = loadData.groups;
+            foreach (var group in groups)
+            {
+                foreach (var item in group.Users)
+                {
+                    DataBase.Add(item.ChatId);
+                }
+            }
             DataBase = loadData.DataBase;
+        }
+        public bool IsInBase()
+        {
+
         }
         public GroupStorage()
         { }
