@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Security.Principal;
+using Excel = Microsoft.Office.Interop.Excel;
+using ClosedXML.Excel;
 
 namespace HoorayTheWinProjectLogic.Data
 {
-    [Serializable]
+    /*[Serializable]
     public class ReportStorage
     {
         private string filePath= Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)+@"\Report.json";
@@ -63,6 +65,45 @@ namespace HoorayTheWinProjectLogic.Data
                 return Decerialize(json);
             }
         }
+
+    }*/
+    public class ReportStorageExcel
+    {
+        
+        public List<Report> Reports { get; private set; }
+
+        //private string filePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + @"\Report.json"
+
+
+        public ReportStorageExcel()
+        {
+            Reports = new List<Report>();
+        }
+
+        public void CreateExcelTable()
+        {
+            Excel.Application xlApp = new Excel.Application();
+            xlApp.SheetsInNewWorkbook = 2;
+            Excel.Workbook workBook = xlApp.Workbooks.Add(Type.Missing);
+            Excel.Worksheet sheet = (Excel.Worksheet)xlApp.Worksheets.get_Item(1);
+            sheet.Name = "Говнокод";
+
+            for (int i = 1; i <= 9; i++)
+            {
+                for (int j = 1; j < 9; j++)
+                    sheet.Cells[i, j] = "nfkh";
+            }
+
+            workBook.Application.ActiveWorkbook.SaveAs("doc.xlsx", Type.Missing,
+            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Excel.XlSaveAsAccessMode.xlNoChange,
+            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+
+        }
+
+
+
+
 
     }
 }

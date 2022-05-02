@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using HoorayTheWinProjectLogic.Questions;
 using System.Windows.Threading;
 using HoorayTheWinProjectLogic.Data;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace HoorayTheWinProject_
 {
@@ -30,7 +31,7 @@ namespace HoorayTheWinProject_
         private DispatcherTimer _timer;
         TestsStorage tests = TestsStorage.GetInstance();
         GroupStorage groups = GroupStorage.GetInstance();
-        ReportStorage reports = ReportStorage.GetInstance();
+        //ReportStorage reports = ReportStorage.GetInstance();
 
         public MainWindow()
         {
@@ -1014,15 +1015,17 @@ namespace HoorayTheWinProject_
 
         private void ButtonReport_Click(object sender, RoutedEventArgs e)
         {
-            ReportStorage reports = ReportStorage.GetInstance();
-            reports.Save();
+            ReportStorageExcel reports = new ReportStorageExcel();
+            //reports.Save();
+
+            reports.CreateExcelTable();
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             tests.Save();
             groups.Save();
-            reports.Save();
+           // reports.Save();
         }
     }
 }
