@@ -17,10 +17,9 @@ namespace HoorayTheWinProjectLogic.Data
         public List<Group> groups { get; set; } = new List<Group>() {_other};
         private List<long> DataBase { get; set; }  = new List<long>();
 
-        private GroupStorage(int tmp)
+        private GroupStorage()
         {
-            var loadData = Load();
-            groups = loadData.groups;
+            groups = Load();
             foreach (var group in groups)
             {
                 foreach (var item in group.Users)
@@ -28,7 +27,6 @@ namespace HoorayTheWinProjectLogic.Data
                     DataBase.Add(item.ChatId);
                 }
             }
-            DataBase = loadData.DataBase;
         }
         public bool IsInBase(long chatId)
         {
@@ -38,25 +36,19 @@ namespace HoorayTheWinProjectLogic.Data
         {
             DataBase.Add(chatId);
         }
-        public GroupStorage()
-        { }
-
         public static GroupStorage GetInstance()
         {
             if (_instance == null)
             {
-                _instance = new GroupStorage(1);
+                _instance = new GroupStorage();
             }
             return _instance;
         }
-
-
         public string Serialize()
         {
-            return JsonSerializer.Serialize<GroupStorage>(_instance);
+            return JsonSerializer.Serialize<List<Group>>(groups);
         }
-
-        public GroupStorage Deserialize(string json)
+        public List<Group> Deserialize(string json)
         {
             if (json == null)
             {
@@ -64,7 +56,7 @@ namespace HoorayTheWinProjectLogic.Data
             }
             else
             {
-                return JsonSerializer.Deserialize<GroupStorage>(json);
+                return JsonSerializer.Deserialize<List<Group>>(json);
             }
         }
         public void Save()
@@ -76,8 +68,7 @@ namespace HoorayTheWinProjectLogic.Data
                 sw.WriteLine(json);
             }
         }
-
-        public GroupStorage Load()
+        public List<Group> Load()
         {
             using (StreamReader sr = new StreamReader(filePath))
             {
@@ -85,6 +76,5 @@ namespace HoorayTheWinProjectLogic.Data
                 return Deserialize(json);
             }
         }
-
     }
 }
