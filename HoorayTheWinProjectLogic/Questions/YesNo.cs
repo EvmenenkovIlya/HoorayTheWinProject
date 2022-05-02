@@ -27,8 +27,8 @@ namespace HoorayTheWinProjectLogic.Questions
              {
              new []
              {
-                 InlineKeyboardButton.WithCallbackData(Answer[0], Answer[0]),
-                 InlineKeyboardButton.WithCallbackData(Answer[1], Answer[1]),
+                 InlineKeyboardButton.WithCallbackData(Answer[0]),
+                 InlineKeyboardButton.WithCallbackData(Answer[1]),
              }
              });
 
@@ -37,6 +37,8 @@ namespace HoorayTheWinProjectLogic.Questions
 
         public override bool SetAnswer(Update update, TestManager test)
         {
+            if (update.Message != null)
+                return false;
             foreach (var item in Answer)
             {
                 if (update.CallbackQuery!.Data == item)

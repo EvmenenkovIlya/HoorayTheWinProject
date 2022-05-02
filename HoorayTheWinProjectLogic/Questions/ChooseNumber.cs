@@ -21,41 +21,54 @@ namespace HoorayTheWinProjectLogic.Questions
             Answer.Add(answerFour);
             base.Answer = Answer;
         }
-        
+
         public override InlineKeyboardMarkup GetInlineKM()
         {
             InlineKeyboardMarkup inlineKeyboard = new(
-             new[]
-             {
-             new []
-             {
-                 InlineKeyboardButton.WithCallbackData(Answer[0], Answer[0]),
-                 InlineKeyboardButton.WithCallbackData(Answer[1], Answer[1]),
-             },
-             new []
-             {
-                 InlineKeyboardButton.WithCallbackData(Answer[2], Answer[2]),
-                 InlineKeyboardButton.WithCallbackData(Answer[3], Answer[3]),
-             },
-             new []
-             {
-                 InlineKeyboardButton.WithCallbackData("Done", "Done")}
-             });
-
+            new[]
+            {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData(Answer[0]),
+                InlineKeyboardButton.WithCallbackData(Answer[1]),
+            },
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData(Answer[2]),
+                InlineKeyboardButton.WithCallbackData(Answer[3]),
+            },
+            new[]
+            {
+               InlineKeyboardButton.WithCallbackData("Done")}
+            });
             return inlineKeyboard;
         }
 
         public override bool SetAnswer(Update update, TestManager test)
-        {     
-            foreach (var item in Answer)
+        {
+            if (update.Message != null)
+                return false;
+            if (update.CallbackQuery!.Data != "Done")
             {
-                if (update.CallbackQuery!.Data == item || update.CallbackQuery!.Data == "Done")
+                foreach (var item in Answer)
                 {
-                    List<string> answers;
-                    test.AnswerBase.TryGetValue(update.CallbackQuery.Message!.Chat.Id, out answers!);
-                    answers.Add(update.CallbackQuery.Data!);                    
-                    return true;
+                    if (update.CallbackQuery!.Data == item)
+                    {
+                        if (DataMock.DataAnswer.Contains(update.CallbackQuery!.Data) == false)
+                        {
+                            DataMock.DataAnswer.Add(update.CallbackQuery.Data!);
+                        }
+                        return false;
+                    }
                 }
+            }
+            else
+            {
+                string s = string.Join(", ", DataMock.DataAnswer);
+                List<string> answers;
+                test.AnswerBase.TryGetValue(update.CallbackQuery.Message!.Chat.Id, out answers!);
+                answers.Add(s);
+                return true;
             }
             return false;
         }

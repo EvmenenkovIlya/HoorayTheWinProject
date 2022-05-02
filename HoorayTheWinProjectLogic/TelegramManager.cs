@@ -29,19 +29,6 @@ namespace HoorayTheWinProjectLogic
             _client.StartReceiving(HandleRecieve, HandleError);
         }
 
-        //public async void Send(AbstractQuestion abstractQuestion, long id)
-        //{
-        //    if (DataMock.IsTesting == false)
-        //    {
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        InlineKeyboardMarkup inlineKeyboard = abstractQuestion.GetInlineKM();
-        //        await _client.SendTextMessageAsync(new ChatId(id), abstractQuestion.TextOfQuestion, replyMarkup: inlineKeyboard);
-        //    }
-        //}
-
         public  void SendNextQuestion(long chatid, TestManager testManager)
         {
             _client.SendTextMessageAsync(chatid,
@@ -78,7 +65,7 @@ namespace HoorayTheWinProjectLogic
                     }
                     else
                     {
-                        await _client.SendTextMessageAsync(chatId, "Тест окончен!!!");
+                        await _client.SendTextMessageAsync(chatId, "The test is over!!!");
 
                     }
                 }
@@ -95,18 +82,39 @@ namespace HoorayTheWinProjectLogic
                 {
                     crntTest.QuestionIndex++;
                 }
+                int counter = 0;
                 if (Tests[chatId].QuestionIndex <= Tests[chatId].Test.AbstractQuestions.Count - 1)
                 {
-                    SendNextQuestion(chatId, crntTest);
-                    await botClient.EditMessageReplyMarkupAsync(
+                    if (crntTest.Test.AbstractQuestions[crntTest.QuestionIndex].TypeQuestion != 0
+                        || crntTest.Test.AbstractQuestions[crntTest.QuestionIndex].TypeQuestion != 3
+                        )
+                    {
+                        SendNextQuestion(chatId, crntTest);
+                        await botClient.EditMessageTextAsync(
+                            update.CallbackQuery.Message!.Chat.Id,
+                            update.CallbackQuery.Message!.MessageId,
+                            update.CallbackQuery.Message!.Text!,
+                            null
+                            );
+                        counter++;
+                    }
+                    else if (update.CallbackQuery.Data != "Done")
+                    {
+                        await botClient.EditMessageTextAsync(
                         update.CallbackQuery.Message!.Chat.Id,
                         update.CallbackQuery.Message!.MessageId,
-                        null
+                        update.CallbackQuery.Message!.Text!,
+                        replyMarkup: crntTest.Test.AbstractQuestions[crntTest.QuestionIndex].GetInlineKM()
                         );
+                    }
+                    else
+                    {
+                        SendNextQuestion(chatId, crntTest);
+                    }
                 }
                 else
                 {
-                    await _client.SendTextMessageAsync(chatId, "Тест окончен!!!");
+                    await _client.SendTextMessageAsync(chatId, "The test is over!!!");
 
                 }
             }
