@@ -34,12 +34,12 @@ namespace HoorayTheWinProjectLogic.Questions
 
         public override Enums.BehaviorOptions SetAnswer(Update update)
         {
-            long chatId = update.CallbackQuery!.Message!.Chat.Id;
-            string message = update.CallbackQuery.Data!;
             if (update.Message != null)
             {
                 return Enums.BehaviorOptions.invalidAnswer;
             }
+            long chatId = update.CallbackQuery!.Message!.Chat.Id;
+            string message = update.CallbackQuery.Data!;
             foreach (var item in Answer)
             {
                 if (message == item)

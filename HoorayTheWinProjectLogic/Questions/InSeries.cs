@@ -42,15 +42,15 @@ namespace HoorayTheWinProjectLogic.Questions
 
         public override Enums.BehaviorOptions SetAnswer(Update update)
         {
+            if (update.Message != null)
+            {
+                return Enums.BehaviorOptions.invalidAnswer;
+            }
             long chatId = update.CallbackQuery!.Message!.Chat.Id;
             string message = update.CallbackQuery.Data!;
             List<string> answers;
             DataMock.testToStart.AnswerBase.TryGetValue(chatId, out answers!);
             string pastString = answers[answers.Count - 1];
-            if (update.Message != null)
-            {
-                return Enums.BehaviorOptions.invalidAnswer;
-            }
             if (message != "Done")
             {
                 if (answers.Count == 0)
@@ -82,7 +82,10 @@ namespace HoorayTheWinProjectLogic.Questions
             }
             else
             {
-                answers.Add("No answer");
+                if (answers.Count == 0)
+                {
+                    answers.Add("No answer");
+                }
                 return Enums.BehaviorOptions.nextQuestoin;
             }
             return Enums.BehaviorOptions.invalidAnswer;
