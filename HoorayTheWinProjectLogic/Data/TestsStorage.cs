@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
-//using System.Reflection;
 using Newtonsoft.Json;
+using HoorayTheWinProjectLogic.Questions;
 
 namespace HoorayTheWinProjectLogic.Data
 {
@@ -18,9 +18,8 @@ namespace HoorayTheWinProjectLogic.Data
 
         private const string filePath = @"..\..\..\..\Tests.json";
         private TestsStorage()
-        {
-            //Tests = Load();
-            Tests = DataMock.tests;
+        {           
+            Tests = Load();
         }
 
         public static TestsStorage GetInstance()
@@ -43,31 +42,69 @@ namespace HoorayTheWinProjectLogic.Data
         }
         private string Serialize()
         {
-            //var settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto, Formatting = Formatting.Indented };
-            //return JsonSerializer.Create(settings);
-            return System.Text.Json.JsonSerializer.Serialize<List<Test>>(Tests);
+            string json = "";
+            foreach (Test test in Tests)
+            {
+                json += $"{test.NameTest}\r\n";
+                foreach (AbstractQuestion qs in test.AbstractQuestions)
+                {
+                    json += $"{System.Text.Json.JsonSerializer.Serialize<AbstractQuestion>(qs)}\r\n";
+                }
+            }
+            return json;
         }
-        //private List<Test> Deserialize(string json)
-        //{
-        //    if (json == null)
-        //    {
-        //        throw new ArgumentNullException("json");
-        //    }
-        //    else
-        //    {
-        //        return JsonSerializer.Deserialize<List<Test>>(json)!;
-        //    }          
-        //}
 
-        //private List<Test> Load()
-        //{
-        //    using (StreamReader sr = new StreamReader(filePath))
-        //    {
-        //        string json = sr.ReadLine();
-        //        return Deserialize(json);
-        //    }
-        //}
+        private List<Test> Load()
+        {
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                List<Test> list = new List<Test>();
+                string[] js = File.ReadAllLines(filePath);
+                js = js[0..(js.Length - 1)];
+                foreach (string s in js)
+                {                   
+                    if (!s.Contains("TypeQuestion"))
+                    {
+                        list.Add(new Test(s));
+                    }
+                    else
+                    {
+                        list.Last().AbstractQuestions.Add(DeserializeQuestion(s));
+                    }
+                }               
+                return list;
+            }
+        }
 
-
+        private AbstractQuestion DeserializeQuestion(string json)
+        {
+            if (json == null)
+            {
+                throw new ArgumentNullException("json");
+            }
+            else
+            {
+                if (json.Contains("\"TypeQuestion\":0"))
+                {
+                    return System.Text.Json.JsonSerializer.Deserialize<ChooseNumber>(json)!;
+                }
+                else if (json.Contains("\"TypeQuestion\":1"))
+                {
+                    return System.Text.Json.JsonSerializer.Deserialize<ChooseOne>(json)!;
+                }
+                else if (json.Contains("\"TypeQuestion\":2"))
+                {
+                    return System.Text.Json.JsonSerializer.Deserialize<EnteringAResponse>(json)!;
+                }
+                else if (json.Contains("\"TypeQuestion\":3"))
+                {
+                    return System.Text.Json.JsonSerializer.Deserialize<InSeries>(json)!;
+                }
+                else
+                {
+                    return System.Text.Json.JsonSerializer.Deserialize<YesNo>(json)!;
+                }
+            }
+        }
     }
 }
