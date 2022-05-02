@@ -13,7 +13,6 @@ namespace HoorayTheWinProjectLogic
         public static List<string> forComboBox = new List<string>() { "CHOOSE NUMBER", "CHOOSE ONE", "WRITE A REPONSE", "IN SERIES", "YES OR NO" };
           
         public static List<long> DataBase { get; set; } = new List<long>();
-        public static List<string> DataAnswer { get; set; } = new List<string>();
 
         public static Group _other = new Group("Other");
 

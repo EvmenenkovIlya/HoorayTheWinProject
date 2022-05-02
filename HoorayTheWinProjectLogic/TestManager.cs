@@ -15,8 +15,6 @@ namespace HoorayTheWinProjectLogic
 
         public Dictionary<long, List<string>> AnswerBase { get; set; } = new Dictionary<long, List<string>>();
 
-        public int QuestionIndex { get; set; }
-
         public TestManager(Test test)
         {
             List<Group> groupsForTest = (DataMock.groups.Where(x => x.IsSelected == true)).ToList();

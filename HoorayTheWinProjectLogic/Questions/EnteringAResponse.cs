@@ -22,12 +22,14 @@ namespace HoorayTheWinProjectLogic.Questions
             return null;
         }
 
-        public override bool SetAnswer(Update update, TestManager test)
+        public override Enums.BehaviorOptions SetAnswer(Update update)
         {
+            long chatId = update.Message!.Chat.Id;
+            string message = update.Message.Text!;
             List<string> answers;
-            test.AnswerBase.TryGetValue(update.Message!.Chat.Id, out answers!);
-            answers.Add(update.Message.Text!);
-            return true;
+            DataMock._testToStart.AnswerBase.TryGetValue(chatId, out answers!);
+            answers.Add(message);
+            return Enums.BehaviorOptions.nextQuestoin;
         }
     }
 }

@@ -44,33 +44,52 @@ namespace HoorayTheWinProjectLogic.Questions
             return inlineKeyboard;
         }
 
-        public override bool SetAnswer(Update update, TestManager test)
+        public override Enums.BehaviorOptions SetAnswer(Update update)
         {
+            long chatId = update.CallbackQuery!.Message!.Chat.Id;
+            string message = update.CallbackQuery.Data!;
+            List<string> answers;
+            DataMock._testToStart.AnswerBase.TryGetValue(chatId, out answers!);
+            string pastString = answers[answers.Count - 1];
             if (update.Message != null)
-                return false;
-            if (update.CallbackQuery!.Data != "Done")
             {
-                foreach (var item in Answer)
+                return Enums.BehaviorOptions.invalidAnswer;
+            }
+            if (message != "Done")
+            {
+                if (answers.Count == 0)
                 {
-                    if (update.CallbackQuery!.Data == item)
+                    answers.Add(message);
+                }
+                else
+                {
+                    foreach (var item in Answer)
                     {
-                        if (DataMock.DataAnswer.Contains(update.CallbackQuery!.Data) == false)
+                        if (!pastString.Contains(item))
                         {
-                            DataMock.DataAnswer.Add(update.CallbackQuery.Data!);
+                            answers.Add(message);
+                            return Enums.BehaviorOptions.refreshKeybord;
                         }
-                        return false;
+                        else
+                        {
+                            if (pastString.Contains(message))
+                            {
+                                return Enums.BehaviorOptions.refreshKeybord;
+                            }
+                            pastString = pastString + ", " + message;
+                            answers.Insert(answers.Count - 1, pastString);
+                            answers.RemoveAt(answers.Count - 1);
+                            return Enums.BehaviorOptions.refreshKeybord;
+                        }
                     }
                 }
             }
             else
             {
-                string s = string.Join(", ", DataMock.DataAnswer);
-                List<string> answers;
-                test.AnswerBase.TryGetValue(update.CallbackQuery.Message!.Chat.Id, out answers!);
-                answers.Add(s);
-                return true;
+                answers.Add("No answer");
+                return Enums.BehaviorOptions.nextQuestoin;
             }
-            return false;
+            return Enums.BehaviorOptions.invalidAnswer;
         }
     }
 }

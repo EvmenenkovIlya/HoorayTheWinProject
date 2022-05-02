@@ -41,21 +41,25 @@ namespace HoorayTheWinProjectLogic.Questions
             return inlineKeyboard;
         }
 
-        public override bool SetAnswer(Update update, TestManager test)
+        public override Enums.BehaviorOptions SetAnswer(Update update)
         {
+            long chatId = update.CallbackQuery!.Message!.Chat.Id;
+            string message = update.CallbackQuery.Data!;
             if (update.Message != null)
-                return false;
+            {
+                return Enums.BehaviorOptions.invalidAnswer;
+            }
             foreach (var item in Answer)
             {
-                if (update.CallbackQuery!.Data == item)
+                if (message == item)
                 {
                     List<string> answers;
-                    test.AnswerBase.TryGetValue(update.CallbackQuery.Message!.Chat.Id, out answers!);
-                    answers.Add(update.CallbackQuery.Data);
-                    return true;
+                    DataMock._testToStart.AnswerBase.TryGetValue(chatId, out answers!);
+                    answers.Add(message);
+                    return Enums.BehaviorOptions.nextQuestoin;
                 }
             }
-            return false;
+            return Enums.BehaviorOptions.invalidAnswer;
         }
     }
 }

@@ -17,7 +17,6 @@ namespace HoorayTheWinProjectLogic
     {
         private TelegramBotClient _client;
         private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
-        Dictionary<long, TestManager> Tests { get; set; } = new Dictionary<long, TestManager>();
 
         public TelegramManager()
         {
@@ -29,95 +28,89 @@ namespace HoorayTheWinProjectLogic
             _client.StartReceiving(HandleRecieve, HandleError);
         }
 
-        public  void SendNextQuestion(long chatid, TestManager testManager)
+        public  void SendNextQuestion(long chatId)
         {
-            _client.SendTextMessageAsync(chatid,
-            testManager.Test.AbstractQuestions[testManager.QuestionIndex].TextOfQuestion,
-            replyMarkup: testManager.Test.AbstractQuestions[testManager.QuestionIndex].GetInlineKM());
+            int numberOfQuestion = (DataMock._testToStart.AnswerBase[chatId]).Count();
+            _client.SendTextMessageAsync(chatId,
+            DataMock._testToStart.Test.AbstractQuestions[numberOfQuestion].TextOfQuestion,
+            replyMarkup: DataMock._testToStart.Test.AbstractQuestions[numberOfQuestion].GetInlineKM());
         }
 
         private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             if (update.Message != null)
             {
-                if(update.Message.Text == null)
-                return;
+                if (update.Message!.Text == null)
+                {
+                    return;
+                }
                 long chatId = update.Message.Chat.Id;
                 if (DataMock.DataBase.Contains(chatId) == false)
                 {
                     DataMock.DataBase.Add(chatId);
                     DataMock._other.AddUser(new User(update.Message.Chat));
-                }                
+                }
                 if (DataMock.IsTesting == true)
                 {
-                    if (Tests.ContainsKey(chatId) == false)
+                    if ((DataMock._testToStart.AnswerBase[chatId]).Count() < DataMock._testToStart.Test.AbstractQuestions.Count())
                     {
-                        Tests.Add(chatId, DataMock._testToStart);
+                        Enums.BehaviorOptions behaviorOption = DataMock._testToStart.Test.AbstractQuestions[(DataMock._testToStart.AnswerBase[chatId]).Count()].SetAnswer(update);
+                        if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
+                        {
+                            SendNextQuestion(chatId);
+                        }
+                        else if (behaviorOption == Enums.BehaviorOptions.nextQuestoin)
+                        {
+                           await botClient.EditMessageTextAsync(
+                           update.Message!.Chat.Id,
+                           update.Message!.MessageId,
+                           update.Message!.Text!,
+                           replyMarkup: null
+                           );
+                            SendNextQuestion(chatId);
+                        }
+                        else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
+                        {                            
+                            return;
+                        }
                     }
-                    var crntTest = Tests[chatId];
-                    if (Tests[chatId].Test.AbstractQuestions[Tests[chatId].QuestionIndex].SetAnswer(update, crntTest))
-                    {
-                        crntTest.QuestionIndex++;
-                    }
-                    if (Tests[chatId].QuestionIndex <= Tests[chatId].Test.AbstractQuestions.Count - 1)
-                    {
-                        SendNextQuestion(chatId, crntTest);
-                    }
-                    else
+                    else if ((DataMock._testToStart.AnswerBase[chatId]).Count() == DataMock._testToStart.Test.AbstractQuestions.Count())
                     {
                         await _client.SendTextMessageAsync(chatId, "The test is over!!!");
-
                     }
                 }
             }
-            else if (update.CallbackQuery != null && DataMock.IsTesting == true)
+            else if (update.CallbackQuery != null)
             {
-                long chatId = update.CallbackQuery!.Message!.Chat.Id;
-                if (Tests.ContainsKey(chatId) == false)
+                long chatId = update.CallbackQuery.Message!.Chat.Id;
+                if ((DataMock._testToStart.AnswerBase[chatId]).Count() < DataMock._testToStart.Test.AbstractQuestions.Count())
                 {
-                    Tests.Add(chatId, DataMock._testToStart);
-                }
-                var crntTest = Tests[chatId];
-                if (Tests[chatId].Test.AbstractQuestions[Tests[chatId].QuestionIndex].SetAnswer(update, crntTest))
-                {
-                    crntTest.QuestionIndex++;
-                }
-                int counter = 0;
-                if (Tests[chatId].QuestionIndex <= Tests[chatId].Test.AbstractQuestions.Count - 1)
-                {
-                    if (crntTest.Test.AbstractQuestions[crntTest.QuestionIndex].TypeQuestion != 0
-                        || crntTest.Test.AbstractQuestions[crntTest.QuestionIndex].TypeQuestion != 3
-                        )
+                    Enums.BehaviorOptions behaviorOption = DataMock._testToStart.Test.AbstractQuestions[(DataMock._testToStart.AnswerBase[chatId]).Count()].SetAnswer(update);
+                    if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
                     {
-                        SendNextQuestion(chatId, crntTest);
-                        await botClient.EditMessageTextAsync(
-                            update.CallbackQuery.Message!.Chat.Id,
-                            update.CallbackQuery.Message!.MessageId,
-                            update.CallbackQuery.Message!.Text!,
-                            null
-                            );
-                        counter++;
+                        SendNextQuestion(chatId);
                     }
-                    else if (update.CallbackQuery.Data != "Done")
+                    else if (behaviorOption == Enums.BehaviorOptions.nextQuestoin)
                     {
                         await botClient.EditMessageTextAsync(
                         update.CallbackQuery.Message!.Chat.Id,
                         update.CallbackQuery.Message!.MessageId,
                         update.CallbackQuery.Message!.Text!,
-                        replyMarkup: crntTest.Test.AbstractQuestions[crntTest.QuestionIndex].GetInlineKM()
+                        replyMarkup: null
                         );
+                        SendNextQuestion(chatId);
                     }
-                    else
-                    {
-                        SendNextQuestion(chatId, crntTest);
+                    else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
+                    {                        
+                        return;
                     }
                 }
-                else
+                else if ((DataMock._testToStart.AnswerBase[chatId]).Count() == DataMock._testToStart.Test.AbstractQuestions.Count())
                 {
                     await _client.SendTextMessageAsync(chatId, "The test is over!!!");
-
                 }
             }
+
         }
 
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
