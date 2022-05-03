@@ -62,6 +62,7 @@ namespace HoorayTheWinProject_
             ButtonCreateNewGroup.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;            
             ButtonSaveTheChanges.IsEnabled = false;
+            ButtonResetQuestionChanges.IsEnabled = false;
             ButtonChangeGroupName.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;
             ButtonCreateAQuestion.IsEnabled = false;
@@ -734,16 +735,37 @@ namespace HoorayTheWinProject_
                 ButtonNewQuestion.IsEnabled = false;
                 ButtonCreateAQuestion.IsEnabled = false;
                 ButtonSaveTheChanges.IsEnabled = true;
+                ButtonResetQuestionChanges.IsEnabled = true;
                 TextBoxTextOfQuestion.IsEnabled = true;
                 ComboBoxTypeOfQuestion.IsEnabled = true;
             }
         }
+
+        private void ButtonResetQuestionChanges_Click(object sender, RoutedEventArgs e)
+        {
+            TextBoxTextOfQuestion.Clear();
+            TextBoxTextOfQuestion.IsEnabled = false;
+            ButtonSaveTheChanges.IsEnabled = false;
+            ButtonResetQuestionChanges.IsEnabled = false;
+            ComboBoxTypeOfQuestion.IsEnabled = false;
+            ComboBoxTypeOfQuestion.SelectedIndex = -1;
+            ListBoxListOfQuestions.IsEnabled = true;
+            ListBoxListOfTests.IsEnabled = true;
+            TextBoxChangeNameOfTest.IsEnabled = true;
+            ButtonDeleteTest.IsEnabled = true;
+            ButtonDeleteQuestionFromTest.IsEnabled = true;
+            ComboBoxListOfTests.IsEnabled = true;
+            ButtonContentOfQuestion.IsEnabled = true;
+            ButtonNewQuestion.IsEnabled = true;
+        }
+
         private void Open()
         {            
             ListBoxListOfQuestions.Items.Refresh();
             TextBoxTextOfQuestion.Clear();
             TextBoxTextOfQuestion.IsEnabled = false;
             ButtonSaveTheChanges.IsEnabled = false;
+            ButtonResetQuestionChanges.IsEnabled = false;
             ComboBoxTypeOfQuestion.IsEnabled = false;
             ComboBoxTypeOfQuestion.SelectedIndex = -1;
             ListBoxListOfQuestions.IsEnabled = true;
