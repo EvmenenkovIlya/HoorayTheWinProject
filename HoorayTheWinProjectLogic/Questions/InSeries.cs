@@ -42,15 +42,17 @@ namespace HoorayTheWinProjectLogic.Questions
 
         public override Enums.BehaviorOptions SetAnswer(Update update)
         {
+            if (update.Message != null)
+            {
+                return Enums.BehaviorOptions.invalidAnswer;
+            }
             long chatId = update.CallbackQuery!.Message!.Chat.Id;
             string message = update.CallbackQuery.Data!;
             List<string> answers;
             DataMock.testToStart.AnswerBase.TryGetValue(chatId, out answers!);
             string pastString = answers[answers.Count - 1];
-            if (update.Message != null)
-            {
-                return Enums.BehaviorOptions.invalidAnswer;
-            }
+            return Enums.BehaviorOptions.refreshKeybord;
+            string past = pastString.Replace(" ", "");
             if (message != "Done")
             {
                 if (answers.Count == 0)
@@ -59,30 +61,70 @@ namespace HoorayTheWinProjectLogic.Questions
                 }
                 else
                 {
-                    foreach (var item in Answer)
+                    if (
+                        !past.Contains(Answer[0])
+                        && !past.Contains(Answer[1])
+                        && !past.Contains(Answer[2])
+                        && !past.Contains(Answer[3])
+                        && !pastString.Contains("No answer")
+                        )
                     {
-                        if (!pastString.Contains(item))
+                        answers.Add(message);
+                        return Enums.BehaviorOptions.refreshKeybord;
+                    }
+                    else
+                    {
+                        if (!pastString.Contains(message))
                         {
-                            answers.Add(message);
-                            return Enums.BehaviorOptions.refreshKeybord;
-                        }
-                        else
-                        {
-                            if (pastString.Contains(message))
+                            if (pastString == " ")
                             {
-                                return Enums.BehaviorOptions.refreshKeybord;
+                                pastString = (pastString + " " + message).Replace(" ", "");
                             }
-                            pastString = pastString + ", " + message;
+                            else
+                            {
+                                pastString = pastString + " " + message;
+
+                            }
                             answers.Insert(answers.Count - 1, pastString);
                             answers.RemoveAt(answers.Count - 1);
                             return Enums.BehaviorOptions.refreshKeybord;
                         }
+                        else if (pastString.Contains(message) || pastString.Contains(" "))
+                        {
+                            List<string> values = pastString.Split(' ').ToList();
+                            if (values.Count > 1)
+                            {
+                                values.Remove(message);
+                                string result = String.Join(" ", values);
+                                answers.Insert(answers.Count - 1, result);
+                                answers.RemoveAt(answers.Count - 1);
+                            }
+                            else if (values.Count == 0 && pastString == " ")
+                            {
+                                answers.Insert(answers.Count - 1, message);
+                                answers.RemoveAt(answers.Count - 1);
+                            }
+                            else
+                            {
+                                answers.Insert(answers.Count - 1, " ");
+                                answers.RemoveAt(answers.Count - 1);
+                            }
+                        }
+                        return Enums.BehaviorOptions.refreshKeybord;
                     }
                 }
             }
             else
             {
-                answers.Add("No answer");
+                if (answers.Count == 0)
+                {
+                    answers.Add("No answer");
+                }
+                else if (answers[answers.Count - 1] == " ")
+                {
+                    answers.Insert(answers.Count - 1, "No answer");
+                    answers.RemoveAt(answers.Count - 1);
+                }
                 return Enums.BehaviorOptions.nextQuestoin;
             }
             return Enums.BehaviorOptions.invalidAnswer;
