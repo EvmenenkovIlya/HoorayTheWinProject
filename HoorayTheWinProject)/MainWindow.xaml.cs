@@ -62,6 +62,7 @@ namespace HoorayTheWinProject_
             ButtonCreateNewGroup.IsEnabled = false;
             ButtonChangeUserName.IsEnabled = false;            
             ButtonSaveTheChanges.IsEnabled = false;
+            
             ButtonResetQuestionChanges.IsEnabled = false;
             ButtonChangeGroupName.IsEnabled = false;
             ButtonDeleteFromGroup.IsEnabled = false;
@@ -471,7 +472,7 @@ namespace HoorayTheWinProject_
 
         private void ButtonStartNewTest_Click(object sender, RoutedEventArgs e)
         {
-            DataMock.IsTesting = true;
+            TelegramManager.IsTesting = true;
             DataMock.testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);
             foreach (long chatId in DataMock.testToStart.AnswerBase.Keys)
             { 
@@ -485,7 +486,7 @@ namespace HoorayTheWinProject_
 
         private void ButtonFinishNewTest_Click(object sender, RoutedEventArgs e)
         {
-            DataMock.IsTesting = false;
+            TelegramManager.IsTesting = false;
             ComboBoxChooseTestForStart.IsEnabled = true;
             ListBoxCheckBoxOfGroupForTest.IsEnabled = true;
             ComboBoxChooseTestForStart.SelectedIndex = -1;

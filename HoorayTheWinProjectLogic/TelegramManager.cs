@@ -20,7 +20,7 @@ namespace HoorayTheWinProjectLogic
         private TelegramBotClient _client;
         private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
         private int tmp = 0;
-
+        public static bool IsTesting = false;
         public TelegramManager()
         {
             _client = new TelegramBotClient(_token);
@@ -54,7 +54,7 @@ namespace HoorayTheWinProjectLogic
                     groups.Add(chatId);
                     groups.groups[0].AddUser(new User(update.Message.Chat));
                 }
-                if (DataMock.IsTesting)
+                if (IsTesting)
                 {
                     if ((DataMock.testToStart.AnswerBase[chatId]).Count() < DataMock.testToStart.Test.AbstractQuestions.Count()-1)
                     {
