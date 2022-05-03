@@ -43,85 +43,17 @@ namespace HoorayTheWinProjectLogic
         private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             TestToBot testToBot = TestToBot.GetInstance();
-            if (update.Message != null)
+            AddToBase(update);
+            if (IsTesting)
             {
-                if (update.Message!.Text == null)
-                {
-                    return;
-                }
-                long chatId = update.Message.Chat.Id;
-
-                if (!groups.IsInBase(chatId))
-                {
-                    groups.Add(chatId);
-                    groups.groups[0].AddUser(new User(update.Message.Chat));
-                }
-                if (IsTesting)
-                {
-                    if ((testToBot.Manager.AnswerBase[chatId]).Count() < testToBot.Manager.Test.AbstractQuestions.Count()-1)
-                    {
-                        Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[(testToBot.Manager.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
-                        if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
-                        {
-                            tmp = 0;
-                            SendNextQuestion(chatId);
-                        }
-                        else if (behaviorOption == Enums.BehaviorOptions.nextQuestoin)
-                        {
-                            tmp = 0;
-                            SendNextQuestion(chatId);
-                        }
-                        else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
-                        {
-                            tmp = -1;
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        await _client.SendTextMessageAsync(chatId, "The test is over!!!");
-                    }
-                }
-            }
-            else if (update.CallbackQuery != null)
-            {
-                long chatId = update.CallbackQuery.Message!.Chat.Id;
-                if ((testToBot.Manager.AnswerBase[chatId]).Count() < testToBot.Manager.Test.AbstractQuestions.Count()-1)
-                {
-                    Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[(testToBot.Manager.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
-                    if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
-                    {
-                        tmp = 0;
-                        SendNextQuestion(chatId);
-                    }
-                    else if (behaviorOption == Enums.BehaviorOptions.nextQuestoin)
-                    {
-                        tmp = 0;
-                        await botClient.EditMessageTextAsync(
-                        update.CallbackQuery.Message!.Chat.Id,
-                        update.CallbackQuery.Message!.MessageId,
-                        update.CallbackQuery.Message!.Text!,
-                        replyMarkup: null
-                        );
-                        SendNextQuestion(chatId);
-                    }
-                    else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
-                    {
-                        tmp = -1;
-                        return;
-                    }
-                }
-                else
-                {
-                    await _client.SendTextMessageAsync(chatId, "The test is over!!!");
-                }
+                HandlingAnswer(update);
             }
         }
 
         public void SendMessageWhenTestNotFinished(long chatId)
         {
             _client.SendTextMessageAsync(chatId,
-           "Haha, I didn't have time",
+           "Haha, You didn't have time",
             replyMarkup: null);
 
         }
@@ -144,7 +76,60 @@ namespace HoorayTheWinProjectLogic
             {
                 return false;
             }
+        }
 
+        private long GetChatId(Update update)
+        {
+            if (update.Message != null)
+            {
+                return update.Message.Chat.Id;
+            }
+            else if (update.CallbackQuery != null)
+            {
+                return update.CallbackQuery.Message.Chat.Id;
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+        private void AddToBase(Update update)
+        {
+            long chatId = GetChatId(update);
+            if (!groups.IsInBase(chatId))
+            {
+                groups.Add(chatId);
+                groups.groups[0].AddUser(new User(update.Message.Chat));
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void HandlingAnswer(Update update)
+        {
+            TestToBot testToBot = TestToBot.GetInstance();
+            long chatId = GetChatId(update);
+            Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[(testToBot.Manager.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
+            if (!IsFinished(chatId))
+            {
+                if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
+                {
+                    tmp = 0;
+                    SendNextQuestion(chatId);
+                }
+                else if (behaviorOption == Enums.BehaviorOptions.nextQuestoin)
+                {
+                    tmp = 0;
+                    SendNextQuestion(chatId);
+                }
+                else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
+                {
+                    tmp = -1;
+                    return;
+                }
+            }
         }
     }
 }

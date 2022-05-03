@@ -25,12 +25,14 @@ namespace HoorayTheWinProjectLogic.Questions
 
         public override Enums.BehaviorOptions SetAnswer(Update update)
         {
+            if (update.Message == null)
+            {
+                return Enums.BehaviorOptions.invalidAnswer;
+            }
             TestToBot testToBot = TestToBot.GetInstance();
             long chatId = update.Message!.Chat.Id;
-            string message = update.Message.Text!;
-            List<string> answers;
-            testToBot.Manager.AnswerBase.TryGetValue(chatId, out answers!);
-            answers.Add(message);
+            List<string> answers = testToBot.Manager.AnswerBase[chatId];
+            answers.Add(update.Message.Text!);
             return Enums.BehaviorOptions.nextQuestoin;
         }
     }
