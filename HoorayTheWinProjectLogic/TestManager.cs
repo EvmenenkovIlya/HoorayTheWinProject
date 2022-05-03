@@ -31,9 +31,17 @@ namespace HoorayTheWinProjectLogic
             Test = test;
         }
 
-        public void GetReport()
-        { 
-        
+        public List<Report> GetReport()
+        {
+            List<Report> result = new List<Report>();
+            foreach (Group group in DataMock.testToStart.Groups)
+            {
+                foreach (User user in group.Users)
+                {
+                    result.Add(new Report(user));               
+                }
+            }
+            return result;
         }
     }
 }
