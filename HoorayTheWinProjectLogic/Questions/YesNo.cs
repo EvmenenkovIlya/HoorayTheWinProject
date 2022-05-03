@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoorayTheWinProjectLogic.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,7 @@ namespace HoorayTheWinProjectLogic.Questions
 
         public override Enums.BehaviorOptions SetAnswer(Update update)
         {
+            TestToBot testToBot = TestToBot.GetInstance();
             if (update.Message != null)
             {
                 return Enums.BehaviorOptions.invalidAnswer;
@@ -45,7 +47,7 @@ namespace HoorayTheWinProjectLogic.Questions
                 if (message == item)
                 {
                     List<string> answers;
-                    DataMock.testToStart.AnswerBase.TryGetValue(chatId, out answers!);
+                    testToBot.Manager.AnswerBase.TryGetValue(chatId, out answers!);
                     answers.Add(message);
                     return Enums.BehaviorOptions.nextQuestoin;
                 }

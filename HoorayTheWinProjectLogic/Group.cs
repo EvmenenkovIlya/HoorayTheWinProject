@@ -8,21 +8,18 @@ namespace HoorayTheWinProjectLogic
 {
     public class Group
     {
-        public Group ()
-        {
-
-        }
-        public string NameGroup { get; set; }
-        
+        public string NameGroup { get; set; }   
         public List<User> Users { get; set; }
-
         public bool IsSelected { get; set; }
         public Group(string nameGroup)
         {
             NameGroup = nameGroup;
             Users = new List<User>();
         }
+        public Group ()
+        {
 
+        }
         public void AddUser(User user)
         {
             if (user == null)
@@ -31,7 +28,6 @@ namespace HoorayTheWinProjectLogic
             }
             Users.Add(user);
         }
-
         public void RemoveUser(User user)
         {
             if (Users.Count < 1)
@@ -41,11 +37,9 @@ namespace HoorayTheWinProjectLogic
 
             Users.Remove(user);
         }
-
         public override string ToString()
         {
             return NameGroup;
         }
-
     }
 }

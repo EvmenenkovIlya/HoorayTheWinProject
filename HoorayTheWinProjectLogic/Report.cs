@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HoorayTheWinProjectLogic.Data;
 using HoorayTheWinProjectLogic.Questions;
 
 
@@ -13,15 +14,15 @@ namespace HoorayTheWinProjectLogic
         public string Name { get; set; }
         public List<string> Questions { get; set; } = new List<string>();
         public List<string> UserAnswer { get; set; } = new List<string>();
-
         public Report(User user)
         {
+            TestToBot testToBot = TestToBot.GetInstance();
             Name = user.NameUser;
-            foreach (var question in DataMock.testToStart.Test.AbstractQuestions)
+            foreach (var question in testToBot.Manager.Test.AbstractQuestions)
             {
                 Questions.Add(question.TextOfQuestion);
             }
-            UserAnswer = DataMock.testToStart.AnswerBase[user.ChatId];
+            UserAnswer = testToBot.Manager.AnswerBase[user.ChatId];
         }
 
     }

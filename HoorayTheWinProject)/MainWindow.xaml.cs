@@ -45,7 +45,7 @@ namespace HoorayTheWinProject_
             ListBoxGroups.ItemsSource = groups.groups;
             ComboBoxChooseGroup.ItemsSource = groups.groups;
             ListBoxCheckBoxOfGroupForTest.ItemsSource = groups.groups;
-            ComboBoxTypeOfQuestion.ItemsSource = DataMock.forComboBox;
+            ComboBoxTypeOfQuestion.ItemsSource = TextToView.forComboBox;
 
             TextBoxChageUserName.IsEnabled = false;
             TextBoxTextOfQuestion.IsEnabled = false;
@@ -473,8 +473,9 @@ namespace HoorayTheWinProject_
         private void ButtonStartNewTest_Click(object sender, RoutedEventArgs e)
         {
             TelegramManager.IsTesting = true;
-            DataMock.testToStart = new TestManager((Test)ComboBoxChooseTestForStart.SelectedItem);
-            foreach (long chatId in DataMock.testToStart.AnswerBase.Keys)
+            TestToBot.CreateInstance((Test)ComboBoxChooseTestForStart.SelectedItem);
+            TestToBot testToBot = TestToBot.GetInstance();
+            foreach (long chatId in testToBot.Manager.AnswerBase.Keys)
             { 
                 _telegramManager.SendNextQuestion(chatId);
             }
@@ -491,9 +492,10 @@ namespace HoorayTheWinProject_
             ListBoxCheckBoxOfGroupForTest.IsEnabled = true;
             ComboBoxChooseTestForStart.SelectedIndex = -1;
             ButtonFinishNewTest.IsEnabled = false;
-            foreach (long chatId in DataMock.testToStart.AnswerBase.Keys)
+            TestToBot testToBot = TestToBot.GetInstance();
+            foreach (long chatId in testToBot.Manager.AnswerBase.Keys)
             {
-                if  (DataMock.testToStart.AnswerBase[chatId].Count() != DataMock.testToStart.Test.AbstractQuestions.Count())
+                if  (testToBot.Manager.AnswerBase[chatId].Count() != testToBot.Manager.Test.AbstractQuestions.Count())
                 {
                     _telegramManager.SendMessageWhenTestNotFinished(chatId);
                 }

@@ -10,9 +10,7 @@ namespace HoorayTheWinProjectLogic
     public class User
     {
         public string NameUser { get; set; }
-
         public long ChatId { get; set; }
-
         public User(Chat chat)
         {
             NameUser = $"{chat.FirstName} {chat.LastName}";
@@ -23,7 +21,6 @@ namespace HoorayTheWinProjectLogic
         public override string ToString()
         {
             return NameUser;
-        }
-        
+        }       
     }
 }

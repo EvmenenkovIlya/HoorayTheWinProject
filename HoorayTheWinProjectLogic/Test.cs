@@ -10,8 +10,7 @@ namespace HoorayTheWinProjectLogic
     public class Test
     {
         public string NameTest { get; set; }
-        public List<AbstractQuestion> AbstractQuestions { get; set; }
-        
+        public List<AbstractQuestion> AbstractQuestions { get; set; }       
         public Test(string nameTest)
         {
             NameTest = nameTest;
@@ -29,7 +28,6 @@ namespace HoorayTheWinProjectLogic
             }
             AbstractQuestions.Add(abstractQuestion);
         }
-
         public void DeleteQuestion(AbstractQuestion abstractQuestion)
         {
             if (AbstractQuestions.Count < 1)
@@ -39,7 +37,6 @@ namespace HoorayTheWinProjectLogic
 
             AbstractQuestions.Remove(abstractQuestion);
         }
-
         public override string ToString()
         {
             return NameTest;

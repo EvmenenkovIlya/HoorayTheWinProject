@@ -33,8 +33,9 @@ namespace HoorayTheWinProjectLogic
 
         public List<Report> GetReport()
         {
+            TestToBot testToBot = TestToBot.GetInstance();
             List<Report> result = new List<Report>();
-            foreach (Group group in DataMock.testToStart.Groups)
+            foreach (Group group in testToBot.Manager.Groups)
             {
                 foreach (User user in group.Users)
                 {

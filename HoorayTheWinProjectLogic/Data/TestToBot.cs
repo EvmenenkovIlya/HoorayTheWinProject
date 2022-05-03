@@ -19,10 +19,6 @@ namespace HoorayTheWinProjectLogic.Data
 
         public static TestToBot GetInstance()
         {
-            if (_instance == null)
-            {
-                throw new NullReferenceException();
-            }
             return _instance;
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoorayTheWinProjectLogic.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,7 +50,8 @@ namespace HoorayTheWinProjectLogic.Questions
             long chatId = update.CallbackQuery!.Message!.Chat.Id;
             string message = update.CallbackQuery.Data!;
             List<string> answers;
-            DataMock.testToStart.AnswerBase.TryGetValue(chatId, out answers!);
+            TestToBot testToBot = TestToBot.GetInstance();
+            testToBot.Manager.AnswerBase.TryGetValue(chatId, out answers!);
             string pastString = answers[answers.Count - 1];
             return Enums.BehaviorOptions.refreshKeybord;
             string past = pastString.Replace(" ", "");

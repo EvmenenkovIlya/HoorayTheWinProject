@@ -17,6 +17,7 @@ namespace HoorayTheWinProjectLogic
     public class TelegramManager
     {
         GroupStorage groups = GroupStorage.GetInstance();
+        
         private TelegramBotClient _client;
         private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
         private int tmp = 0;
@@ -24,8 +25,7 @@ namespace HoorayTheWinProjectLogic
         public TelegramManager()
         {
             _client = new TelegramBotClient(_token);
-        }
-
+        }        
         public void Start()
         {
             _client.StartReceiving(HandleRecieve, HandleError);
@@ -33,14 +33,16 @@ namespace HoorayTheWinProjectLogic
 
         public  void SendNextQuestion(long chatId)
         {
-            int numberOfQuestion = (DataMock.testToStart.AnswerBase[chatId]).Count();
+            TestToBot testToBot = TestToBot.GetInstance();
+            int numberOfQuestion = (testToBot.Manager.AnswerBase[chatId]).Count();
             _client.SendTextMessageAsync(chatId,
-            DataMock.testToStart.Test.AbstractQuestions[numberOfQuestion].TextOfQuestion,
-            replyMarkup: DataMock.testToStart.Test.AbstractQuestions[numberOfQuestion].GetInlineKM());
+            testToBot.Manager.Test.AbstractQuestions[numberOfQuestion].TextOfQuestion,
+            replyMarkup: testToBot.Manager.Test.AbstractQuestions[numberOfQuestion].GetInlineKM());
         }
 
         private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
+            TestToBot testToBot = TestToBot.GetInstance();
             if (update.Message != null)
             {
                 if (update.Message!.Text == null)
@@ -56,9 +58,9 @@ namespace HoorayTheWinProjectLogic
                 }
                 if (IsTesting)
                 {
-                    if ((DataMock.testToStart.AnswerBase[chatId]).Count() < DataMock.testToStart.Test.AbstractQuestions.Count()-1)
+                    if ((testToBot.Manager.AnswerBase[chatId]).Count() < testToBot.Manager.Test.AbstractQuestions.Count()-1)
                     {
-                        Enums.BehaviorOptions behaviorOption = DataMock.testToStart.Test.AbstractQuestions[(DataMock.testToStart.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
+                        Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[(testToBot.Manager.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
                         if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
                         {
                             tmp = 0;
@@ -84,9 +86,9 @@ namespace HoorayTheWinProjectLogic
             else if (update.CallbackQuery != null)
             {
                 long chatId = update.CallbackQuery.Message!.Chat.Id;
-                if ((DataMock.testToStart.AnswerBase[chatId]).Count() < DataMock.testToStart.Test.AbstractQuestions.Count()-1)
+                if ((testToBot.Manager.AnswerBase[chatId]).Count() < testToBot.Manager.Test.AbstractQuestions.Count()-1)
                 {
-                    Enums.BehaviorOptions behaviorOption = DataMock.testToStart.Test.AbstractQuestions[(DataMock.testToStart.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
+                    Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[(testToBot.Manager.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
                     if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
                     {
                         tmp = 0;
@@ -132,7 +134,8 @@ namespace HoorayTheWinProjectLogic
 
         private bool IsFinished(long chatId)
         {
-            if ((DataMock.testToStart.AnswerBase[chatId]).Count() == DataMock.testToStart.Test.AbstractQuestions.Count())
+            TestToBot testToBot = TestToBot.GetInstance();
+            if ((testToBot.Manager.AnswerBase[chatId]).Count() == testToBot.Manager.Test.AbstractQuestions.Count())
             {
                 _client.SendTextMessageAsync(chatId, "Уходи, ты все!", replyMarkup: null);
                 return true;
