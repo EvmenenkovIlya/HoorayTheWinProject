@@ -5,8 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Security.Principal;
-using Excel = Microsoft.Office.Interop.Excel;
-using ClosedXML.Excel;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace HoorayTheWinProjectLogic.Data
 {
@@ -67,43 +71,89 @@ namespace HoorayTheWinProjectLogic.Data
         }
 
     }*/
+
+
     public class ReportStorageExcel
     {
-        
-        public List<Report> Reports { get; private set; }
+        public List<Report> Reports { get; set; }
 
-        //private string filePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + @"\Report.json"
-
-
-        public ReportStorageExcel()
+        public  ReportStorageExcel()
         {
             Reports = new List<Report>();
         }
-
-        public void CreateExcelTable()
+        static async Task CreateExcel()
         {
-            Excel.Application xlApp = new Excel.Application();
-            xlApp.SheetsInNewWorkbook = 2;
-            Excel.Workbook workBook = xlApp.Workbooks.Add(Type.Missing);
-            Excel.Worksheet sheet = (Excel.Worksheet)xlApp.Worksheets.get_Item(1);
-            sheet.Name = "Говнокод";
-
-            for (int i = 1; i <= 9; i++)
-            {
-                for (int j = 1; j < 9; j++)
-                    sheet.Cells[i, j] = "nfkh";
-            }
-
-            workBook.Application.ActiveWorkbook.SaveAs("doc.xlsx", Type.Missing,
-            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Excel.XlSaveAsAccessMode.xlNoChange,
-            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-
-
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            var file = new FileInfo(@"C:\users\vit20\LERA.xlsx");
+            //await SaveExcelFile(file);
+            //List<Report> reportList = await LoadExcelFile(file);
         }
 
+        public  async Task<List<Report>> LoadExcelFile(FileInfo file)
+        {
+            List<Report> output = new();
 
+            using var package = new ExcelPackage(file);
 
+            await package.LoadAsync(file);
 
+            var ws = package.Workbook.Worksheets[0];
 
+            int row = 3;
+            int col = 1;
+
+            while (string.IsNullOrWhiteSpace(ws.Cells[row, col].Value?.ToString()) == false)
+            {
+                Report p = new Report();
+                p.Name = ws.Cells[row, col].Value.ToString();
+                p.Question = ws.Cells[row, col + 1].Value.ToString();
+                p.UserAnswer.Add(ws.Cells[row, col + 2].Value.ToString());
+                output.Add(p);
+                row += 1;
+            }
+            return output;
+        }
+
+        public async Task SaveExcelFile(FileInfo file)
+        {
+            //DeleteIfExists(file);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using var package = new ExcelPackage(file);
+            var ws = package.Workbook.Worksheets.Add("MainReport");
+            List<Report> output = new();
+            foreach (Report p in output)
+            {
+                output.Add
+                {
+                    
+
+                };
+            }
+
+            ws.Cells["A1"].LoadFromCollection(output, true);
+
+            //ws.Cells["Name"].Value = "Our Cool Report";
+            await package.SaveAsync();
+        }
+
+        public void DeleteIfExists(FileInfo file)
+        {
+            if (file.Exists)
+            {
+                file.Delete();
+            }
+        }
+
+        public List<Report> GetSetupData()
+        {
+            List<Report> output = new()
+            {
+                new() { Name="1" },
+                new() { Name = "2" },
+                new() { Name = "3" }
+            };
+
+            return output;
+        }
     }
 }

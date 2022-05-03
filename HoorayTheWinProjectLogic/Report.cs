@@ -21,5 +21,10 @@ namespace HoorayTheWinProjectLogic
             UserAnswer = answer.Answer;
         }
 
+        public Report() 
+        {
+            Name = "Vasya";
+            UserAnswer = new List<string>();
+        }
     }
 }

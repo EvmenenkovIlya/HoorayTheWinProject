@@ -18,6 +18,7 @@ using HoorayTheWinProjectLogic.Questions;
 using System.Windows.Threading;
 using HoorayTheWinProjectLogic.Data;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.IO;
 
 namespace HoorayTheWinProject_
 {
@@ -31,7 +32,7 @@ namespace HoorayTheWinProject_
         private DispatcherTimer _timer;
         TestsStorage tests = TestsStorage.GetInstance();
         GroupStorage groups = GroupStorage.GetInstance();
-        //ReportStorage reports = ReportStorage.GetInstance();
+       // ReportStorage reports = ReportStorage.GetInstance();
 
         public MainWindow()
         {
@@ -1015,10 +1016,10 @@ namespace HoorayTheWinProject_
 
         private void ButtonReport_Click(object sender, RoutedEventArgs e)
         {
-            ReportStorageExcel reports = new ReportStorageExcel();
             //reports.Save();
-
-            reports.CreateExcelTable();
+            var tmp = new ReportStorageExcel();
+            var file = new FileInfo(@"C:\users\vit20\LERA.xlsx");
+            tmp.SaveExcelFile(file);
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
@@ -1026,6 +1027,9 @@ namespace HoorayTheWinProject_
             tests.Save();
             groups.Save();
            // reports.Save();
+
         }
+
+
     }
 }
