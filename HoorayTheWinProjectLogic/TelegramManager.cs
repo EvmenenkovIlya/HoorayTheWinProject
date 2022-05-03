@@ -119,7 +119,7 @@ namespace HoorayTheWinProjectLogic
         public void SendMessageWhenTestNotFinished(long chatId)
         {
             _client.SendTextMessageAsync(chatId,
-           "Хаха, не успел",
+           "Haha, I didn't have time",
             replyMarkup: null);
 
         }
