@@ -1018,8 +1018,9 @@ namespace HoorayTheWinProject_
         {
             //reports.Save();
             var tmp = new ReportStorageExcel();
-            var file = new FileInfo(@"C:\users\vit20\LERA.xlsx");
-            tmp.SaveExcelFile(file);
+            var file = new FileInfo(@"C:\Users\WWW\Dasha.xlsx");
+            List<Report> reports = new List<Report>();
+            tmp.SaveExcelFile(file, reports);
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)

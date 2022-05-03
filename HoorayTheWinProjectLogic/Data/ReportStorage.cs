@@ -84,7 +84,7 @@ namespace HoorayTheWinProjectLogic.Data
         static async Task CreateExcel()
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            var file = new FileInfo(@"C:\users\vit20\LERA.xlsx");
+            var file = new FileInfo(@"C:\Users\WWW\DASHA.xlsx"); 
             //await SaveExcelFile(file);
             //List<Report> reportList = await LoadExcelFile(file);
         }
@@ -99,7 +99,7 @@ namespace HoorayTheWinProjectLogic.Data
 
             var ws = package.Workbook.Worksheets[0];
 
-            int row = 3;
+            int row = 2;
             int col = 1;
 
             while (string.IsNullOrWhiteSpace(ws.Cells[row, col].Value?.ToString()) == false)
@@ -114,23 +114,21 @@ namespace HoorayTheWinProjectLogic.Data
             return output;
         }
 
-        public async Task SaveExcelFile(FileInfo file)
+        public async Task SaveExcelFile(FileInfo file, List<Report> reports)
         {
             //DeleteIfExists(file);
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using var package = new ExcelPackage(file);
             var ws = package.Workbook.Worksheets.Add("MainReport");
-            List<Report> output = new();
-            foreach (Report p in output)
+            /*List<Report> output = new()
             {
-                output.Add
-                {
-                    
+                new() { Name = "1", Question = "mnhjgf" },
+                new() { Name = "2" },
+                new() { Name = "3" }
+            };*/
+          
 
-                };
-            }
-
-            ws.Cells["A1"].LoadFromCollection(output, true);
+            ws.Cells["A1"].LoadFromCollection(reports, true);
 
             //ws.Cells["Name"].Value = "Our Cool Report";
             await package.SaveAsync();

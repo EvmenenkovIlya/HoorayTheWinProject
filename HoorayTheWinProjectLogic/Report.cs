@@ -24,6 +24,7 @@ namespace HoorayTheWinProjectLogic
         public Report() 
         {
             Name = "Vasya";
+            Question = "ndhdjdhs";
             UserAnswer = new List<string>();
         }
     }
