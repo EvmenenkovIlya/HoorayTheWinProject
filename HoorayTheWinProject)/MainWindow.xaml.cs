@@ -485,7 +485,7 @@ namespace HoorayTheWinProject_
             TestToBot testToBot = TestToBot.GetInstance();
             foreach (long chatId in testToBot.Manager.AnswerBase.Keys)
             {
-                if  (_telegramManager.IsFinished(chatId))
+                if  (!_telegramManager.IsFinished(chatId))
                 {
                     _telegramManager.SendMessageWhenTestNotFinished(chatId);
                 }
