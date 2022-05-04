@@ -26,7 +26,7 @@ namespace HoorayTheWinProjectLogic.Data
         static async Task CreateExcel()
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            var file = new FileInfo(@"..\..\..\DLIV.xlsx"); 
+            var file = new FileInfo(@"..\..\..\..\DLIV.xlsx"); 
             
         }
 

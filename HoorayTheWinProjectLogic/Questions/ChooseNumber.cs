@@ -127,7 +127,7 @@ namespace HoorayTheWinProjectLogic.Questions
                     answers.Insert(answers.Count - 1, "No answer");
                     answers.RemoveAt(answers.Count - 1);
                 }
-                return Enums.BehaviorOptions.nextQuestoin;
+                return Enums.BehaviorOptions.nextQuestion;
             }
             return Enums.BehaviorOptions.invalidAnswer;
         }

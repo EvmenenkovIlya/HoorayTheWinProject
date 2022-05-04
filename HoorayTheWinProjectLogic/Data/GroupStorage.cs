@@ -32,7 +32,7 @@ namespace HoorayTheWinProjectLogic.Data
         {
             return DataBase.Contains(chatId);
         }
-        public void Add(long chatId)
+        public void AddChatId(long chatId)
         {
             DataBase.Add(chatId);
         }

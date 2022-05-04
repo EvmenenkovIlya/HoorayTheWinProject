@@ -11,6 +11,5 @@ namespace HoorayTheWinProjectLogic
     public static class TextToView
     {
         public static List<string> forComboBox = new List<string>() { "CHOOSE NUMBER", "CHOOSE ONE", "WRITE A REPONSE", "IN SERIES", "YES OR NO" };
-
     }
 }
