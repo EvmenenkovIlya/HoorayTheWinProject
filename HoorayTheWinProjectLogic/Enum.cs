@@ -10,7 +10,7 @@ namespace HoorayTheWinProjectLogic
 	{
 		public enum BehaviorOptions
 		{
-			nextQuestoin,
+			nextQuestion,
 			invalidAnswer,
 			refreshKeybord,
 			lastQuestion

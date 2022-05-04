@@ -47,7 +47,7 @@ namespace HoorayTheWinProjectLogic.Questions
             {
                 return Enums.BehaviorOptions.lastQuestion;
             }
-            return Enums.BehaviorOptions.nextQuestoin;          
+            return Enums.BehaviorOptions.nextQuestion;          
         }
     }
 }

@@ -46,6 +46,7 @@ namespace HoorayTheWinProjectLogic
             if (IsTesting && !IsInTest(update))
             {
                 SendMessageWhenNotInTest(update);
+                return;
             }
             else if (IsTesting)
             {
@@ -71,7 +72,7 @@ namespace HoorayTheWinProjectLogic
             return Task.CompletedTask;
         }
 
-        private bool IsFinished(long chatId)
+        public bool IsFinished(long chatId)
         {
             TestToBot testToBot = TestToBot.GetInstance();
             return ((testToBot.Manager.AnswerBase[chatId]).Count() == testToBot.Manager.Test.AbstractQuestions.Count());
@@ -103,7 +104,7 @@ namespace HoorayTheWinProjectLogic
             long chatId = GetChatId(update);
             if (update.Message != null && !groups.IsInBase(chatId))
             {
-                groups.Add(chatId);
+                groups.AddChatId(chatId);
                 groups.groups[0].AddUser(new User(update.Message.Chat));
             }
             else
@@ -124,7 +125,7 @@ namespace HoorayTheWinProjectLogic
                     tmp = 0;
                     SendNextQuestion(chatId);
                 }
-                else if (behaviorOption == Enums.BehaviorOptions.nextQuestoin)
+                else if (behaviorOption == Enums.BehaviorOptions.nextQuestion)
                 {
                     tmp = 0;
                     SendNextQuestion(chatId);

@@ -485,7 +485,7 @@ namespace HoorayTheWinProject_
             TestToBot testToBot = TestToBot.GetInstance();
             foreach (long chatId in testToBot.Manager.AnswerBase.Keys)
             {
-                if  (testToBot.Manager.AnswerBase[chatId].Count() != testToBot.Manager.Test.AbstractQuestions.Count())
+                if  (_telegramManager.IsFinished(chatId))
                 {
                     _telegramManager.SendMessageWhenTestNotFinished(chatId);
                 }
@@ -1029,11 +1029,10 @@ namespace HoorayTheWinProject_
 
         private void ButtonReport_Click(object sender, RoutedEventArgs e)
         {
-            //reports.Save();
             var tmp = new ReportStorageExcel();
-            var file = new FileInfo(@"C:\Users\WWW\Dasha.xlsx");
-            List<Report> reports = new List<Report>();
-            tmp.SaveExcelFile(file, reports);
+            var file = new FileInfo(@"..\..\..\DLIV.xlsx");
+            var tmp2 =new TestManager();
+            tmp.SaveExcelFile(file, tmp2.GetReport());
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)

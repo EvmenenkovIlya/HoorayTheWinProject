@@ -31,6 +31,8 @@ namespace HoorayTheWinProjectLogic
             Test = test;
         }
 
+        public TestManager() { }
+
         public List<Report> GetReport()
         {
             TestToBot testToBot = TestToBot.GetInstance();
