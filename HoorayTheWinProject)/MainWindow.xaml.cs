@@ -1030,7 +1030,7 @@ namespace HoorayTheWinProject_
         private void ButtonReport_Click(object sender, RoutedEventArgs e)
         {
             var tmp = new ReportStorageExcel();
-            var file = new FileInfo(@"..\..\..\DashaLeraVityaIlya.xlsx");
+            var file = new FileInfo(@"..\..\..\DLIV.xlsx");
             var tmp2 =new TestManager();
             tmp.SaveExcelFile(file, tmp2.GetReport());
         }
