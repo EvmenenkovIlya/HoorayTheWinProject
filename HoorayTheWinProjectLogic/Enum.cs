@@ -12,7 +12,8 @@ namespace HoorayTheWinProjectLogic
 		{
 			nextQuestoin,
 			invalidAnswer,
-			refreshKeybord
+			refreshKeybord,
+			lastQuestion
 		}
 	}
 }

@@ -30,7 +30,6 @@ namespace HoorayTheWinProjectLogic
         {
             _client.StartReceiving(HandleRecieve, HandleError);
         }
-
         public  void SendNextQuestion(long chatId)
         {
             TestToBot testToBot = TestToBot.GetInstance();
@@ -39,25 +38,33 @@ namespace HoorayTheWinProjectLogic
             testToBot.Manager.Test.AbstractQuestions[numberOfQuestion].TextOfQuestion,
             replyMarkup: testToBot.Manager.Test.AbstractQuestions[numberOfQuestion].GetInlineKM());
         }
-
         private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             TestToBot testToBot = TestToBot.GetInstance();
-            AddToBase(update);
-            if (IsTesting)
+            TryAddUserToBase(update);
+
+            if (IsTesting && !IsInTest(update))
             {
-                HandlingAnswer(update);
+                SendMessageWhenNotInTest(update);
+            }
+            else if (IsTesting)
+            {
+                HandlingAnswer(update);                
             }
         }
-
         public void SendMessageWhenTestNotFinished(long chatId)
         {
             _client.SendTextMessageAsync(chatId,
            "Haha, You didn't have time",
             replyMarkup: null);
-
         }
-
+        private void SendMessageWhenNotInTest(Update update)
+        {
+            long chatId = GetChatId(update);
+            _client.SendTextMessageAsync(chatId,
+           "Sorry, you are not in test now",
+            replyMarkup: null);
+        }
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
 
@@ -67,15 +74,7 @@ namespace HoorayTheWinProjectLogic
         private bool IsFinished(long chatId)
         {
             TestToBot testToBot = TestToBot.GetInstance();
-            if ((testToBot.Manager.AnswerBase[chatId]).Count() == testToBot.Manager.Test.AbstractQuestions.Count())
-            {
-                _client.SendTextMessageAsync(chatId, "Уходи, ты все!", replyMarkup: null);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return ((testToBot.Manager.AnswerBase[chatId]).Count() == testToBot.Manager.Test.AbstractQuestions.Count());
         }
 
         private long GetChatId(Update update)
@@ -93,10 +92,16 @@ namespace HoorayTheWinProjectLogic
                 throw new InvalidOperationException();
             }
         }
-        private void AddToBase(Update update)
+        private bool IsInTest(Update update)
+        {
+            TestToBot testToBot = TestToBot.GetInstance();
+            long chatId = GetChatId(update);
+            return testToBot.Manager.AnswerBase.ContainsKey(chatId);
+        }
+        private void TryAddUserToBase(Update update)
         {
             long chatId = GetChatId(update);
-            if (!groups.IsInBase(chatId))
+            if (update.Message != null && !groups.IsInBase(chatId))
             {
                 groups.Add(chatId);
                 groups.groups[0].AddUser(new User(update.Message.Chat));
@@ -106,14 +111,14 @@ namespace HoorayTheWinProjectLogic
                 return;
             }
         }
-
         private void HandlingAnswer(Update update)
         {
             TestToBot testToBot = TestToBot.GetInstance();
             long chatId = GetChatId(update);
-            Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[(testToBot.Manager.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
+
             if (!IsFinished(chatId))
             {
+                Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[(testToBot.Manager.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
                 if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
                 {
                     tmp = 0;
@@ -124,11 +129,19 @@ namespace HoorayTheWinProjectLogic
                     tmp = 0;
                     SendNextQuestion(chatId);
                 }
+                else if (behaviorOption == Enums.BehaviorOptions.lastQuestion)
+                {
+                    return;
+                }
                 else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
                 {
                     tmp = -1;
                     return;
                 }
+            }
+            else 
+            {
+                _client.SendTextMessageAsync(chatId, "Уходи, ты все!", replyMarkup: null);
             }
         }
     }

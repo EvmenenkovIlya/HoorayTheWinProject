@@ -42,12 +42,12 @@ namespace HoorayTheWinProjectLogic.Questions
             }
             long chatId = update.CallbackQuery!.Message!.Chat.Id;
             string message = update.CallbackQuery.Data!;
+            List<string> answers = testToBot.Manager.AnswerBase[chatId];
             foreach (var item in Answer)
             {
                 if (message == item)
                 {
-                    List<string> answers;
-                    testToBot.Manager.AnswerBase.TryGetValue(chatId, out answers!);
+                    
                     answers.Add(message);
                     return Enums.BehaviorOptions.nextQuestoin;
                 }

@@ -33,6 +33,10 @@ namespace HoorayTheWinProjectLogic.Questions
             long chatId = update.Message!.Chat.Id;
             List<string> answers = testToBot.Manager.AnswerBase[chatId];
             answers.Add(update.Message.Text!);
+            if (answers.Count == testToBot.Manager.Test.AbstractQuestions.Count())
+            {
+                return Enums.BehaviorOptions.lastQuestion;
+            }
             return Enums.BehaviorOptions.nextQuestoin;
         }
     }
