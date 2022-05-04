@@ -1029,13 +1029,9 @@ namespace HoorayTheWinProject_
 
         private void ButtonReport_Click(object sender, RoutedEventArgs e)
         {
-            //reports.Save();
-            //User user=new User();
             var tmp = new ReportStorageExcel();
-            var file = new FileInfo(@"C:\users\vit20\DASHA.xlsx");
-            //List <Report> reports = new List <Report>();
+            var file = new FileInfo(@"..\..\..\DashaLeraVityaIlya.xlsx");
             var tmp2 =new TestManager();
-
             tmp.SaveExcelFile(file, tmp2.GetReport());
         }
 
