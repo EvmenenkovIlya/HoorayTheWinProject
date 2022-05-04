@@ -106,7 +106,7 @@ namespace HoorayTheWinProjectLogic.Data
             {
                 Report p = new Report();
                 p.Name = ws.Cells[row, col].Value.ToString();
-                p.Question = ws.Cells[row, col + 1].Value.ToString();
+                //p.Question = ws.Cells[row, col + 1].Value.ToString();
                 p.UserAnswer.Add(ws.Cells[row, col + 2].Value.ToString());
                 output.Add(p);
                 row += 1;
