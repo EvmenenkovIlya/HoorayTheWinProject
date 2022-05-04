@@ -1,4 +1,5 @@
 ﻿using HoorayTheWinProjectLogic;
+using HoorayTheWinProjectLogic.Data;
 using HoorayTheWinProjectLogic.Questions;
 using System;
 using System.Collections.Generic;
@@ -15,80 +16,133 @@ namespace HoorayTheWinProjectLogic
 {
     public class TelegramManager
     {
+        GroupStorage groups = GroupStorage.GetInstance();
+        
         private TelegramBotClient _client;
-        private Test _test;
         private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
-
-        public TelegramManager(Test test)
+        private int tmp = 0;
+        public static bool IsTesting = false;
+        public TelegramManager()
         {
             _client = new TelegramBotClient(_token);
-            _test = test;
-        }
-
+        }        
         public void Start()
         {
             _client.StartReceiving(HandleRecieve, HandleError);
         }
-
-        public async void Send(AbstractQuestion abstractQuestion, long id)
+        public  void SendNextQuestion(long chatId)
         {
-            InlineKeyboardMarkup inlineKeyboard = abstractQuestion.GetInlineKM();
-            await _client.SendTextMessageAsync(new ChatId(id), abstractQuestion.TextOfQuestion, replyMarkup: inlineKeyboard);
+            TestToBot testToBot = TestToBot.GetInstance();
+            int numberOfQuestion = (testToBot.Manager.AnswerBase[chatId]).Count();
+            _client.SendTextMessageAsync(chatId,
+            testToBot.Manager.Test.AbstractQuestions[numberOfQuestion].TextOfQuestion,
+            replyMarkup: testToBot.Manager.Test.AbstractQuestions[numberOfQuestion].GetInlineKM());
         }
-
         private async Task HandleRecieve(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
+            TestToBot testToBot = TestToBot.GetInstance();
+            TryAddUserToBase(update);
 
-            if (update.Message == null || update.Message.Text == null)
+            if (IsTesting && !IsInTest(update))
             {
-                //await _client.SendTextMessageAsync(update.Message!.Chat.Id, "Enter text or emoji",  replyMarkup: null);
-                return;
+                SendMessageWhenNotInTest(update);
             }
-            if (DataMock.DataBase.Contains(update.Message.Chat.Id) == false)
+            else if (IsTesting)
             {
-                DataMock.DataBase.Add(update.Message.Chat.Id);
-                DataMock._other.AddUser(new User(update.Message.Chat));
+                HandlingAnswer(update);                
             }
-            if (DataMock.IsTesting && DataMock._testToStart.AnswerBase.ContainsKey(update.Id))
-            {               
-                SendNextQuestion(update.Id);
-                //int numberOfQuestion = 0;
-                //foreach (long id in DataMock._testToStart.AnswerBase.Keys)
-                //{
-                //    int numberOfAnswer = (DataMock._testToStart.AnswerBase[id]).Count;
-                //    if (numberOfAnswer == numberOfQuestion)
-                //    {
-                //        Send(DataMock._testToStart.FinalTest.AbstractQuestions[numberOfQuestion], id);
-                //        numberOfQuestion++;
-                //    }
-                //    else
-                //    {
-                //        // try to set answer
-                //        (DataMock._testToStart.AnswerBase[id]).Add(update.Message.Text);
-                //    }
-                //}
-            }
-            //else if (update.CallbackQuery != null)
-            //{
-            //    await botClient.EditMessageTextAsync(
-            //        update.CallbackQuery.Message!.Chat.Id,
-            //        update.CallbackQuery.Message!.MessageId,
-            //        update.CallbackQuery.Message!.Text!,
-            //        replyMarkup: null
-            //        );
-            //}
         }
-
+        public void SendMessageWhenTestNotFinished(long chatId)
+        {
+            _client.SendTextMessageAsync(chatId,
+           "Haha, You didn't have time",
+            replyMarkup: null);
+        }
+        private void SendMessageWhenNotInTest(Update update)
+        {
+            long chatId = GetChatId(update);
+            _client.SendTextMessageAsync(chatId,
+           "Sorry, you are not in test now",
+            replyMarkup: null);
+        }
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
 
             return Task.CompletedTask;
         }
 
-        private void SendNextQuestion(long id)
+        private bool IsFinished(long chatId)
         {
-            int questionIndex = (DataMock._testToStart.AnswerBase[id]).Count;
-            Send(DataMock._testToStart.FinalTest.AbstractQuestions[questionIndex], id);
+            TestToBot testToBot = TestToBot.GetInstance();
+            return ((testToBot.Manager.AnswerBase[chatId]).Count() == testToBot.Manager.Test.AbstractQuestions.Count());
+        }
+
+        private long GetChatId(Update update)
+        {
+            if (update.Message != null)
+            {
+                return update.Message.Chat.Id;
+            }
+            else if (update.CallbackQuery != null)
+            {
+                return update.CallbackQuery.Message.Chat.Id;
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+        private bool IsInTest(Update update)
+        {
+            TestToBot testToBot = TestToBot.GetInstance();
+            long chatId = GetChatId(update);
+            return testToBot.Manager.AnswerBase.ContainsKey(chatId);
+        }
+        private void TryAddUserToBase(Update update)
+        {
+            long chatId = GetChatId(update);
+            if (update.Message != null && !groups.IsInBase(chatId))
+            {
+                groups.Add(chatId);
+                groups.groups[0].AddUser(new User(update.Message.Chat));
+            }
+            else
+            {
+                return;
+            }
+        }
+        private void HandlingAnswer(Update update)
+        {
+            TestToBot testToBot = TestToBot.GetInstance();
+            long chatId = GetChatId(update);
+
+            if (!IsFinished(chatId))
+            {
+                Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[(testToBot.Manager.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
+                if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
+                {
+                    tmp = 0;
+                    SendNextQuestion(chatId);
+                }
+                else if (behaviorOption == Enums.BehaviorOptions.nextQuestoin)
+                {
+                    tmp = 0;
+                    SendNextQuestion(chatId);
+                }
+                else if (behaviorOption == Enums.BehaviorOptions.lastQuestion)
+                {
+                    return;
+                }
+                else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
+                {
+                    tmp = -1;
+                    return;
+                }
+            }
+            else 
+            {
+                _client.SendTextMessageAsync(chatId, "Уходи, ты все!", replyMarkup: null);
+            }
         }
     }
 }

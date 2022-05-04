@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoorayTheWinProjectLogic.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,15 +13,11 @@ namespace HoorayTheWinProjectLogic.Questions
     {
         public InSeries(string question, string answerOne, string answerTwo, string answerThree, string answerFour)
         {
-            List<string> Answer = new List<string>();
+            base.Answer = new List<string>() { answerOne, answerTwo, answerThree, answerFour };
             TextOfQuestion = question;
             TypeQuestion = 3;
-            Answer.Add(answerOne);
-            Answer.Add(answerTwo);
-            Answer.Add(answerThree);
-            Answer.Add(answerFour);
-            base.Answer = Answer;
         }
+        public InSeries() { }
         public override InlineKeyboardMarkup GetInlineKM()
         {
             InlineKeyboardMarkup inlineKeyboard = new(
@@ -28,35 +25,111 @@ namespace HoorayTheWinProjectLogic.Questions
              {
              new []
              {
-                 InlineKeyboardButton.WithCallbackData(Answer[0], Answer[0]),
-                 InlineKeyboardButton.WithCallbackData(Answer[1], Answer[1]),
+                 InlineKeyboardButton.WithCallbackData(Answer[0]),
+                 InlineKeyboardButton.WithCallbackData(Answer[1]),
              },
              new []
              {
-                 InlineKeyboardButton.WithCallbackData(Answer[2], Answer[2]),
-                 InlineKeyboardButton.WithCallbackData(Answer[3], Answer[3]),
+                 InlineKeyboardButton.WithCallbackData(Answer[2]),
+                 InlineKeyboardButton.WithCallbackData(Answer[3]),
              },
              new []
              {
-                 InlineKeyboardButton.WithCallbackData("Done", "Done")}
+                 InlineKeyboardButton.WithCallbackData("Done")}
              });
 
             return inlineKeyboard;
         }
 
-        public override bool SetAnswer(Update update, TestManager test)
+        public override Enums.BehaviorOptions SetAnswer(Update update)
         {
-            foreach (var item in Answer)
+            if (update.Message != null)
             {
-                if (update.Message!.Text == item || update.Message.Text == "Done")
+                return Enums.BehaviorOptions.invalidAnswer;
+            }
+            long chatId = update.CallbackQuery!.Message!.Chat.Id;
+            string message = update.CallbackQuery.Data!;
+            List<string> answers;
+            TestToBot testToBot = TestToBot.GetInstance();
+            testToBot.Manager.AnswerBase.TryGetValue(chatId, out answers!);
+            string pastString = answers[answers.Count - 1];
+            return Enums.BehaviorOptions.refreshKeybord;
+            string past = pastString.Replace(" ", "");
+            if (message != "Done")
+            {
+                if (answers.Count == 0)
                 {
-                    List<string> answers;
-                    test.AnswerBase.TryGetValue(update.Message.Chat.Id, out answers!);
-                    answers.Add(update.Message.Text);
-                    return true;
+                    answers.Add(message);
+                }
+                else
+                {
+                    if (
+                        !past.Contains(Answer[0])
+                        && !past.Contains(Answer[1])
+                        && !past.Contains(Answer[2])
+                        && !past.Contains(Answer[3])
+                        && !pastString.Contains("No answer")
+                        )
+                    {
+                        answers.Add(message);
+                        return Enums.BehaviorOptions.refreshKeybord;
+                    }
+                    else
+                    {
+                        if (!pastString.Contains(message))
+                        {
+                            if (pastString == " ")
+                            {
+                                pastString = (pastString + " " + message).Replace(" ", "");
+                            }
+                            else
+                            {
+                                pastString = pastString + " " + message;
+
+                            }
+                            answers.Insert(answers.Count - 1, pastString);
+                            answers.RemoveAt(answers.Count - 1);
+                            return Enums.BehaviorOptions.refreshKeybord;
+                        }
+                        else if (pastString.Contains(message) || pastString.Contains(" "))
+                        {
+                            List<string> values = pastString.Split(' ').ToList();
+                            if (values.Count > 1)
+                            {
+                                values.Remove(message);
+                                string result = String.Join(" ", values);
+                                answers.Insert(answers.Count - 1, result);
+                                answers.RemoveAt(answers.Count - 1);
+                            }
+                            else if (values.Count == 0 && pastString == " ")
+                            {
+                                answers.Insert(answers.Count - 1, message);
+                                answers.RemoveAt(answers.Count - 1);
+                            }
+                            else
+                            {
+                                answers.Insert(answers.Count - 1, " ");
+                                answers.RemoveAt(answers.Count - 1);
+                            }
+                        }
+                        return Enums.BehaviorOptions.refreshKeybord;
+                    }
                 }
             }
-            return false;
+            else
+            {
+                if (answers.Count == 0)
+                {
+                    answers.Add("No answer");
+                }
+                else if (answers[answers.Count - 1] == " ")
+                {
+                    answers.Insert(answers.Count - 1, "No answer");
+                    answers.RemoveAt(answers.Count - 1);
+                }
+                return Enums.BehaviorOptions.nextQuestoin;
+            }
+            return Enums.BehaviorOptions.invalidAnswer;
         }
     }
 }

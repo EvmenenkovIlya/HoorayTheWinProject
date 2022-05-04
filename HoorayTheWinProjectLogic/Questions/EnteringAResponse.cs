@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoorayTheWinProjectLogic.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,22 +13,31 @@ namespace HoorayTheWinProjectLogic.Questions
     {
         public EnteringAResponse(string question)
         {
-            List<string> Answer = new List<string>();
+            base.Answer = new List<string>();
             TextOfQuestion = question;
             TypeQuestion = 2;
-            base.Answer = Answer;
         }
+        public EnteringAResponse() { }
         public override InlineKeyboardMarkup GetInlineKM()
         {
             return null;
         }
 
-        public override bool SetAnswer(Update update, TestManager test)
+        public override Enums.BehaviorOptions SetAnswer(Update update)
         {
-            List<string> answers;
-            test.AnswerBase.TryGetValue(update.Message!.Chat.Id, out answers!);
+            if (update.Message == null)
+            {
+                return Enums.BehaviorOptions.invalidAnswer;
+            }
+            TestToBot testToBot = TestToBot.GetInstance();
+            long chatId = update.Message!.Chat.Id;
+            List<string> answers = testToBot.Manager.AnswerBase[chatId];
             answers.Add(update.Message.Text!);
-            return true;
+            if (answers.Count == testToBot.Manager.Test.AbstractQuestions.Count())
+            {
+                return Enums.BehaviorOptions.lastQuestion;
+            }
+            return Enums.BehaviorOptions.nextQuestoin;
         }
     }
 }

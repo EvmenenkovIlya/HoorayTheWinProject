@@ -10,18 +10,17 @@ namespace HoorayTheWinProjectLogic
     public class User
     {
         public string NameUser { get; set; }
-
-        public long ChatId { get; private set; }
-
+        public long ChatId { get; set; }
         public User(Chat chat)
         {
             NameUser = $"{chat.FirstName} {chat.LastName}";
             ChatId = chat.Id;
         }
+        public User()
+        { }
         public override string ToString()
         {
             return NameUser;
-        }
-        
+        }       
     }
 }
