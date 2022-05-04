@@ -83,11 +83,6 @@ namespace HoorayTheWinProject_
             _timer.Start();
         }
 
-        private void TextBoxTextOfQuestion_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void ListBoxGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Group groupOfUser = (Group)ListBoxGroups.SelectedItem;
@@ -139,7 +134,6 @@ namespace HoorayTheWinProject_
             TextBoxChangeGroupName.Clear();
             ButtonChangeGroupName.IsEnabled = false;
         }
-
 
         private void ButtonCreateNewGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -213,12 +207,6 @@ namespace HoorayTheWinProject_
         {          
             //_telegramManager.Start();
         }
-
-        private void TextBoxTextOfQuestion_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void ListBoxListOfQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {            
             ComboBoxListOfTests.IsEnabled = true;
@@ -1055,7 +1043,5 @@ namespace HoorayTheWinProject_
            // reports.Save();
 
         }
-
-
     }
 }
