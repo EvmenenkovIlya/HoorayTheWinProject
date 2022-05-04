@@ -120,15 +120,15 @@ namespace HoorayTheWinProjectLogic.Data
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using var package = new ExcelPackage(file);
             var ws = package.Workbook.Worksheets.Add("MainReport");
-            /*List<Report> output = new()
+            
+            List<Report> output = new()
             {
-                new() { Name = "1", Question = "mnhjgf" },
+                new() { Name = "1" },
                 new() { Name = "2" },
                 new() { Name = "3" }
-            };*/
-          
+            };
 
-            ws.Cells["A1"].LoadFromCollection(reports, true);
+            ws.Cells["A1"].LoadFromCollection(output, true);
 
             //ws.Cells["Name"].Value = "Our Cool Report";
             await package.SaveAsync();
