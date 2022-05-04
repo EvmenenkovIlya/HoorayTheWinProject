@@ -5,10 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Security.Principal;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace HoorayTheWinProjectLogic.Data
 {
-    [Serializable]
+    /*[Serializable]
     public class ReportStorage
     {
         private string filePath= Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)+@"\Report.json";
@@ -64,5 +70,88 @@ namespace HoorayTheWinProjectLogic.Data
             }
         }
 
+    }*/
+
+
+    public class ReportStorageExcel
+    {
+        public List<Report> Reports { get; set; }
+
+        public  ReportStorageExcel()
+        {
+            Reports = new List<Report>();
+        }
+        static async Task CreateExcel()
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            var file = new FileInfo(@"C:\Users\WWW\DASHA.xlsx"); 
+            //await SaveExcelFile(file);
+            //List<Report> reportList = await LoadExcelFile(file);
+        }
+
+        public  async Task<List<Report>> LoadExcelFile(FileInfo file)
+        {
+            List<Report> output = new();
+
+            using var package = new ExcelPackage(file);
+
+            await package.LoadAsync(file);
+
+            var ws = package.Workbook.Worksheets[0];
+
+            int row = 2;
+            int col = 1;
+
+            while (string.IsNullOrWhiteSpace(ws.Cells[row, col].Value?.ToString()) == false)
+            {
+                Report p = new Report();
+                p.Name = ws.Cells[row, col].Value.ToString();
+                p.Question = ws.Cells[row, col + 1].Value.ToString();
+                p.UserAnswer.Add(ws.Cells[row, col + 2].Value.ToString());
+                output.Add(p);
+                row += 1;
+            }
+            return output;
+        }
+
+        public async Task SaveExcelFile(FileInfo file, List<Report> reports)
+        {
+            //DeleteIfExists(file);
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using var package = new ExcelPackage(file);
+            var ws = package.Workbook.Worksheets.Add("MainReport");
+            
+            List<Report> output = new()
+            {
+                new() { Name = "1" },
+                new() { Name = "2" },
+                new() { Name = "3" }
+            };
+
+            ws.Cells["A1"].LoadFromCollection(output, true);
+
+            //ws.Cells["Name"].Value = "Our Cool Report";
+            await package.SaveAsync();
+        }
+
+        public void DeleteIfExists(FileInfo file)
+        {
+            if (file.Exists)
+            {
+                file.Delete();
+            }
+        }
+
+        public List<Report> GetSetupData()
+        {
+            List<Report> output = new()
+            {
+                new() { Name="1" },
+                new() { Name = "2" },
+                new() { Name = "3" }
+            };
+
+            return output;
+        }
     }
 }
