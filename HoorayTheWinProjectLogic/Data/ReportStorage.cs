@@ -14,64 +14,6 @@ using System.Threading.Tasks;
 
 namespace HoorayTheWinProjectLogic.Data
 {
-    /*[Serializable]
-    public class ReportStorage
-    {
-        private string filePath= Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)+@"\Report.json";
-        public List<Report> Reports { get; private set; }
-
-        private static ReportStorage _instance;
-
-        private ReportStorage()
-        { 
-            Reports = new List<Report>();
-        }
-
-        public static ReportStorage GetInstance()
-        {
-            if (_instance == null)
-            {
-                _instance = new ReportStorage();
-            }
-            return _instance;
-        }
-
-        public string Serialize()
-        {
-            return JsonSerializer.Serialize<List<Report>>(Reports);
-        }
-
-        public List<Report> Decerialize(string json)
-        {
-            if(json== null)
-            {
-                throw new ArgumentException("json");
-            }
-            return JsonSerializer.Deserialize<List<Report>>(json);
-
-        }
-
-        public void Save()
-        {
-            string json = Serialize();
-
-            using (StreamWriter sw = new StreamWriter(filePath, false))
-            {
-                sw.WriteLine(json);
-            }
-        }
-
-        public List<Report> Load()
-        {
-            using (StreamReader sr = new StreamReader(filePath))
-            {
-                string json = sr.ReadLine();
-                return Decerialize(json);
-            }
-        }
-
-    }*/
-
 
     public class ReportStorageExcel
     {
@@ -84,12 +26,11 @@ namespace HoorayTheWinProjectLogic.Data
         static async Task CreateExcel()
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            var file = new FileInfo(@"C:\Users\WWW\DASHA.xlsx"); 
-            //await SaveExcelFile(file);
-            //List<Report> reportList = await LoadExcelFile(file);
+            var file = new FileInfo(@"..\..\..\..\DLIV.xlsx"); 
+            
         }
 
-        public  async Task<List<Report>> LoadExcelFile(FileInfo file)
+        public  async Task<List<Report>> LoadExcelFile(FileInfo file, User user)
         {
             List<Report> output = new();
 
@@ -106,31 +47,47 @@ namespace HoorayTheWinProjectLogic.Data
             {
                 Report p = new Report();
                 p.Name = ws.Cells[row, col].Value.ToString();
-                //p.Question = ws.Cells[row, col + 1].Value.ToString();
+                p.Questions.Add(ws.Cells[row, col + 1].Value.ToString());
                 p.UserAnswer.Add(ws.Cells[row, col + 2].Value.ToString());
                 output.Add(p);
-                row += 1;
+                row += 10;
             }
             return output;
         }
 
-        public async Task SaveExcelFile(FileInfo file, List<Report> reports)
+        public async Task SaveExcelFile(FileInfo file, List <Report> reports)
         {
-            //DeleteIfExists(file);
+            DeleteIfExists(file);
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using var package = new ExcelPackage(file);
             var ws = package.Workbook.Worksheets.Add("MainReport");
-            
-            List<Report> output = new()
+
+            ws.Cells["A1"].Value = "Name";
+            ws.Cells["B1"].Value = "Question";
+            ws.Cells["C1"].Value = "Answers";
+            int x = 2;
+            foreach (var report in reports)
             {
-                new() { Name = "1" },
-                new() { Name = "2" },
-                new() { Name = "3" }
-            };
+                int count = 0;
 
-            ws.Cells["A1"].LoadFromCollection(output, true);
+                for (int i = 0; i < report.Questions.Count; i++)
+                {
+                    ws.Cells[x + i, 1].Value = report.Name;
+                    ws.Cells[x + i, 2].Value = report.Questions[i];
+                    if(i>=report.UserAnswer.Count())
+                    {
+                        ws.Cells[x + i, 3].Value = "-";
+                    }
+                    else
+                    {
+                        ws.Cells[x + i, 3].Value = report.UserAnswer[i];
+                    }
+                    
+                    count++;
+                }
+                x += count;
+            }
 
-            //ws.Cells["Name"].Value = "Our Cool Report";
             await package.SaveAsync();
         }
 
@@ -142,16 +99,5 @@ namespace HoorayTheWinProjectLogic.Data
             }
         }
 
-        public List<Report> GetSetupData()
-        {
-            List<Report> output = new()
-            {
-                new() { Name="1" },
-                new() { Name = "2" },
-                new() { Name = "3" }
-            };
-
-            return output;
-        }
     }
 }
