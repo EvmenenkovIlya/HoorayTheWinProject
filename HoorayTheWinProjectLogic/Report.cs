@@ -25,5 +25,11 @@ namespace HoorayTheWinProjectLogic
             UserAnswer = testToBot.Manager.AnswerBase[user.ChatId];
         }
 
+        public Report() 
+        {
+            Name = "Vasya";
+            //Question = "ndhdjdhs";
+            UserAnswer = new List<string>();
+        }
     }
 }
