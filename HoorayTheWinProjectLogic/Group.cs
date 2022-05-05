@@ -8,7 +8,7 @@ namespace HoorayTheWinProjectLogic
 {
     public class Group
     {
-        public string NameGroup { get; set; }   
+        public string NameGroup { get; set; }
         public List<User> Users { get; set; }
         public bool IsSelected { get; set; }
         public Group(string nameGroup)
@@ -16,7 +16,7 @@ namespace HoorayTheWinProjectLogic
             NameGroup = nameGroup;
             Users = new List<User>();
         }
-        public Group ()
+        public Group()
         {
 
         }
@@ -41,5 +41,37 @@ namespace HoorayTheWinProjectLogic
         {
             return NameGroup;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !(obj is Group))
+            {
+                return false;
+            }
+            else
+            {
+                Group objGroup = (Group)obj;
+                if ((objGroup.Users.Count != this.Users.Count) && (objGroup.NameGroup != this.NameGroup))
+                {
+
+                    return false;
+                }
+                else
+                {
+                    foreach (User user in objGroup.Users)
+                    {
+                        List<User> users = this.Users.Where(x => x.NameUser == user.NameUser && x.ChatId == user.ChatId).ToList();
+                        if (users.Count != 1)
+                        {
+                            return false;
+                        }
+
+                    }
+                    return true;
+
+                }
+            }
+        }
+
     }
 }

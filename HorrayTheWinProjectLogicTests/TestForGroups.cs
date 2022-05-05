@@ -1,17 +1,18 @@
 using NUnit.Framework;
 using HoorayTheWinProjectLogic.Questions;
 using HoorayTheWinProjectLogic;
+using HorrayTheWinProjectLogicTests.HorrayTheWinProjectLogicTestsSources;
 namespace HorrayTheWinProjectLogicTests
 {
     public class TestsForLinkList
     {
-        //[TestCaseSource(typeof(AddInTheEndTestSource))]
-        //public void AddUserToGroup()
-        //{
-        //    list.AddInTheEnd(value);
-        //    LinkList actualList = list;
-        //    Assert.AreEqual(expectedList, actualList);
-        //}
+        
+        [TestCaseSource(typeof(AddUserTestSource))]
+        public void AddUserTest(User user, Group group, Group expectedGroup)
+        {
+            Group actualGroup = group;
+            group.AddUser(user);
+            Assert.AreEqual(expectedGroup, actualGroup);
 
         [TestCaseSource(typeof(AddQuestionTestSource))]
         public void AddQuestion(AbstractQuestion abstractQuestion,  Test actualTest, Test expectedTest)

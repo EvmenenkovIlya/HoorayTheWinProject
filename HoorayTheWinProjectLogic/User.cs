@@ -18,6 +18,12 @@ namespace HoorayTheWinProjectLogic
         }
         public User()
         { }
+
+        public User(string name, long chatId)
+        {
+            NameUser = name;
+            ChatId = chatId;
+        }
         public override string ToString()
         {
             return NameUser;
