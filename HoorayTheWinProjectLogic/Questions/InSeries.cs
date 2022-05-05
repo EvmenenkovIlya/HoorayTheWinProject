@@ -41,6 +41,28 @@ namespace HoorayTheWinProjectLogic.Questions
             return inlineKeyboard;
         }
 
+        public override InlineKeyboardMarkup GetRefreshInlineKM(List<string> answers)
+        {
+            List<string> modifyAnswers = ModifyAnswers(answers);
+            InlineKeyboardMarkup inlineKeyboard = new(
+            new[]
+            {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData(modifyAnswers[0], Answer[0]),
+                InlineKeyboardButton.WithCallbackData(modifyAnswers[1], Answer[1]),
+            },
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData(modifyAnswers[2], Answer[2]),
+                InlineKeyboardButton.WithCallbackData(modifyAnswers[3], Answer[3]),
+            },
+            new[]
+            {
+               InlineKeyboardButton.WithCallbackData("Done")}
+            });
+            return inlineKeyboard;
+        }
         public override Enums.BehaviorOptions SetAnswer(Update update)
         {
             if (update.Message != null)
@@ -55,7 +77,7 @@ namespace HoorayTheWinProjectLogic.Questions
             }
             else
             {
-                PressingDone(update, message);
+                PressingDone(update);
                 TestToBot testToBot = TestToBot.GetInstance();
                 if (GetAnswerList(update).Count == testToBot.Manager.Test.AbstractQuestions.Count())
                 {
@@ -65,16 +87,19 @@ namespace HoorayTheWinProjectLogic.Questions
             }
         }
 
-        private void PressingDone(Update update, string message)
+        private void PressingDone(Update update)
         {
-            if (GetAnswerList(update).Count == 0)
+            TestToBot testToBot = TestToBot.GetInstance();
+            List<string> list = GetAnswerList(update);
+            int index = testToBot.Manager.Test.AbstractQuestions.IndexOf(this);
+            if (list.Count == 0 || list.Count == index)
             {
-                GetAnswerList(update).Add("No answer");
+                list.Add("No answer");
             }
             else if (GetPastIndex(update) == "Empty")
             {
-                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, "No answer");
-                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+                list.Insert(list.Count - 1, "No answer");
+                list.RemoveAt(list.Count - 1);
             }
         }
 
@@ -133,23 +158,24 @@ namespace HoorayTheWinProjectLogic.Questions
 
         private void RemoveNewAnswerFromIndex(Update update, string message)
         {
+            List<string> list = GetAnswerList(update);
             List<string> values = GetPastIndex(update).Split(' ').ToList();
             if (values.Count > 1)
             {
                 values.Remove(message);
                 string result = String.Join(" ", values);
-                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, result);
-                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+                list.Insert(list.Count - 1, result);
+                list.RemoveAt(list.Count - 1);
             }
             else if (values.Count == 0 && GetPastIndex(update) == "Empty")
             {
-                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, message);
-                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+                list.Insert(list.Count - 1, message);
+                list.RemoveAt(list.Count - 1);
             }
             else
             {
-                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, "Empty");
-                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+                list.Insert(list.Count - 1, "Empty");
+                list.RemoveAt(list.Count - 1);
             }
         }
 
@@ -168,10 +194,25 @@ namespace HoorayTheWinProjectLogic.Questions
             return answers;
         }
 
-        public override InlineKeyboardMarkup GetRefreshInlineKM(List<string> answers)
+        public List<string> ModifyAnswers(List<string> userAnswers)
         {
-            throw new NotImplementedException();
+            string[] arr = new string[4];
+            Answer.CopyTo(arr);
+            List<string> modifyAnswer = arr.ToList<string>();
+            int i = 0;
+            string[] abc = new string[4] { "1️⃣", "2️⃣", "3️⃣", "4️⃣" };
+            foreach (var answer in userAnswers)
+            {              
+                if (modifyAnswer.Contains(answer))
+                {
+                    int index = modifyAnswer.IndexOf(answer);
+                    modifyAnswer[index] = $"{abc[i]} {answer}";
+                }
+                i++;
+            }
+            return modifyAnswer;
         }
+
     }
 }
 

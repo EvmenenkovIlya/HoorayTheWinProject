@@ -90,7 +90,9 @@ namespace HoorayTheWinProjectLogic.Questions
         private void PressingDone(Update update)
         {
             List<string> list = GetAnswerList(update);
-            if (list.Count == 0)
+            TestToBot testToBot = TestToBot.GetInstance();
+            int index = testToBot.Manager.Test.AbstractQuestions.IndexOf(this);           
+                if (list.Count == 0 || list.Count == index)
             {
                 list.Add("No answer");
             }
