@@ -1,9 +1,10 @@
 Bank of Questions
 {"TextOfQuestion":"What is love? Baby, don\u0027t hurt me","TypeQuestion":2,"Answer":[]}
+{"TextOfQuestion":"What is a love?","TypeQuestion":1,"Answer":["Perfect feelings","Pain","A knife in the heart","Fairytale"]}
 TestForTest
 {"TextOfQuestion":"Who is the author of War and Peace?","TypeQuestion":1,"Answer":["Lermontov","Dostoevskiy","Tolstoy","Leskov"]}
 {"TextOfQuestion":"What kind of animal have a four legs?","TypeQuestion":0,"Answer":["Fish","Kangaroo","Tiger","Panda"]}
 {"TextOfQuestion":"Sort in right order the authors by their year of birth","TypeQuestion":3,"Answer":["Mayakovskiy","Pushkin","Tyutchev","Pelevin"]}
 {"TextOfQuestion":"Is an year contains 365 days?","TypeQuestion":4,"Answer":["Yes","No"]}
-{"TextOfQuestion":"What is love? Baby, don\u0027t hurt me","TypeQuestion":2,"Answer":[]}
+{"TextOfQuestion":"What is a love?","TypeQuestion":1,"Answer":["Perfect feelings","Pain","A knife in the heart","Fairytale"]}
 
