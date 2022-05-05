@@ -32,7 +32,6 @@ namespace HoorayTheWinProject_
         private DispatcherTimer _timer;
         TestsStorage tests = TestsStorage.GetInstance();
         GroupStorage groups = GroupStorage.GetInstance();
-       // ReportStorage reports = ReportStorage.GetInstance();
 
         public MainWindow()
         {
@@ -485,9 +484,13 @@ namespace HoorayTheWinProject_
             TestToBot testToBot = TestToBot.GetInstance();
             foreach (long chatId in testToBot.Manager.AnswerBase.Keys)
             {
-                if  (_telegramManager.IsFinished(chatId))
+                if  (!_telegramManager.IsFinished(chatId))
                 {
                     _telegramManager.SendMessageWhenTestNotFinished(chatId);
+                }
+                else 
+                {
+                    _telegramManager.SendMessageWhenTestFinished(chatId);
                 }
             }
         }
@@ -1039,8 +1042,6 @@ namespace HoorayTheWinProject_
         {
             tests.Save();
             groups.Save();
-           // reports.Save();
-
         }
     }
 }
