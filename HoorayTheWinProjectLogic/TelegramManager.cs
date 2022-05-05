@@ -49,7 +49,7 @@ namespace HoorayTheWinProjectLogic
             }
             else if (IsTesting)
             {
-                HandlingAnswer(update);                
+               await HandlingAnswerAsync(botClient, update);                
             }
         }
         public void SendMessageWhenTestNotFinished(long chatId)
@@ -85,7 +85,7 @@ namespace HoorayTheWinProjectLogic
             }
             else if (update.CallbackQuery != null)
             {
-                return update.CallbackQuery.Message.Chat.Id;
+                return update.CallbackQuery.Message!.Chat.Id;
             }
             else
             {
@@ -111,7 +111,7 @@ namespace HoorayTheWinProjectLogic
                 return;
             }
         }
-        private void HandlingAnswer(Update update)
+        private async Task HandlingAnswerAsync(ITelegramBotClient botClient, Update update)
         {
             TestToBot testToBot = TestToBot.GetInstance();
             long chatId = GetChatId(update);
@@ -126,11 +126,18 @@ namespace HoorayTheWinProjectLogic
                 }
                 else if (behaviorOption == Enums.BehaviorOptions.nextQuestoin)
                 {
+                    await botClient.EditMessageTextAsync(
+                          update.CallbackQuery!.Message!.Chat.Id,
+                          update.CallbackQuery.Message!.MessageId,
+                          update.CallbackQuery.Message!.Text!,
+                          replyMarkup: null
+                          );
                     tmp = 0;
                     SendNextQuestion(chatId);
                 }
                 else if (behaviorOption == Enums.BehaviorOptions.lastQuestion)
                 {
+                    await _client.SendTextMessageAsync(chatId, "The test is over!", replyMarkup: null);
                     return;
                 }
                 else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
@@ -141,7 +148,7 @@ namespace HoorayTheWinProjectLogic
             }
             else 
             {
-                _client.SendTextMessageAsync(chatId, "Уходи, ты все!", replyMarkup: null);
+               await _client.SendTextMessageAsync(chatId, "The test is over!", replyMarkup: null);
             }
         }
     }

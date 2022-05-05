@@ -26,13 +26,13 @@ namespace HoorayTheWinProjectLogic.Questions
             {
             new[]
             {
-                InlineKeyboardButton.WithCallbackData(Answer[0]),
-                InlineKeyboardButton.WithCallbackData(Answer[1]),
+                InlineKeyboardButton.WithCallbackData(Answer[0], Answer[0]),
+                InlineKeyboardButton.WithCallbackData(Answer[1], Answer[1]),
             },
             new[]
             {
-                InlineKeyboardButton.WithCallbackData(Answer[2]),
-                InlineKeyboardButton.WithCallbackData(Answer[3]),
+                InlineKeyboardButton.WithCallbackData(Answer[2], Answer[2]),
+                InlineKeyboardButton.WithCallbackData(Answer[3], Answer[3]),
             },
             new[]
             {
@@ -47,89 +47,125 @@ namespace HoorayTheWinProjectLogic.Questions
             {
                 return Enums.BehaviorOptions.invalidAnswer;
             }
-            long chatId = update.CallbackQuery!.Message!.Chat.Id;
-            string message = update.CallbackQuery.Data!;
-            List<string> answers;
-            TestToBot testToBot = TestToBot.GetInstance();
-            testToBot.Manager.AnswerBase.TryGetValue(chatId, out answers!);
-            string pastString = answers[answers.Count - 1];
-            string past = pastString.Replace(" ", "");
+            string message = update.CallbackQuery!.Data!;
             if (message != "Done")
             {
-                if (answers.Count == 0)
-                {
-                    answers.Add(message);
-                }
-                else
-                {
-                    if (
-                        !past.Contains(Answer[0])
-                        && !past.Contains(Answer[1])
-                        && !past.Contains(Answer[2])
-                        && !past.Contains(Answer[3])
-                        && !past.Contains("No answer")
-                        && !pastString.Contains(" ")
-                        )
-                    {
-                        answers.Add(message);
-                        return Enums.BehaviorOptions.refreshKeybord;
-                    }
-                    else
-                    {
-                        if(!pastString.Contains(message))
-                        {
-                            if(pastString ==" ")
-                            {
-                                pastString = (pastString + " " + message).Replace(" ", "");
-                            }
-                            else
-                            {
-                                pastString = pastString + " " + message;
-
-                            }
-                            answers.Insert(answers.Count - 1, pastString);
-                            answers.RemoveAt(answers.Count - 1);
-                            return Enums.BehaviorOptions.refreshKeybord;
-                        }
-                        else if (pastString.Contains(message) || pastString.Contains(" "))
-                        {
-                            List<string> values = pastString.Split(' ').ToList();
-                            if (values.Count > 1)
-                            {
-                                values.Remove(message);
-                                string result = String.Join(" ", values);
-                                answers.Insert(answers.Count - 1, result);
-                                answers.RemoveAt(answers.Count - 1);
-                            }
-                            else if(values.Count == 0 && pastString == " ")
-                            {
-                                answers.Insert(answers.Count - 1, message);
-                                answers.RemoveAt(answers.Count - 1);
-                            }
-                            else
-                            {
-                                answers.Insert(answers.Count - 1, " ");
-                                answers.RemoveAt(answers.Count - 1);
-                            }
-                        }
-                        return Enums.BehaviorOptions.refreshKeybord;
-                    }
-                }
+                PressingNotDone(update, message);
+                return Enums.BehaviorOptions.refreshKeybord;
             }
             else
             {
-                if(answers.Count == 0)
+                PressingDone(update, message);
+                TestToBot testToBot = TestToBot.GetInstance();
+                if (GetAnswerList(update).Count == testToBot.Manager.Test.AbstractQuestions.Count())
                 {
-                    answers.Add("No answer");
-                }
-                else if(answers[answers.Count - 1] == " ")
-                {
-                    answers.Insert(answers.Count - 1, "No answer");
-                    answers.RemoveAt(answers.Count - 1);
+                    return Enums.BehaviorOptions.lastQuestion;
                 }
                 return Enums.BehaviorOptions.nextQuestoin;
             }
-            return Enums.BehaviorOptions.invalidAnswer;
+        }
+
+        private void PressingDone(Update update, string message)
+        {
+            if (GetAnswerList(update).Count == 0)
+            {
+                GetAnswerList(update).Add("No answer");
+            }
+            else if (GetPastIndex(update) == "Empty")
+            {
+                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, "No answer");
+                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+            }
+        }
+
+        private void PressingNotDone(Update update, string message)
+        {
+            if (GetAnswerList(update).Count == 0)
+            {
+                GetAnswerList(update).Add(message);
+            }
+            else
+            {
+                if (
+                    !GetPastIndex(update).Contains(Answer[0])
+                    && !GetPastIndex(update).Contains(Answer[1])
+                    && !GetPastIndex(update).Contains(Answer[2])
+                    && !GetPastIndex(update).Contains(Answer[3])
+                    && !GetPastIndex(update).Contains("Empty")
+                    )
+                {
+                    AddNewAnswer(update, message);
+                }
+                else
+                {
+                    if (!GetPastIndex(update).Contains(message))
+                    {
+                        AddNewAnswerToIndex(update, message);
+                    }
+                    else if (GetPastIndex(update).Contains(message) || GetPastIndex(update).Contains("Empty"))
+                    {
+                        RemoveNewAnswerFromIndex(update, message);
+                    }
+                }
+            }
+        }
+
+        private void AddNewAnswer(Update update, string message)
+        {
+            GetAnswerList(update).Add(message);
+        }
+
+        private void AddNewAnswerToIndex (Update update, string message)
+        {
+            string pastString = GetPastIndex(update);
+            if (pastString == "Empty")
+            {
+                GetAnswerList(update).Remove(pastString);
+                GetAnswerList(update).Add(message);
+            }
+            else
+            {
+                pastString = pastString + " " + message;
+                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, pastString);
+                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+            }
+        }
+
+        private void RemoveNewAnswerFromIndex(Update update, string message)
+        {
+            List<string> values = GetPastIndex(update).Split(' ').ToList();
+            if (values.Count > 1)
+            {
+                values.Remove(message);
+                string result = String.Join(" ", values);
+                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, result);
+                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+            }
+            else if (values.Count == 0 && GetPastIndex(update) == "Empty")
+            {
+                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, message);
+                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+            }
+            else
+            {
+                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, "Empty");
+                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+            }
+        }
+
+        private string GetPastIndex(Update update)
+        {
+            string pastString = GetAnswerList(update)[GetAnswerList(update).Count - 1];
+            return pastString;
+        }
+
+        private List<string> GetAnswerList(Update update)
+        {
+            long chatId = update.CallbackQuery!.Message!.Chat.Id;
+            TestToBot testToBot = TestToBot.GetInstance();
+            List<string> answers;
+            testToBot.Manager.AnswerBase.TryGetValue(chatId, out answers!);
+            return answers;
         }
     }
 }
