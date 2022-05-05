@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 
 
-namespace MyArrayListTests.MyLinkedListTestSources;
+namespace HorrayTheWinProjectLogicTests;
 
 internal class AddInTheEndTestSource : IEnumerable
 {

@@ -1,5 +1,6 @@
 using NUnit.Framework;
-
+using HoorayTheWinProjectLogic.Questions;
+using HoorayTheWinProjectLogic;
 namespace HorrayTheWinProjectLogicTests
 {
     public class TestsForLinkList
@@ -12,5 +13,17 @@ namespace HorrayTheWinProjectLogicTests
         //    Assert.AreEqual(expectedList, actualList);
         //}
 
+        [TestCaseSource(typeof(AddQuestionTestSource))]
+        public void AddQuestion(AbstractQuestion abstractQuestion,  Test actualTest, Test expectedTest)
+        {
+            actualTest.AddQuestion(abstractQuestion);
+            Assert.AreEqual( expectedTest, actualTest);
+        }
+        [TestCaseSource(typeof(DeleteQuestionTestSource))]
+        public void DeleteQuestion(AbstractQuestion abstractQuestion, Test actualTest, Test expectedTest)
+        {
+            actualTest.DeleteQuestion(abstractQuestion);
+            Assert.AreEqual(expectedTest, actualTest);
+        }
     }
 }
