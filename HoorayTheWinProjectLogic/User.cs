@@ -18,6 +18,8 @@ namespace HoorayTheWinProjectLogic
         }
         public User()
         { }
+        [NonSerialized]
+        public int tmp = 0;
         public override string ToString()
         {
             return NameUser;

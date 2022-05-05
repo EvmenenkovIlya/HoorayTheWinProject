@@ -49,5 +49,10 @@ namespace HoorayTheWinProjectLogic.Questions
             }
             return Enums.BehaviorOptions.nextQuestion;          
         }
+
+        public override InlineKeyboardMarkup GetRefreshInlineKM(List<string> answers)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -167,6 +167,11 @@ namespace HoorayTheWinProjectLogic.Questions
             testToBot.Manager.AnswerBase.TryGetValue(chatId, out answers!);
             return answers;
         }
+
+        public override InlineKeyboardMarkup GetRefreshInlineKM(List<string> answers)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
