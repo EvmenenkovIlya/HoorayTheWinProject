@@ -53,6 +53,13 @@ namespace HoorayTheWinProjectLogic
                await HandlingAnswerAsync(botClient, update);                
             }
         }
+
+        public void SendMessageWhenTestFinished(long chatId)
+        {
+            _client.SendTextMessageAsync(chatId,
+          "The test is over!",
+           replyMarkup: null);
+        }
         public void SendMessageWhenTestNotFinished(long chatId)
         {
             _client.SendTextMessageAsync(chatId,
@@ -138,7 +145,7 @@ namespace HoorayTheWinProjectLogic
                 }
                 else if (behaviorOption == Enums.BehaviorOptions.lastQuestion)
                 {
-                    await _client.SendTextMessageAsync(chatId, "The test is over!", replyMarkup: null);
+                    SendMessageWhenTestFinished(chatId);
                     return;
                 }
                 else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
@@ -149,7 +156,7 @@ namespace HoorayTheWinProjectLogic
             }
             else 
             {
-               await _client.SendTextMessageAsync(chatId, "The test is over!", replyMarkup: null);
+                SendMessageWhenTestFinished(chatId);
             }
         }
     }
