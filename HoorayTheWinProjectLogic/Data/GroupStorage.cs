@@ -16,7 +16,6 @@ namespace HoorayTheWinProjectLogic.Data
         private static Group _other = new Group("Other");
         public List<Group> groups { get; set; } = new List<Group>() { _other };
         private Dictionary<long, User> Base { get; set; } = new Dictionary<long, User>();
-
         private GroupStorage()
         {
             groups = Load();
@@ -39,6 +38,15 @@ namespace HoorayTheWinProjectLogic.Data
         public bool IsInBase(long chatId)
         {
             return Base.ContainsKey(chatId);
+        }
+        public Dictionary<long, User> ReturnCopyBase()
+        {
+            Dictionary<long, User> CopyBase = new Dictionary<long, User>();
+            foreach (var person in Base)
+            {
+                CopyBase.Add(person.Key, person.Value);
+            }
+            return CopyBase;
         }
         public void AddChatId(long chatId, User user)
         {

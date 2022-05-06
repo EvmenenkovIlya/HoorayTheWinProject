@@ -131,7 +131,8 @@ namespace HoorayTheWinProjectLogic
                 Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[index + tmp].SetAnswer(update);
                 groups.ChangeUserTmp(chatId, 0);
                 if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
-                {                    
+                {
+                    DeleteKeyboard(update, botClient);
                     SendNextQuestion(chatId);
                 }
                 else if (behaviorOption == Enums.BehaviorOptions.nextQuestion)
