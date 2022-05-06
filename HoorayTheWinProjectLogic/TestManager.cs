@@ -42,14 +42,6 @@ namespace HoorayTheWinProjectLogic
             {
                 result.Add(new Report(Base[id]));              
             }
-            //foreach (Group group in testToBot.Manager.Groups)
-            //{
-            //    foreach (User user in group.Users)
-            //    {
-            //        result.Add(new Report(user));               
-            //    }
-            //}
-
             return result;
         }
     }

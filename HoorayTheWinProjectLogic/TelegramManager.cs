@@ -54,23 +54,23 @@ namespace HoorayTheWinProjectLogic
             }
         }
 
-        public void SendMessageWhenTestFinished(long chatId)
-        {
-            _client.SendTextMessageAsync(chatId,
-          "The test is over!",
+        public void SendMessageWhenTestFinished(long chatId, string text = "You finished test")
+        {         
+           _client.SendTextMessageAsync(chatId,
+           text,
            replyMarkup: null);
         }
         public void SendMessageWhenTestNotFinished(long chatId)
         {
             _client.SendTextMessageAsync(chatId,
-           "Haha, You didn't have time",
+            "Haha, You didn't have time",
             replyMarkup: null);
         }
         private void SendMessageWhenNotInTest(Update update)
         {
             long chatId = GetChatId(update);
             _client.SendTextMessageAsync(chatId,
-           "Sorry, you are not in test now",
+            "Sorry, you are not in test now",
             replyMarkup: null);
         }
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
@@ -82,7 +82,8 @@ namespace HoorayTheWinProjectLogic
         public bool IsFinished(long chatId)
         {
             TestToBot testToBot = TestToBot.GetInstance();
-            return ((testToBot.Manager.AnswerBase[chatId]).Count() == testToBot.Manager.Test.AbstractQuestions.Count());
+            int tmpUser = groups.ReturnUserTmp(chatId);
+            return ((testToBot.Manager.AnswerBase[chatId]).Count() - tmpUser == testToBot.Manager.Test.AbstractQuestions.Count());
         }
 
         public static long GetChatId(Update update)
@@ -142,6 +143,7 @@ namespace HoorayTheWinProjectLogic
                 }
                 else if (behaviorOption == Enums.BehaviorOptions.lastQuestion)
                 {
+                    DeleteKeyboard(update, botClient);
                     SendMessageWhenTestFinished(chatId);
                     return;
                 }
