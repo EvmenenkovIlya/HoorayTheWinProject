@@ -40,6 +40,11 @@ namespace HoorayTheWinProjectLogic.Questions
             return Enums.BehaviorOptions.nextQuestion;
         }
 
+        public override InlineKeyboardMarkup GetRefreshInlineKM(List<string> answers)
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool Equals(object? obj)
         {
             if (obj == null || !(obj is EnteringAResponse))

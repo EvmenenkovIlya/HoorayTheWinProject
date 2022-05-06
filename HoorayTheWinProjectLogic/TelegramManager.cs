@@ -20,7 +20,7 @@ namespace HoorayTheWinProjectLogic
         
         private TelegramBotClient _client;
         private const string _token = "5309481862:AAHaEMz6L2bozc4jO2DuAAxj1yHDipoSV5s";
-        private int tmp = 0;
+        
         public static bool IsTesting = false;
         public TelegramManager()
         {
@@ -54,23 +54,23 @@ namespace HoorayTheWinProjectLogic
             }
         }
 
-        public void SendMessageWhenTestFinished(long chatId)
-        {
-            _client.SendTextMessageAsync(chatId,
-          "The test is over!",
+        public void SendMessageWhenTestFinished(long chatId, string text = "You finished test")
+        {         
+           _client.SendTextMessageAsync(chatId,
+           text,
            replyMarkup: null);
         }
         public void SendMessageWhenTestNotFinished(long chatId)
         {
             _client.SendTextMessageAsync(chatId,
-           "Haha, You didn't have time",
+            "Haha, You didn't have time",
             replyMarkup: null);
         }
         private void SendMessageWhenNotInTest(Update update)
         {
             long chatId = GetChatId(update);
             _client.SendTextMessageAsync(chatId,
-           "Sorry, you are not in test now",
+            "Sorry, you are not in test now",
             replyMarkup: null);
         }
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
@@ -82,10 +82,11 @@ namespace HoorayTheWinProjectLogic
         public bool IsFinished(long chatId)
         {
             TestToBot testToBot = TestToBot.GetInstance();
-            return ((testToBot.Manager.AnswerBase[chatId]).Count() == testToBot.Manager.Test.AbstractQuestions.Count());
+            int tmpUser = groups.ReturnUserTmp(chatId);
+            return ((testToBot.Manager.AnswerBase[chatId]).Count() - tmpUser == testToBot.Manager.Test.AbstractQuestions.Count());
         }
 
-        private long GetChatId(Update update)
+        public static long GetChatId(Update update)
         {
             if (update.Message != null)
             {
@@ -111,8 +112,9 @@ namespace HoorayTheWinProjectLogic
             long chatId = GetChatId(update);
             if (update.Message != null && !groups.IsInBase(chatId))
             {
-                groups.AddChatId(chatId);
-                groups.groups[0].AddUser(new User(update.Message.Chat));
+                User user = new User(update.Message.Chat);
+                groups.groups[0].AddUser(user);
+                groups.AddChatId(chatId, user);
             }
             else
             {
@@ -123,40 +125,65 @@ namespace HoorayTheWinProjectLogic
         {
             TestToBot testToBot = TestToBot.GetInstance();
             long chatId = GetChatId(update);
-
+            int tmp = groups.ReturnUserTmp(chatId);
             if (!IsFinished(chatId))
             {
-                Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[(testToBot.Manager.AnswerBase[chatId]).Count() + tmp].SetAnswer(update);
+                int index = (testToBot.Manager.AnswerBase[chatId]).Count();
+                Enums.BehaviorOptions behaviorOption = testToBot.Manager.Test.AbstractQuestions[index + tmp].SetAnswer(update);
+                groups.ChangeUserTmp(chatId, 0);
                 if (behaviorOption == Enums.BehaviorOptions.invalidAnswer)
                 {
-                    tmp = 0;
+                    DeleteKeyboard(update, botClient);
                     SendNextQuestion(chatId);
                 }
                 else if (behaviorOption == Enums.BehaviorOptions.nextQuestion)
                 {
-                    await botClient.EditMessageTextAsync(
-                          update.CallbackQuery!.Message!.Chat.Id,
-                          update.CallbackQuery.Message!.MessageId,
-                          update.CallbackQuery.Message!.Text!,
-                          replyMarkup: null
-                          );
-                    tmp = 0;
+                    DeleteKeyboard(update, botClient);            
                     SendNextQuestion(chatId);
                 }
                 else if (behaviorOption == Enums.BehaviorOptions.lastQuestion)
                 {
+                    DeleteKeyboard(update, botClient);
                     SendMessageWhenTestFinished(chatId);
                     return;
                 }
                 else if (behaviorOption == Enums.BehaviorOptions.refreshKeybord)
                 {
-                    tmp = -1;
+                    int indexHere = (testToBot.Manager.AnswerBase[chatId]).Count();
+                    groups.ChangeUserTmp(chatId, -1);
+                    tmp = groups.ReturnUserTmp(chatId);
+                    string answers = testToBot.Manager.AnswerBase[chatId][indexHere + tmp];
+                    RefreshKeyboard(update, botClient, testToBot.Manager.Test.AbstractQuestions[indexHere + tmp].GetRefreshInlineKM(answers.Split(' ').ToList<string>()));
                     return;
                 }
             }
             else 
             {
                 SendMessageWhenTestFinished(chatId);
+            }         
+        }
+        private async void DeleteKeyboard(Update update, ITelegramBotClient botClient)
+        {
+            if (update.Message == null)
+            {
+                await botClient.EditMessageTextAsync(
+                      update.CallbackQuery!.Message!.Chat.Id,
+                      update.CallbackQuery.Message!.MessageId,
+                      update.CallbackQuery.Message!.Text!,
+                      replyMarkup: null
+                      );
+            }
+        }
+        private async void RefreshKeyboard(Update update, ITelegramBotClient botClient, InlineKeyboardMarkup refreshKeyboard)
+        {
+            if (update.Message == null)
+            {
+                await botClient.EditMessageTextAsync(
+                      update.CallbackQuery!.Message!.Chat.Id,
+                      update.CallbackQuery.Message!.MessageId,
+                      update.CallbackQuery.Message!.Text!,
+                      replyMarkup: refreshKeyboard
+                      );
             }
         }
     }

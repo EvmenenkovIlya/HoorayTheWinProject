@@ -78,5 +78,10 @@ namespace HoorayTheWinProjectLogic.Questions
             }
             return true;
         }
+
+        public override InlineKeyboardMarkup GetRefreshInlineKM(List<string> answers)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -36,13 +36,11 @@ namespace HoorayTheWinProjectLogic
         public List<Report> GetReport()
         {
             TestToBot testToBot = TestToBot.GetInstance();
-            List<Report> result = new List<Report>();
-            foreach (Group group in testToBot.Manager.Groups)
+            Dictionary<long, User> Base = groups.ReturnCopyBase();
+            List<Report> result = new List<Report>();          
+            foreach (long id in testToBot.Manager.AnswerBase.Keys)
             {
-                foreach (User user in group.Users)
-                {
-                    result.Add(new Report(user));               
-                }
+                result.Add(new Report(Base[id]));              
             }
             return result;
         }
