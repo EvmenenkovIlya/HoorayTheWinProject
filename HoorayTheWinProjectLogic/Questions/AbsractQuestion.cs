@@ -13,7 +13,7 @@ namespace HoorayTheWinProjectLogic.Questions
         
         public abstract InlineKeyboardMarkup GetInlineKM();
         public abstract Enums.BehaviorOptions SetAnswer(Update update);
-
+        public abstract InlineKeyboardMarkup GetRefreshInlineKM(List<string> answers);
         public override string ToString()
         {
             return TextOfQuestion;

@@ -39,5 +39,39 @@ namespace HoorayTheWinProjectLogic.Questions
             }
             return Enums.BehaviorOptions.nextQuestion;
         }
+
+        public override InlineKeyboardMarkup GetRefreshInlineKM(List<string> answers)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !(obj is EnteringAResponse))
+            {
+                return false;
+            }
+            else
+            {
+                EnteringAResponse objTest = (EnteringAResponse)obj;
+                if ((objTest.TextOfQuestion != this.TextOfQuestion) && (objTest.TypeQuestion != this.TypeQuestion)
+                    && (objTest.Answer.Count == this.Answer.Count))
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach (string answer in objTest.Answer)
+                    {
+                        int indexOfAnswer = objTest.Answer.IndexOf(answer);
+                        if (answer != this.Answer[indexOfAnswer])
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
     }
 }

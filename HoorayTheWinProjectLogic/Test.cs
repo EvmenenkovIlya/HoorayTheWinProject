@@ -41,5 +41,44 @@ namespace HoorayTheWinProjectLogic
         {
             return NameTest;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !(obj is Test))
+            {
+                return false;
+            }
+            else
+            {
+                Test objTest = (Test)obj;
+                if((objTest.AbstractQuestions.Count != this.AbstractQuestions.Count) && (objTest.NameTest != this.NameTest))
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach (AbstractQuestion abstractQuestion in objTest.AbstractQuestions)
+                    {
+                        int index = objTest.AbstractQuestions.IndexOf(abstractQuestion);
+                        if ((abstractQuestion.TextOfQuestion == this.AbstractQuestions[index].TextOfQuestion) 
+                            && (abstractQuestion.TypeQuestion == this.AbstractQuestions[index].TypeQuestion)
+                            && (abstractQuestion.Answer.Count == this.AbstractQuestions[index].Answer.Count )) 
+
+                        {
+                            foreach (string answer in abstractQuestion.Answer)
+                            {
+                                int indexOfAnswer = abstractQuestion.Answer.IndexOf(answer);
+                                if (answer != this.AbstractQuestions[index].Answer[indexOfAnswer])
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                    
+                    return true;
+                }
+            }
+        }
     }
 }

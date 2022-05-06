@@ -196,16 +196,6 @@ namespace HoorayTheWinProject_
                 ListBoxListOfUsers.ItemsSource = groups.groups[0].Users;
             }
         }
-
-        private void ButtonSend_Click(object sender, RoutedEventArgs e)
-        {          
-            //_telegramManager.Send(DataMock.qs, 296570604);
-        }
-
-        private void ButtonStart_Click(object sender, RoutedEventArgs e)
-        {          
-            //_telegramManager.Start();
-        }
         private void ListBoxListOfQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {            
             ComboBoxListOfTests.IsEnabled = true;
@@ -302,12 +292,6 @@ namespace HoorayTheWinProject_
                 TextBoxTwo.Visibility = Visibility.Visible;                
                 return;
             }            
-        }
-
-        private void ButtonStop_Click(object sender, RoutedEventArgs e)
-        {
-
-
         }
 
         private void ButtonChangeUserName_Click(object sender, RoutedEventArgs e)
@@ -490,7 +474,7 @@ namespace HoorayTheWinProject_
                 }
                 else 
                 {
-                    _telegramManager.SendMessageWhenTestFinished(chatId);
+                    _telegramManager.SendMessageWhenTestFinished(chatId, "The test is over!");
                 }
             }
         }

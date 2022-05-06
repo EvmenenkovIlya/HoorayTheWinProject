@@ -18,7 +18,7 @@ namespace HoorayTheWinProjectLogic.Questions
             TypeQuestion = 0;
         }
         public ChooseNumber() { }
-        
+
         public override InlineKeyboardMarkup GetInlineKM()
         {
             InlineKeyboardMarkup inlineKeyboard = new(
@@ -33,6 +33,28 @@ namespace HoorayTheWinProjectLogic.Questions
             {
                 InlineKeyboardButton.WithCallbackData(Answer[2], Answer[2]),
                 InlineKeyboardButton.WithCallbackData(Answer[3], Answer[3]),
+            },
+            new[]
+            {
+               InlineKeyboardButton.WithCallbackData("Done")}
+            });
+            return inlineKeyboard;
+        }
+        public override InlineKeyboardMarkup GetRefreshInlineKM(List<string> answers)
+        {
+            List<string> modifyAnswers = ModifyAnswers(answers);          
+            InlineKeyboardMarkup inlineKeyboard = new(
+            new[]
+            {
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData(modifyAnswers[0], Answer[0]),
+                InlineKeyboardButton.WithCallbackData(modifyAnswers[1], Answer[1]),
+            },
+            new[]
+            {
+                InlineKeyboardButton.WithCallbackData(modifyAnswers[2], Answer[2]),
+                InlineKeyboardButton.WithCallbackData(modifyAnswers[3], Answer[3]),
             },
             new[]
             {
@@ -55,7 +77,7 @@ namespace HoorayTheWinProjectLogic.Questions
             }
             else
             {
-                PressingDone(update, message);
+                PressingDone(update);
                 TestToBot testToBot = TestToBot.GetInstance();
                 if (GetAnswerList(update).Count == testToBot.Manager.Test.AbstractQuestions.Count())
                 {
@@ -65,34 +87,61 @@ namespace HoorayTheWinProjectLogic.Questions
             }
         }
 
-        private void PressingDone(Update update, string message)
+        public override bool Equals(object? obj)
         {
-            if (GetAnswerList(update).Count == 0)
+            if (obj == null || !(obj is ChooseNumber))
             {
-                GetAnswerList(update).Add("No answer");
+                return false;
+            }
+            else
+            {
+                ChooseNumber objTest = (ChooseNumber)obj;
+                if ((objTest.TextOfQuestion != this.TextOfQuestion) && (objTest.TypeQuestion != this.TypeQuestion)
+                    && (objTest.Answer.Count == this.Answer.Count))
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach (string answer in objTest.Answer)
+                    {
+                        int indexOfAnswer = objTest.Answer.IndexOf(answer);
+                        if (answer != this.Answer[indexOfAnswer])
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+        private void PressingDone(Update update)
+        {
+            List<string> list = GetAnswerList(update);
+            TestToBot testToBot = TestToBot.GetInstance();
+            int index = testToBot.Manager.Test.AbstractQuestions.IndexOf(this);           
+                if (list.Count == 0 || list.Count == index)
+            {
+                list.Add("No answer");
             }
             else if (GetPastIndex(update) == "Empty")
             {
-                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, "No answer");
-                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+                list.Insert(list.Count - 1, "No answer");
+                list.RemoveAt(list.Count - 1);
             }
         }
 
         private void PressingNotDone(Update update, string message)
         {
-            if (GetAnswerList(update).Count == 0)
+            List<string> answers = GetAnswerList(update);
+            if (answers.Count == 0)
             {
-                GetAnswerList(update).Add(message);
+                answers.Add(message);
             }
             else
             {
-                if (
-                    !GetPastIndex(update).Contains(Answer[0])
-                    && !GetPastIndex(update).Contains(Answer[1])
-                    && !GetPastIndex(update).Contains(Answer[2])
-                    && !GetPastIndex(update).Contains(Answer[3])
-                    && !GetPastIndex(update).Contains("Empty")
-                    )
+                if (IsInAnswer(update))                   
                 {
                     AddNewAnswer(update, message);
                 }
@@ -115,7 +164,7 @@ namespace HoorayTheWinProjectLogic.Questions
             GetAnswerList(update).Add(message);
         }
 
-        private void AddNewAnswerToIndex (Update update, string message)
+        private void AddNewAnswerToIndex(Update update, string message)
         {
             string pastString = GetPastIndex(update);
             if (pastString == "Empty")
@@ -133,26 +182,24 @@ namespace HoorayTheWinProjectLogic.Questions
 
         private void RemoveNewAnswerFromIndex(Update update, string message)
         {
+            TestToBot testToBot = TestToBot.GetInstance();
             List<string> values = GetPastIndex(update).Split(' ').ToList();
+            List<string> answer = testToBot.Manager.AnswerBase[update.CallbackQuery.Message!.Chat.Id];
             if (values.Count > 1)
             {
                 values.Remove(message);
                 string result = String.Join(" ", values);
-                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, result);
-                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+                answer[answer.Count - 1] = result;
             }
             else if (values.Count == 0 && GetPastIndex(update) == "Empty")
             {
-                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, message);
-                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+                answer[answer.Count - 1] = message;
             }
             else
             {
-                GetAnswerList(update).Insert(GetAnswerList(update).Count - 1, "Empty");
-                GetAnswerList(update).RemoveAt(GetAnswerList(update).Count - 1);
+                answer[answer.Count - 1] = "Empty";
             }
         }
-
         private string GetPastIndex(Update update)
         {
             string pastString = GetAnswerList(update)[GetAnswerList(update).Count - 1];
@@ -163,9 +210,33 @@ namespace HoorayTheWinProjectLogic.Questions
         {
             long chatId = update.CallbackQuery!.Message!.Chat.Id;
             TestToBot testToBot = TestToBot.GetInstance();
-            List<string> answers;
-            testToBot.Manager.AnswerBase.TryGetValue(chatId, out answers!);
+            List<string> answers = testToBot.Manager.AnswerBase[chatId];
             return answers;
+        }
+        public List<string> ModifyAnswers(List<string> userAnswers)
+        {
+            string[] arr = new string[4];
+            Answer.CopyTo(arr);
+            List<string>  modifyAnswer = arr.ToList<string>();
+            foreach (var answer in userAnswers)
+            {
+                if (modifyAnswer.Contains(answer))
+                {
+                    int index = modifyAnswer.IndexOf(answer);
+                    modifyAnswer[index] = $"{answer} ✅";
+                }
+            }
+            return modifyAnswer;
+        }
+        private bool IsInAnswer(Update update)
+        {
+            return (
+                    !GetPastIndex(update).Contains(Answer[0])
+                    && !GetPastIndex(update).Contains(Answer[1])
+                    && !GetPastIndex(update).Contains(Answer[2])
+                    && !GetPastIndex(update).Contains(Answer[3])
+                    && !GetPastIndex(update).Contains("Empty")
+                    );
         }
     }
 }
