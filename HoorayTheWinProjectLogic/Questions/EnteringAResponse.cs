@@ -23,6 +23,11 @@ namespace HoorayTheWinProjectLogic.Questions
             return null;
         }
 
+        public Enums.BehaviorOptions SetAnswer(string? text)
+        {
+            throw new NotImplementedException();
+        }
+
         public override Enums.BehaviorOptions SetAnswer(Update update)
         {
             if (update.Message == null)
@@ -38,6 +43,35 @@ namespace HoorayTheWinProjectLogic.Questions
                 return Enums.BehaviorOptions.lastQuestion;
             }
             return Enums.BehaviorOptions.nextQuestion;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !(obj is EnteringAResponse))
+            {
+                return false;
+            }
+            else
+            {
+                EnteringAResponse objTest = (EnteringAResponse)obj;
+                if ((objTest.TextOfQuestion != this.TextOfQuestion) && (objTest.TypeQuestion != this.TypeQuestion)
+                    && (objTest.Answer.Count == this.Answer.Count))
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach (string answer in objTest.Answer)
+                    {
+                        int indexOfAnswer = objTest.Answer.IndexOf(answer);
+                        if (answer != this.Answer[indexOfAnswer])
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 }

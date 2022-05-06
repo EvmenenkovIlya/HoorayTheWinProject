@@ -65,6 +65,35 @@ namespace HoorayTheWinProjectLogic.Questions
             }
         }
 
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || !(obj is InSeries))
+            {
+                return false;
+            }
+            else
+            {
+                InSeries objTest = (InSeries)obj;
+                if ((objTest.TextOfQuestion != this.TextOfQuestion) && (objTest.TypeQuestion != this.TypeQuestion)
+                    && (objTest.Answer.Count == this.Answer.Count))
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach (string answer in objTest.Answer)
+                    {
+                        int indexOfAnswer = objTest.Answer.IndexOf(answer);
+                        if (answer != this.Answer[indexOfAnswer])
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         private void PressingDone(Update update, string message)
         {
             if (GetAnswerList(update).Count == 0)
