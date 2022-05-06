@@ -55,11 +55,6 @@ namespace HoorayTheWinProjectLogic.Questions
             return Enums.BehaviorOptions.nextQuestion;        
         }
 
-        public Enums.BehaviorOptions SetAnswer(string? data)
-        {
-            throw new NotImplementedException();
-        }
-
         public override bool Equals(object? obj)
         {
             if (obj == null || !(obj is ChooseOne))

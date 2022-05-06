@@ -41,11 +41,6 @@ namespace HoorayTheWinProjectLogic.Questions
             return inlineKeyboard;
         }
 
-        public Enums.BehaviorOptions SetAnswer(string? data)
-        {
-            throw new NotImplementedException();
-        }
-
         public override Enums.BehaviorOptions SetAnswer(Update update)
         {
             if (update.Message != null)

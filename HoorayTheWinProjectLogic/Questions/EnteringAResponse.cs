@@ -23,11 +23,6 @@ namespace HoorayTheWinProjectLogic.Questions
             return null;
         }
 
-        public Enums.BehaviorOptions SetAnswer(string? text)
-        {
-            throw new NotImplementedException();
-        }
-
         public override Enums.BehaviorOptions SetAnswer(Update update)
         {
             if (update.Message == null)

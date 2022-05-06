@@ -17,7 +17,7 @@ namespace HorrayTheWinProjectLogicTests
         [TestCaseSource(typeof(EnteringAResponseSetAnswerTestSource))]
         public void EnteringAResponseSetAnswerTest(Update update, Enums.BehaviorOptions expected)
         {
-            Enums.BehaviorOptions behaviorOptions = new EnteringAResponse().SetAnswer(update.Message!.Text);
+            Enums.BehaviorOptions behaviorOptions = new EnteringAResponse().SetAnswer(update);
             Enums.BehaviorOptions actual = behaviorOptions;
             Assert.AreEqual(expected, actual);
         }
@@ -25,7 +25,7 @@ namespace HorrayTheWinProjectLogicTests
         [TestCaseSource(typeof(ChooseNumberSetAnswerTestSource))]
         public void ChooseNumberSetAnswerTest(Update update, Enums.BehaviorOptions expected)
         {
-            Enums.BehaviorOptions behaviorOptions = new ChooseNumber().SetAnswer(update.CallbackQuery!.Data);
+            Enums.BehaviorOptions behaviorOptions = new ChooseNumber().SetAnswer(update);
             Enums.BehaviorOptions actual = behaviorOptions;
             Assert.AreEqual(expected, actual);
         }
@@ -33,7 +33,7 @@ namespace HorrayTheWinProjectLogicTests
         [TestCaseSource(typeof(ChooseOneSetAnswerTestSource))]
         public void ChooseOneSetAnswerTest(Update update, Enums.BehaviorOptions expected)
         {
-            Enums.BehaviorOptions behaviorOptions = new ChooseOne().SetAnswer(update.CallbackQuery!.Data);
+            Enums.BehaviorOptions behaviorOptions = new ChooseOne().SetAnswer(update);
             Enums.BehaviorOptions actual = behaviorOptions;
             Assert.AreEqual(expected, actual);
         }
@@ -41,7 +41,7 @@ namespace HorrayTheWinProjectLogicTests
         [TestCaseSource(typeof(InSeriesSetAnswerTestSource))]
         public void InSeriesSetAnswerTest(Update update, Enums.BehaviorOptions expected)
         {
-            Enums.BehaviorOptions behaviorOptions = new EnteringAResponse().SetAnswer(update.CallbackQuery!.Data);
+            Enums.BehaviorOptions behaviorOptions = new EnteringAResponse().SetAnswer(update);
             Enums.BehaviorOptions actual = behaviorOptions;
             Assert.AreEqual(expected, actual);
         }
@@ -49,7 +49,7 @@ namespace HorrayTheWinProjectLogicTests
         [TestCaseSource(typeof(YesNoSetAnswerTestSource))]
         public void YesNoSetAnswerTest(Update update, Enums.BehaviorOptions expected)
         {
-            Enums.BehaviorOptions behaviorOptions = new EnteringAResponse().SetAnswer(update.CallbackQuery!.Data);
+            Enums.BehaviorOptions behaviorOptions = new EnteringAResponse().SetAnswer(update);
             Enums.BehaviorOptions actual = behaviorOptions;
             Assert.AreEqual(expected, actual);
         }
